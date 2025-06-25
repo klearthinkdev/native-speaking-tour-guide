@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ThemeService } from './shared/services/theme.service';
 import { Theme } from './shared/enums/theme.enum';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import { Theme } from './shared/enums/theme.enum';
   styleUrl: './app.css',
 })
 export class App {
-  protected title = 'native-speaking-tour-guide';
+  protected version = environment.version;
 
   constructor(public th: ThemeService) {
     this.th.init();
