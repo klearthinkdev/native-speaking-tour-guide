@@ -1,6 +1,22 @@
-@import "tailwindcss";
+@import 'tailwindcss' important;
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* breakpoint */
+  --breakpoint-sm: 600px; /* 37.5rem */
+  --breakpoint-md: 960px; /* 60rem */
+  --breakpoint-lg: 1280px; /* 80rem */
+  --breakpoint-xl: 1920px; /* 120rem */
+
+  /* color */
+  --color-primary: var(--mat-sys-primary);
+
+  /* font-weight */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+}
 
 /* You can add global styles to this file, and also import other style files */
 
@@ -10,5 +26,53 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family:
+    Roboto,
+    Noto Sans TC,
+    Noto Sans JP,
+    Noto Sans KR,
+    sans-serif;
+}
+
+* {
+  scrollbar-width: thin;
+}
+
+/* page */
+.w-page {
+  @apply m-auto w-full max-w-7xl;
+}
+
+/* form */
+.form-box {
+  @apply grid auto-rows-min gap-4;
+}
+
+/* activated */
+.activated {
+  @apply bg-primary/15 text-primary;
+}
+
+.text-gray {
+  @apply text-gray-700 dark:text-gray-300;
+}
+.border-gray {
+  @apply border-gray-700 dark:border-gray-300;
+}
+
+/* adjustments for @angular/material */
+/* button */
+button[maticonbutton] {
+  @apply leading-none;
+}
+
+/* form-field */
+.mdc-notched-outline__notch {
+  border-right-width: 0 !important;
+}
+mat-form-field .mdc-notched-outline > .mdc-notched-outline__leading {
+  @apply rounded-tl-2xl rounded-bl-2xl;
+}
+mat-form-field .mdc-notched-outline > .mdc-notched-outline__trailing {
+  @apply rounded-tr-2xl rounded-br-2xl;
 }

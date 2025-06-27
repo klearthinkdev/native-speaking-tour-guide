@@ -9,7 +9,9 @@
     "build": "ng build",
     "build:dev": "ng build --configuration dev",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "prettier": "prettier --write \"./src/**/*.{ts,html,scss,css,json}\"",
+    "prettier:check": "prettier --check \"./src/**/*.{ts,html,scss,css,json}\""
   },
   "private": true,
   "dependencies": {
@@ -40,6 +42,8 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "prettier": "^3.6.0",
+    "prettier-plugin-organize-attributes": "^1.0.0",
+    "prettier-plugin-organize-imports": "^4.1.0",
     "prettier-plugin-tailwindcss": "^0.6.13",
     "typescript": "~5.8.2"
   }

@@ -1,0 +1,120 @@
+@if (b.queries$ | async; as queries) {
+  <div class="absolute top-0 right-0 bottom-0 left-0 flex flex-col">
+    <header class="z-10">
+      <mat-toolbar class="fixed sm:static">
+        <div class="w-page flex items-center">
+          <div class="flex w-full grow">
+            <button (click)="sidenav.toggle()" matIconButton type="button">
+              <mat-icon>menu</mat-icon>
+            </button>
+
+            <span class="grow"></span>
+          </div>
+
+          <div class="flex w-full grow"></div>
+        </div>
+      </mat-toolbar>
+    </header>
+
+    <mat-sidenav-container
+      class="mt-14 shrink-0 grow basis-auto sm:mt-0 sm:shrink sm:grow sm:basis-0"
+    >
+      <mat-sidenav
+        class="w-80 pb-12"
+        [fixedInViewport]="!queries.MD"
+        [fixedTopGap]="queries.MD ? 0 : queries.SM ? 64 : 56"
+        [mode]="queries.MD ? 'side' : 'over'"
+        [opened]="queries.MD"
+        #sidenav
+      >
+        <mat-nav-list class="mx-2 h-full overflow-y-auto">
+          <!-- 首頁 -->
+          <mat-list-item
+            class="w-full px-2"
+            [activated]="rla0.isActive"
+            [routerLink]="['/']"
+            [routerLinkActiveOptions]="{ exact: true }"
+            #rla0="routerLinkActive"
+            routerLinkActive
+            title="首頁"
+          >
+            <div class="flex items-center" matListItemTitle>
+              <div class="flex h-10 w-10 shrink-0 items-center justify-center">
+                <mat-icon [class.text-primary]="rla0.isActive">home</mat-icon>
+              </div>
+
+              <span [class.text-primary]="rla0.isActive" class="grow truncate"> 首頁 </span>
+            </div>
+          </mat-list-item>
+
+          <!-- 個人頁面 -->
+          <mat-list-item
+            class="w-full px-2"
+            [activated]="rla1.isActive"
+            [routerLink]="['/user']"
+            #rla1="routerLinkActive"
+            routerLinkActive
+            title="個人頁面"
+          >
+            <div class="flex items-center" matListItemTitle>
+              <div class="flex h-10 w-10 shrink-0 items-center justify-center">
+                <mat-icon [class.text-primary]="rla1.isActive">person</mat-icon>
+              </div>
+
+              <span [class.text-primary]="rla1.isActive" class="grow truncate"> 個人頁面 </span>
+            </div>
+          </mat-list-item>
+
+          <mat-divider class="mx-2"></mat-divider>
+
+          <!-- 外觀 -->
+          <mat-list-item class="w-full px-2" title="外觀">
+            <div class="flex items-center" matListItemTitle>
+              <div class="flex h-10 w-10 shrink-0 items-center justify-center">
+                <mat-icon>contrast</mat-icon>
+              </div>
+
+              <span class="grow"> 外觀 </span>
+
+              <div matListItemMeta>
+                <mat-icon>chevron_right</mat-icon>
+              </div>
+            </div>
+          </mat-list-item>
+
+          <!-- 語言 -->
+          <mat-list-item class="w-full px-2" title="語言">
+            <div class="flex items-center" matListItemTitle>
+              <div class="flex h-10 w-10 shrink-0 items-center justify-center">
+                <mat-icon>language</mat-icon>
+              </div>
+
+              <span class="grow truncate"> 語言 </span>
+
+              <div matListItemMeta>
+                <mat-icon>chevron_right</mat-icon>
+              </div>
+            </div>
+          </mat-list-item>
+        </mat-nav-list>
+
+        <div
+          class="absolute right-0 bottom-0 left-0 z-10 mx-2 flex h-12 items-center px-2"
+          title="發起會議"
+        >
+          <button class="grow" matButton="filled" type="button">
+            <mat-icon>add</mat-icon>
+
+            發起會議
+          </button>
+        </div>
+      </mat-sidenav>
+
+      <mat-sidenav-content>
+        <main class="w-page px-4">
+          <router-outlet></router-outlet>
+        </main>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+}

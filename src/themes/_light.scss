@@ -1,4 +1,4 @@
-@use "@angular/material" as mat;
+@use '@angular/material' as mat;
 
 html {
   color-scheme: light;
@@ -9,7 +9,7 @@ html {
         primary: mat.$azure-palette,
         tertiary: mat.$blue-palette,
       ),
-      typography: Roboto,
+      typography: 'Roboto, "Noto Sans TC", "Noto Sans JP", "Noto Sans KR", sans-serif',
       density: 0,
     )
   );

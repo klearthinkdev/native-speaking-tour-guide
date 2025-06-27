@@ -1,6 +1,6 @@
 import { DOCUMENT, Inject, Injectable } from '@angular/core';
-import { Theme } from '../enums/theme.enum';
 import { BehaviorSubject, distinctUntilChanged, Subject } from 'rxjs';
+import { Theme } from '../enums/theme.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -43,9 +43,7 @@ export class ThemeService {
     });
 
     const _theme = this.loadTheme();
-    const defaultTheme = this.validateTheme(_theme)
-      ? (_theme as Theme)
-      : this._defaultTheme;
+    const defaultTheme = this.validateTheme(_theme) ? (_theme as Theme) : this._defaultTheme;
 
     this.use(defaultTheme);
 
@@ -68,8 +66,7 @@ export class ThemeService {
     const isDark =
       theme === Theme.Dark ||
       (theme === Theme.System &&
-        this.document.defaultView?.matchMedia('(prefers-color-scheme: dark)')
-          .matches);
+        this.document.defaultView?.matchMedia('(prefers-color-scheme: dark)').matches);
 
     if (this.document.startViewTransition === undefined) {
       this.toggleClass(isDark);

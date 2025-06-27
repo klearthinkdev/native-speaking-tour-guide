@@ -1,0 +1,28 @@
+<div [style.height]="pageHeight$ | async" class="flex flex-col md:flex-row">
+  <div class="flex min-h-1/2 w-full flex-col items-center justify-center md:min-h-auto md:w-1/2">
+    <div class="m-auto flex w-full items-start">
+      <mat-form-field>
+        <input
+          inputmode="text"
+          matInput
+          maxlength="6"
+          placeholder="輸入會議代碼"
+          required
+          type="text"
+        />
+
+        <mat-icon matPrefix>keyboard</mat-icon>
+
+        <button class="mr-2 shadow-none" matMiniFab matSuffix type="button">
+          <mat-icon>send</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <button class="ml-2 shadow-none" matFab type="button">
+        <mat-icon>qr_code</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="min-h-1/2 w-full bg-blue-500/15 md:min-h-auto md:w-1/2"></div>
+</div>
