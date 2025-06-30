@@ -26,14 +26,14 @@ export class BreakpointsService {
     this.queries$.next(value);
   }
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private _breakpointObserver: BreakpointObserver) {}
 
   init(): void {
     if (this._initialized) {
       return;
     }
 
-    this.breakpointObserver.observe([MediaQuery.SM, MediaQuery.MD]).subscribe((result) => {
+    this._breakpointObserver.observe([MediaQuery.SM, MediaQuery.MD]).subscribe((result) => {
       this.queries = {
         SM: result.breakpoints[MediaQuery.SM],
         MD: result.breakpoints[MediaQuery.MD],

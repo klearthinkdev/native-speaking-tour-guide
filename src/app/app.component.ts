@@ -16,18 +16,18 @@ export class AppComponent {
   protected version = environment.version;
 
   constructor(
-    private b: BreakpointsService,
-    private th: ThemeService,
+    private _b: BreakpointsService,
+    private _th: ThemeService,
   ) {
-    this.b.init();
-    this.th.init();
+    this._b.init();
+    this._th.init();
   }
 
   useNextTheme(): void {
     const all = [Theme.Light, Theme.Dark, Theme.System];
-    const currentIndex = all.indexOf(this.th.currentTheme);
+    const currentIndex = all.indexOf(this._th.currentTheme);
     const next = all[(currentIndex + 1) % all.length];
 
-    this.th.use(next);
+    this._th.use(next);
   }
 }

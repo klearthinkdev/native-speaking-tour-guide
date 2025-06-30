@@ -4,7 +4,7 @@ import { HomeComponent } from './pages/home.component/home.component';
 import { LoginComponent } from './pages/login.component/login.component';
 import { MeetingComponent } from './pages/meeting.component/meeting.component';
 import { SignupComponent } from './pages/signup.component/signup.component';
-import { UserComponent } from './pages/user.component/user';
+import { UserComponent } from './pages/user.component/user.component';
 
 export const routes: Routes = [
   {

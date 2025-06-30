@@ -4,12 +4,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { map, Observable } from 'rxjs';
 import { BreakpointsService } from '../../shared/services/breakpoints.service';
 
 @Component({
   selector: 'app-home',
-  imports: [AsyncPipe, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule],
+  imports: [
+    AsyncPipe,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatTooltipModule,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -17,8 +25,8 @@ import { BreakpointsService } from '../../shared/services/breakpoints.service';
 export class HomeComponent {
   pageHeight$: Observable<string> | undefined;
 
-  constructor(public b: BreakpointsService) {
-    this.pageHeight$ = this.b.queries$.pipe(
+  constructor(private _b: BreakpointsService) {
+    this.pageHeight$ = this._b.queries$.pipe(
       map((queries) => `calc(100dvh - ${queries.SM ? 64 : 56}px)`),
     );
   }

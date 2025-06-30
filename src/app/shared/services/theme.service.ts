@@ -10,7 +10,7 @@ export class ThemeService {
   private _defaultTheme = Theme.System;
   private _initialized = false;
 
-  themeChange = new Subject<Theme>();
+  themeChange$ = new Subject<Theme>();
   isDark$ = new BehaviorSubject<boolean>(false);
 
   currentTheme!: Theme;
@@ -24,7 +24,7 @@ export class ThemeService {
 
   constructor(
     @Inject(DOCUMENT)
-    private document: Document & { startViewTransition: Function },
+    private _document: Document & { startViewTransition: Function },
   ) {}
 
   init(): void {
@@ -32,7 +32,7 @@ export class ThemeService {
       return;
     }
 
-    this.themeChange.pipe(distinctUntilChanged()).subscribe((theme) => {
+    this.themeChange$.pipe(distinctUntilChanged()).subscribe((theme) => {
       if (this.validateTheme(theme)) {
         this.onToggleClass(theme);
 
@@ -51,7 +51,7 @@ export class ThemeService {
   }
 
   use(theme: Theme): void {
-    this.themeChange.next(theme);
+    this.themeChange$.next(theme);
   }
 
   private loadTheme(): string | null {
@@ -66,12 +66,12 @@ export class ThemeService {
     const isDark =
       theme === Theme.Dark ||
       (theme === Theme.System &&
-        this.document.defaultView?.matchMedia('(prefers-color-scheme: dark)').matches);
+        this._document.defaultView?.matchMedia('(prefers-color-scheme: dark)').matches);
 
-    if (this.document.startViewTransition === undefined) {
+    if (this._document.startViewTransition === undefined) {
       this.toggleClass(isDark);
     } else {
-      this.document.startViewTransition(() => {
+      this._document.startViewTransition(() => {
         this.toggleClass(isDark);
       });
     }
@@ -80,7 +80,7 @@ export class ThemeService {
   }
 
   private toggleClass(isDark?: boolean) {
-    this.document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+    this._document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
   }
 
   private validateTheme(theme: string | null): boolean {

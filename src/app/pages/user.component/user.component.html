@@ -1,1 +1,163 @@
-<p>user works!</p>
+<div [style.height]="pageHeight$ | async" class="grid grid-cols-2 gap-4">
+  <form class="col-span-2 flex flex-col md:col-span-1" [formGroup]="fg">
+    <div class="my-4 flex items-center text-2xl">
+      <span class="grow"> 關於我 </span>
+
+      @if (!editing1) {
+        <button
+          class="shadow-none"
+          [disabled]="editing2"
+          (click)="startEditing1()"
+          matMiniFab
+          matTooltip="編輯"
+          type="button"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+      } @else {
+        <button
+          class="mr-2 bg-transparent shadow-none"
+          (click)="cancelEditing1()"
+          matMiniFab
+          matTooltip="取消"
+          type="button"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+
+        <button
+          class="shadow-none"
+          (click)="onUpdate1()"
+          matMiniFab
+          matTooltip="更新"
+          type="button"
+        >
+          <mat-icon>check</mat-icon>
+        </button>
+      }
+    </div>
+
+    <div class="mb-8 flex flex-col gap-4 lg:flex-row">
+      <div class="grow-0">
+        <div
+          class="m-auto mb-2 flex h-15 w-15 items-center justify-center rounded-full bg-primary/15 text-2xl text-primary"
+        >
+          {{ cache.nickname | slice: 0 : 1 }}
+        </div>
+
+        <div class="m-auto text-center">訪客</div>
+      </div>
+
+      <div class="flex grow flex-col">
+        <!-- 顯示暱稱 -->
+        <mat-form-field class="w-full">
+          <mat-label>顯示暱稱</mat-label>
+          <input
+            #nicknameInput
+            class="truncate"
+            [formControl]="fcs['nickname']"
+            [readonly]="!editing1"
+            inputmode="text"
+            matInput
+            maxlength="64"
+            placeholder="輸入顯示暱稱"
+            required
+            type="text"
+          />
+
+          <span class="mr-2" matSuffix> #{{ fcs['code'].value }} </span>
+
+          @if (fcs['nickname'].hasError('required')) {
+            <mat-error>請輸入顯示暱稱</mat-error>
+          }
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="my-4 flex items-center text-2xl">
+      <span class="grow"> 偏好語言 </span>
+
+      @if (!editing2) {
+        <button
+          class="shadow-none"
+          [disabled]="editing1"
+          (click)="startEditing2()"
+          matMiniFab
+          matTooltip="編輯"
+          type="button"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+      } @else {
+        <button
+          class="mr-2 bg-transparent shadow-none"
+          (click)="cancelEditing2()"
+          matMiniFab
+          matTooltip="取消"
+          type="button"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+
+        <button
+          class="shadow-none"
+          (click)="onUpdate2()"
+          matMiniFab
+          matTooltip="更新"
+          type="button"
+        >
+          <mat-icon>check</mat-icon>
+        </button>
+      }
+    </div>
+
+    <mat-list (cdkDropListDropped)="drop($event)" cdkDropList>
+      @for (rlang of fcs['rlangs'].value; track $index) {
+        <mat-list-item [cdkDragData]="rlang" cdkDrag>
+          <div class="flex items-center" matListItemTitle>
+            <button
+              [class.hidden]="!editing2"
+              class="mr-2 rounded-full shadow-none not-disabled:bg-error not-disabled:text-white"
+              [disabled]="fcs['rlangs'].value.length === 1"
+              (click)="remove($index)"
+              matMiniFab
+              type="button"
+            >
+              <mat-icon>remove</mat-icon>
+            </button>
+
+            <div
+              [class.hidden]="editing2"
+              class="mr-2 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary"
+            >
+              {{ $index + 1 }}
+            </div>
+
+            <span class="grow"> {{ rlang | i18nSelect: allRLangNameMap }} </span>
+
+            <div [class.hidden]="!editing2" class="cursor-move" cdkDragHandle matListItemMeta>
+              <mat-icon>reorder</mat-icon>
+            </div>
+          </div>
+        </mat-list-item>
+      }
+
+      @if (editing2) {
+        <mat-list-item>
+          <div class="flex items-center" matListItemTitle>
+            <button
+              class="rounded-full bg-primary/15 text-primary shadow-none"
+              (click)="openRLangPicker()"
+              matMiniFab
+              type="button"
+            >
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+        </mat-list-item>
+      }
+    </mat-list>
+  </form>
+
+  <div class="col-span-2 bg-primary/15 md:col-span-1"></div>
+</div>

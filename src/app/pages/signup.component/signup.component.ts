@@ -76,7 +76,7 @@ export class SignupComponent {
 
   showPassword = false;
 
-  constructor(private router: Router) {}
+  constructor(private _router: Router) {}
 
   onSignup(): void {
     this.fg.markAllAsTouched();
@@ -88,6 +88,6 @@ export class SignupComponent {
 
     // TODO
 
-    this.router.navigate(['/login']);
+    this._router.navigate(['/login']);
   }
 }

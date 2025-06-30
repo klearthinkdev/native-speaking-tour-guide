@@ -1,6 +1,7 @@
 {
   "arrowParens": "always",
   "attributeGroups": [
+    "^#",
     "^\\[style\\..*]$",
     "^\\[class\\..*]$",
     "^\\[ngStyle\\]$",

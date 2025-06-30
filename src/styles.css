@@ -11,11 +11,25 @@
 
   /* color */
   --color-primary: var(--mat-sys-primary);
+  --color-primary-100: #3c0800;
+  --color-primary-200: #611300;
+  --color-primary-300: #891e00;
+  --color-primary-400: #b32a00;
+  --color-primary-500: #db3d0f;
+  --color-primary-600: #ff5629;
+  --color-primary-700: #ff8b6d;
+  --color-primary-800: #ffb4a1;
+  --color-primary-900: #ffdbd2;
+
+  --color-error: #ba1a1a;
 
   /* font-weight */
-  --font-weight-regular: 400;
+  --font-weight-thin: 300;
+  --font-weight-normal: 400;
   --font-weight-medium: 500;
-  --font-weight-bold: 700;
+
+  /* spacing */
+  --spacing-100: 25rem; /* 400px */
 }
 
 /* You can add global styles to this file, and also import other style files */

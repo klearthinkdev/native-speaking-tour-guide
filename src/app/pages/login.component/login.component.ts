@@ -48,7 +48,7 @@ export class LoginComponent {
 
   showPassword = false;
 
-  constructor(private router: Router) {}
+  constructor(private _router: Router) {}
 
   onLogin(): void {
     this.fg.markAllAsTouched();
@@ -60,12 +60,12 @@ export class LoginComponent {
 
     // TODO
 
-    this.router.navigate(['/']);
+    this._router.navigate(['/']);
   }
 
   onSkipLogin(): void {
     // TODO
 
-    this.router.navigate(['/']);
+    this._router.navigate(['/']);
   }
 }

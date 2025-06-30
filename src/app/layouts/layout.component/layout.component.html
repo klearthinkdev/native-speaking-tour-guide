@@ -20,21 +20,21 @@
       class="mt-14 shrink-0 grow basis-auto sm:mt-0 sm:shrink sm:grow sm:basis-0"
     >
       <mat-sidenav
+        #sidenav
         class="w-80 pb-12"
         [fixedInViewport]="!queries.MD"
         [fixedTopGap]="queries.MD ? 0 : queries.SM ? 64 : 56"
         [mode]="queries.MD ? 'side' : 'over'"
         [opened]="queries.MD"
-        #sidenav
       >
         <mat-nav-list class="mx-2 h-full overflow-y-auto">
           <!-- 首頁 -->
           <mat-list-item
+            #rla0="routerLinkActive"
             class="w-full px-2"
             [activated]="rla0.isActive"
             [routerLink]="['/']"
             [routerLinkActiveOptions]="{ exact: true }"
-            #rla0="routerLinkActive"
             routerLinkActive
             title="首頁"
           >
@@ -49,10 +49,10 @@
 
           <!-- 個人頁面 -->
           <mat-list-item
+            #rla1="routerLinkActive"
             class="w-full px-2"
             [activated]="rla1.isActive"
             [routerLink]="['/user']"
-            #rla1="routerLinkActive"
             routerLinkActive
             title="個人頁面"
           >
