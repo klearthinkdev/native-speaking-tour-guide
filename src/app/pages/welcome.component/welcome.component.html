@@ -3,12 +3,8 @@
     <div class="flex grow">
       <div class="w-0 bg-blue-500/15 md:w-1/2"></div>
 
-      <div class="flex w-full items-center justify-center md:w-1/2">
-        <form
-          class="form-box m-4 w-full max-w-80 grid-cols-1"
-          [formGroup]="fg"
-          (ngSubmit)="onLogin()"
-        >
+      <div class="flex w-full items-center justify-center p-4 md:w-1/2">
+        <form class="form-box w-full max-w-80 grid-cols-1" [formGroup]="fg" (ngSubmit)="onLogin()">
           <!-- 帳號 account -->
           <mat-form-field class="col-span-1">
             <mat-label>帳號</mat-label>
@@ -53,8 +49,10 @@
           <button class="col-span-1" matButton="filled" type="submit">登入</button>
 
           <div class="col-span-1 my-4">
-            <div class="text-center">沒有帳號嗎？</div>
-            <button class="w-full" matButton="tonal" type="button">註冊</button>
+            <div class="text-gray text-center">沒有帳號嗎？</div>
+            <button class="w-full" [routerLink]="['/signup']" matButton="tonal" type="button">
+              註冊
+            </button>
           </div>
 
           <div class="col-span-1 flex items-center opacity-50">
@@ -65,8 +63,6 @@
 
           <button class="col-span-1" matButton type="button">以訪客身份繼續</button>
         </form>
-
-        <!-- TODO -->
       </div>
     </div>
 

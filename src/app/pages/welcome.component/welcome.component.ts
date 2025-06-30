@@ -5,6 +5,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { RouterLink } from '@angular/router';
 import { FooterComponent } from '../../layouts/footer.component/footer.component';
 import { LoginFCs } from './welcome.models';
 
@@ -17,6 +18,7 @@ import { LoginFCs } from './welcome.models';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    RouterLink,
     FooterComponent,
   ],
   templateUrl: './welcome.component.html',
