@@ -16,16 +16,30 @@
             placeholder="輸入會議代碼"
             required
             type="text"
+            value="123456"
           />
 
           <mat-icon matPrefix>keyboard</mat-icon>
 
-          <button class="mr-2 shadow-none" matMiniFab matSuffix matTooltip="加入" type="button">
+          <button
+            class="mr-2 shadow-none"
+            [routerLink]="['/meeting']"
+            matMiniFab
+            matSuffix
+            matTooltip="加入"
+            type="button"
+          >
             <mat-icon>send</mat-icon>
           </button>
         </mat-form-field>
 
-        <button class="shadow-none" matFab matTooltip="掃描 QR code" type="button">
+        <button
+          class="shadow-none"
+          [routerLink]="['/meeting']"
+          matFab
+          matTooltip="掃描 QR code"
+          type="button"
+        >
           <mat-icon>qr_code</mat-icon>
         </button>
       </div>

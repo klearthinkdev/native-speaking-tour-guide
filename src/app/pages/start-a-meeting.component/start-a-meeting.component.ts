@@ -8,7 +8,13 @@ import {
   OnDestroy,
   ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -35,6 +41,7 @@ import { StartAMeetingFCs } from './start-a-meeting.models';
     AsyncPipe,
     DragDropModule,
     I18nSelectPipe,
+    FormsModule,
     ReactiveFormsModule,
     MatButtonModule,
     MatDatepickerModule,
@@ -67,9 +74,6 @@ export class StartAMeetingComponent implements OnDestroy {
         nonNullable: true,
         validators: [Validators.required, Validators.maxLength(64)],
       }),
-      endDatetime: new FormControl(this.now, {
-        validators: [Validators.required],
-      }),
     }),
     rlangs: new FormControl(this._langs, { nonNullable: true }),
   });
@@ -83,11 +87,11 @@ export class StartAMeetingComponent implements OnDestroy {
   meetingFG = this.fcs.meeting;
   meetingFCs = {
     name: this.meetingFG.controls['name'],
-    endDatetime: this.meetingFG.controls['endDatetime'],
   };
   get meetingFV() {
     return this.meetingFG.getRawValue();
   }
+  endDatetime: Date | null = this.now;
   get now(): Date {
     const today = new Date();
     const year = today.getFullYear();
@@ -97,8 +101,8 @@ export class StartAMeetingComponent implements OnDestroy {
     return new Date(year, month, date);
   }
 
-  // TODO: disable formControl by script
   cache = structuredClone(this.fv);
+  endDatetimeCache = this.endDatetime;
   editing1 = false;
   editing2 = false;
 
@@ -109,6 +113,8 @@ export class StartAMeetingComponent implements OnDestroy {
   ) {}
 
   startEditing1(): void {
+    console.log(this.endDatetime);
+
     this.editing1 = true;
 
     this.nameInput.nativeElement.select();
@@ -117,6 +123,7 @@ export class StartAMeetingComponent implements OnDestroy {
 
   cancelEditing1(): void {
     this.meetingFCs['name'].setValue(this.cache.meeting.name);
+    this.endDatetime = this.endDatetimeCache;
 
     this.editing1 = false;
   }
@@ -125,11 +132,12 @@ export class StartAMeetingComponent implements OnDestroy {
     this.meetingFG.markAllAsTouched();
     this.meetingFG.updateValueAndValidity();
 
-    if (this.meetingFG.invalid) {
+    if (this.meetingFG.invalid || this.endDatetime === null) {
       return;
     }
 
     this.cache.meeting = { ...this.meetingFV };
+    this.endDatetimeCache = this.endDatetime;
 
     this.editing1 = false;
   }

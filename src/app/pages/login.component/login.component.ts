@@ -60,12 +60,12 @@ export class LoginComponent {
 
     // TODO
 
-    this._router.navigate(['/']);
+    this._router.navigate(['/user']);
   }
 
   onSkipLogin(): void {
     // TODO
 
-    this._router.navigate(['/']);
+    this._router.navigate(['/user']);
   }
 }

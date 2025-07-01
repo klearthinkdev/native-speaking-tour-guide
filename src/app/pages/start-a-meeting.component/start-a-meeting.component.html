@@ -43,7 +43,6 @@
         <input
           #nameInput
           class="truncate"
-          [disabled]="!editing1"
           [formControl]="meetingFCs['name']"
           [readonly]="!editing1"
           inputmode="text"
@@ -63,44 +62,57 @@
         <mat-form-field class="w-full">
           <mat-label>結束日期</mat-label>
           <input
-            [disabled]="!editing1"
-            [formControl]="meetingFCs['endDatetime']"
             [matDatepicker]="endDatepicker"
+            [ngModelOptions]="{ standalone: true }"
             [readonly]="!editing1"
+            [(ngModel)]="endDatetime"
             matInput
             placeholder="選擇結束日期"
             required
           />
 
-          @if (meetingFCs['endDatetime'].hasError('required')) {
+          @if (endDatetime === null) {
             <mat-error>請選擇結束日期</mat-error>
           }
 
-          <mat-datepicker #endDatepicker [touchUi]="!queries.SM" />
-          <mat-datepicker-toggle [disabled]="!editing1" [for]="endDatepicker" matSuffix />
+          <mat-datepicker #endDatepicker [disabled]="!editing1" [touchUi]="!queries.SM" />
+
+          <mat-datepicker-toggle
+            class="mr-2"
+            [disabled]="!editing1"
+            [for]="endDatepicker"
+            matSuffix
+          />
         </mat-form-field>
 
         <mat-form-field class="w-full">
           <mat-label>結束時間</mat-label>
           <input
             [disabled]="!editing1"
-            [formControl]="meetingFCs['endDatetime']"
             [matTimepicker]="endTimepicker"
+            [ngModelOptions]="{ standalone: true }"
             [readonly]="!editing1"
+            [(ngModel)]="endDatetime"
             matInput
             placeholder="選擇結束時間"
             required
           />
 
-          @if (meetingFCs['endDatetime'].hasError('required')) {
+          @if (endDatetime === null) {
             <mat-error>請選擇結束時間</mat-error>
           }
 
           <mat-timepicker #endTimepicker />
-          <mat-timepicker-toggle [disabled]="!editing1" [for]="endTimepicker" matSuffix />
+          <mat-timepicker-toggle
+            class="mr-2"
+            [disabled]="!editing1"
+            [for]="endTimepicker"
+            matSuffix
+          />
         </mat-form-field>
       </div>
 
+      <!-- TODO: 預設勾選 3-4 種最常用語言，並隱藏此區塊，需要自行設定再展開 -->
       <div class="mt-4 flex items-center text-2xl">
         <span class="grow">支援語言</span>
 

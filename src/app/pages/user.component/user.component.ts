@@ -59,6 +59,7 @@ export class UserComponent implements OnDestroy {
 
   fg = new FormGroup<UserFCs>({
     aboutMe: new FormGroup({
+      // TODO: 以台灣特有種的英文名稱作為預設暱稱
       nickname: new FormControl(this._user, {
         nonNullable: true,
         validators: [Validators.required, Validators.maxLength(64)],
@@ -83,7 +84,6 @@ export class UserComponent implements OnDestroy {
     return this.aboutMeFG.getRawValue();
   }
 
-  // TODO: disable formControl by script
   cache = structuredClone(this.fv);
   editing1 = false;
   editing2 = false;

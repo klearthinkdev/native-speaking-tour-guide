@@ -22,8 +22,8 @@ const DATE_FORMATS: MatDateFormats = {
     monthYearLabel: 'yyyy MMM',
     dateA11yLabel: 'yyyy-MM-dd',
     monthYearA11yLabel: 'yyyy MMM',
-    timeInput: 'HH:mm',
-    timeOptionLabel: 'HH:mm',
+    timeInput: 'HH:mm a',
+    timeOptionLabel: 'HH:mm a',
   },
 };
 
