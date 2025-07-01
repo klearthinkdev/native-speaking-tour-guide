@@ -1,5 +1,5 @@
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import { I18nSelectPipe } from '@angular/common';
+import { AsyncPipe, I18nSelectPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -11,10 +11,12 @@ import {
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
 import { Subject, takeUntil, tap } from 'rxjs';
@@ -24,19 +26,23 @@ import {
 } from '../../shared/components/rlang.picker/rlang.models';
 import { RLangPicker } from '../../shared/components/rlang.picker/rlang.picker';
 import { ALL_RLANG_NAME_MAP, RLang } from '../../shared/enums/r-lang.enum';
+import { BreakpointsService } from '../../shared/services/breakpoints.service';
 import { StartAMeetingFCs } from './start-a-meeting.models';
 
 @Component({
   selector: 'app-start-a-meeting.component',
   imports: [
+    AsyncPipe,
     DragDropModule,
     I18nSelectPipe,
     ReactiveFormsModule,
     MatButtonModule,
+    MatDatepickerModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatListModule,
+    MatTimepickerModule,
     MatToolbarModule,
     RouterLink,
   ],
@@ -91,6 +97,7 @@ export class StartAMeetingComponent implements OnDestroy {
     return new Date(year, month, date);
   }
 
+  // TODO: disable formControl by script
   cache = structuredClone(this.fv);
   editing1 = false;
   editing2 = false;
@@ -98,6 +105,7 @@ export class StartAMeetingComponent implements OnDestroy {
   constructor(
     private _cdr: ChangeDetectorRef,
     private _matBottomSheet: MatBottomSheet,
+    public b: BreakpointsService,
   ) {}
 
   startEditing1(): void {

@@ -152,6 +152,13 @@
   dependencies:
     tslib "^2.3.0"
 
+"@angular/material-date-fns-adapter@20.0.3":
+  version "20.0.3"
+  resolved "https://registry.yarnpkg.com/@angular/material-date-fns-adapter/-/material-date-fns-adapter-20.0.3.tgz#49868f172cf127958690674f1a57cc99cc92cff1"
+  integrity sha512-/s4qbEWaazFMi+29OLiJt2PB9kxwg4CrqsWh6MoJ8Ai9inH28+xG8tJeoOGPAoH0fshZ9tX4Wasx0VQj/wD61Q==
+  dependencies:
+    tslib "^2.3.0"
+
 "@angular/material@20.0.3":
   version "20.0.3"
   resolved "https://registry.yarnpkg.com/@angular/material/-/material-20.0.3.tgz#8ff22bf0870868c0170d290538c99087b8f1cb0d"
@@ -1882,6 +1889,11 @@ custom-event@~1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/custom-event/-/custom-event-1.0.1.tgz#5d02a46850adf1b4a317946a3928fccb5bfd0425"
   integrity sha512-GAj5FOq0Hd+RsCGVJxZuKaIDXDf3h6GQoNEjFgbLLI/trgtavwUbSnZ5pVfg27DVCaWjIohryS0JFwIJyT2cMg==
+
+date-fns@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-4.1.0.tgz#64b3d83fff5aa80438f5b1a633c2e83b8a1c2d14"
+  integrity sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==
 
 date-format@^4.0.14:
   version "4.0.14"

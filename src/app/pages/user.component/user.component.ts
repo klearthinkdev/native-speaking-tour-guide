@@ -83,6 +83,7 @@ export class UserComponent implements OnDestroy {
     return this.aboutMeFG.getRawValue();
   }
 
+  // TODO: disable formControl by script
   cache = structuredClone(this.fv);
   editing1 = false;
   editing2 = false;
