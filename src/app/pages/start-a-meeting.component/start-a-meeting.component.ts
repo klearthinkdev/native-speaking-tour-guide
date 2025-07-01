@@ -1,5 +1,5 @@
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import { I18nSelectPipe, SlicePipe } from '@angular/common';
+import { I18nSelectPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -15,7 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
 import { Subject, takeUntil, tap } from 'rxjs';
 import {
@@ -24,63 +24,71 @@ import {
 } from '../../shared/components/rlang.picker/rlang.models';
 import { RLangPicker } from '../../shared/components/rlang.picker/rlang.picker';
 import { ALL_RLANG_NAME_MAP, RLang } from '../../shared/enums/r-lang.enum';
-import { UserFCs } from './user.models';
+import { StartAMeetingFCs } from './start-a-meeting.models';
 
 @Component({
-  selector: 'app-user',
+  selector: 'app-start-a-meeting.component',
   imports: [
     DragDropModule,
     I18nSelectPipe,
-    SlicePipe,
     ReactiveFormsModule,
     MatButtonModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatListModule,
-    MatTooltipModule,
+    MatToolbarModule,
     RouterLink,
   ],
-  templateUrl: './user.component.html',
-  styleUrl: './user.component.css',
+  templateUrl: './start-a-meeting.component.html',
+  styleUrl: './start-a-meeting.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserComponent implements OnDestroy {
-  // TODO: default nickname from AuthService ?
-  _code = 'ABCDE';
-  _user = 'ubestream999@ubestream.com';
-  _langs = [RLang.ZH, RLang.EN, RLang.JA];
+export class StartAMeetingComponent implements OnDestroy {
+  // TODO: default name  ?
+  _name = '我的會議';
+  _langs = [RLang.ZH];
 
   readonly allRLangNameMap = ALL_RLANG_NAME_MAP;
 
   private _destroy$ = new Subject<void>();
 
-  @ViewChild('nicknameInput') nicknameInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('nameInput') nameInput!: ElementRef<HTMLInputElement>;
 
-  fg = new FormGroup<UserFCs>({
-    aboutMe: new FormGroup({
-      nickname: new FormControl(this._user, {
+  fg = new FormGroup<StartAMeetingFCs>({
+    meeting: new FormGroup({
+      name: new FormControl(this._name, {
         nonNullable: true,
         validators: [Validators.required, Validators.maxLength(64)],
       }),
-      code: new FormControl(this._code, { nonNullable: true }),
+      endDatetime: new FormControl(this.now, {
+        validators: [Validators.required],
+      }),
     }),
     rlangs: new FormControl(this._langs, { nonNullable: true }),
   });
-  fcs: UserFCs = {
-    aboutMe: this.fg.controls['aboutMe'],
+  fcs: StartAMeetingFCs = {
+    meeting: this.fg.controls['meeting'],
     rlangs: this.fg.controls['rlangs'],
   };
   get fv() {
     return this.fg.getRawValue();
   }
-  aboutMeFG = this.fg.controls['aboutMe'];
-  aboutMeFCs = {
-    nickname: this.aboutMeFG.controls['nickname'],
-    code: this.aboutMeFG.controls['code'],
+  meetingFG = this.fcs.meeting;
+  meetingFCs = {
+    name: this.meetingFG.controls['name'],
+    endDatetime: this.meetingFG.controls['endDatetime'],
   };
-  get aboutMeFV() {
-    return this.aboutMeFG.getRawValue();
+  get meetingFV() {
+    return this.meetingFG.getRawValue();
+  }
+  get now(): Date {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth();
+    const date = today.getDate();
+
+    return new Date(year, month, date);
   }
 
   cache = structuredClone(this.fv);
@@ -95,25 +103,25 @@ export class UserComponent implements OnDestroy {
   startEditing1(): void {
     this.editing1 = true;
 
-    this.nicknameInput.nativeElement.select();
-    this.nicknameInput.nativeElement.focus();
+    this.nameInput.nativeElement.select();
+    this.nameInput.nativeElement.focus();
   }
 
   cancelEditing1(): void {
-    this.aboutMeFCs['nickname'].setValue(this.cache.aboutMe.nickname);
+    this.meetingFCs['name'].setValue(this.cache.meeting.name);
 
     this.editing1 = false;
   }
 
   onUpdate1(): void {
-    this.aboutMeFG.markAllAsTouched();
-    this.aboutMeFG.updateValueAndValidity();
+    this.meetingFG.markAllAsTouched();
+    this.meetingFG.updateValueAndValidity();
 
-    if (this.aboutMeFG.invalid) {
+    if (this.meetingFG.invalid) {
       return;
     }
 
-    this.cache.aboutMe = { ...this.aboutMeFV };
+    this.cache.meeting = { ...this.meetingFV };
 
     this.editing1 = false;
   }

@@ -30,6 +30,10 @@
 
   /* spacing */
   --spacing-100: 25rem; /* 400px */
+  --spacing-page-h: calc(100dvh - 56px);
+  --spacing-sm-page-h: calc(100dvh - 64px);
+  --spacing-picker-h: calc(100% - 56px);
+  --spacing-sm-picker-h: calc(100% - 64px);
 }
 
 /* You can add global styles to this file, and also import other style files */

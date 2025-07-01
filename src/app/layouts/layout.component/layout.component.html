@@ -4,6 +4,7 @@
       <mat-toolbar class="fixed sm:static">
         <div class="w-page flex items-center">
           <div class="flex w-full grow">
+            <!-- TODO: 在會議室 (/meeting) 時，隱藏選單 且不顯示 menu 按鈕 -->
             <button (click)="sidenav.toggle()" matIconButton type="button">
               <mat-icon>menu</mat-icon>
             </button>
@@ -102,7 +103,7 @@
           class="absolute right-0 bottom-0 left-0 z-10 mx-2 flex h-12 items-center px-2"
           title="發起會議"
         >
-          <button class="grow" matButton="filled" type="button">
+          <button class="grow" [routerLink]="['/start-a-meeting']" matButton="filled" type="button">
             <mat-icon>add</mat-icon>
 
             發起會議

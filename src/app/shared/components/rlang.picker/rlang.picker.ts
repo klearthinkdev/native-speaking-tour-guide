@@ -7,9 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule, MatSelectionList } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { ALL_RLANG_NAME_MAP, RLang } from '../../enums/r-lang.enum';
-import { BreakpointsService } from '../../services/breakpoints.service';
 import { RLangPickerData } from './rlang.models';
 
 @Component({
@@ -33,7 +32,6 @@ export class RLangPicker {
 
   @ViewChild('selectionList') selectionList!: MatSelectionList;
 
-  listHeight$: Observable<string> | undefined;
   itemList$ = new BehaviorSubject<Array<RLang>>([]);
 
   get itemList(): Array<RLang> {
@@ -50,12 +48,7 @@ export class RLangPicker {
   constructor(
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: RLangPickerData,
     private _bottomSheetRef: MatBottomSheetRef<RLangPicker>,
-    private _b: BreakpointsService,
   ) {
-    this.listHeight$ = this._b.queries$.pipe(
-      map((queries) => `calc(100% - ${queries.SM ? 64 : 56}px)`),
-    );
-
     const { minLength, maxLength } = this.data;
 
     if (minLength !== undefined && minLength > 0) {

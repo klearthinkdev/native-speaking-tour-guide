@@ -1,7 +1,7 @@
 <div class="grid h-page-h grid-cols-2 gap-4 sm:h-sm-page-h">
   <form class="col-span-2 flex flex-col gap-4 md:col-span-1" [formGroup]="fg">
     <div class="mt-4 flex items-center text-2xl">
-      <span class="grow"> 關於我 </span>
+      <span class="grow"> 會議資訊 </span>
 
       @if (!editing1) {
         <button
@@ -37,45 +37,30 @@
       }
     </div>
 
-    <div class="my-8 flex flex-col gap-4 lg:flex-row" [formGroup]="aboutMeFG">
-      <div class="grow-0">
-        <div
-          class="m-auto mb-2 flex h-15 w-15 items-center justify-center rounded-full bg-primary/15 text-2xl text-primary"
-        >
-          {{ cache.aboutMe.nickname | slice: 0 : 1 }}
-        </div>
+    <mat-form-field class="w-full">
+      <mat-label>會議名稱</mat-label>
+      <input
+        #nameInput
+        class="truncate"
+        [formControl]="meetingFCs['name']"
+        [readonly]="!editing1"
+        inputmode="text"
+        matInput
+        maxlength="64"
+        placeholder="輸入會議名稱"
+        required
+        type="text"
+      />
 
-        <div class="m-auto text-center">訪客</div>
-      </div>
+      @if (meetingFCs['name'].hasError('required')) {
+        <mat-error>請輸入會議名稱</mat-error>
+      }
+    </mat-form-field>
 
-      <div class="flex grow flex-col">
-        <!-- 顯示暱稱 -->
-        <mat-form-field class="w-full">
-          <mat-label>顯示暱稱</mat-label>
-          <input
-            #nicknameInput
-            class="truncate"
-            [formControl]="aboutMeFCs['nickname']"
-            [readonly]="!editing1"
-            inputmode="text"
-            matInput
-            maxlength="64"
-            placeholder="輸入顯示暱稱"
-            required
-            type="text"
-          />
-
-          <span class="mr-2" matSuffix> #{{ aboutMeFCs['code'].value }} </span>
-
-          @if (aboutMeFCs['nickname'].hasError('required')) {
-            <mat-error>請輸入顯示暱稱</mat-error>
-          }
-        </mat-form-field>
-      </div>
-    </div>
+    <!-- TODO: 會議時間 -->
 
     <div class="mt-4 flex items-center text-2xl">
-      <span class="grow"> 偏好語言 </span>
+      <span class="grow">支援語言</span>
 
       @if (!editing2) {
         <button
@@ -166,8 +151,8 @@
     <div class="flex">
       <span class="grow"></span>
 
-      <button [disabled]="fg.invalid" [routerLink]="['/']" matButton="filled" type="button">
-        返回首頁
+      <button [disabled]="fg.invalid" [routerLink]="['/meeting']" matButton="filled" type="button">
+        開始會議
       </button>
     </div>
   </form>
