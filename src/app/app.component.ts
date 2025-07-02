@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { environment } from '../environments/environment';
 import { Theme } from './shared/enums/theme.enum';
 import { BreakpointsService } from './shared/services/breakpoints.service';
+import { LangService } from './shared/services/lang.service';
 import { ThemeService } from './shared/services/theme.service';
 
 @Component({
@@ -17,9 +18,11 @@ export class AppComponent {
 
   constructor(
     private _b: BreakpointsService,
+    private _langService: LangService,
     private _th: ThemeService,
   ) {
     this._b.init();
+    this._langService.init();
     this._th.init();
   }
 

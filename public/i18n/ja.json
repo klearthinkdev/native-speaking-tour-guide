@@ -1,0 +1,20 @@
+{
+  "ACTION": {},
+  "ENUM": {
+    "API": {},
+    "SHARED": {
+      "THEME": {
+        "DARK": "暗く",
+        "LIGHT": "明るく",
+        "SYSTEM": "システム"
+      }
+    }
+  },
+  "MESSAGE": {},
+  "SITEMAP": {
+    "HOME": "ホームページ"
+  },
+  "PAGES": {},
+  "COMPONENTS": {},
+  "api": {}
+}

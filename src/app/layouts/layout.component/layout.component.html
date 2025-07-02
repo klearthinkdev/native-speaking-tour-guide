@@ -35,15 +35,17 @@
             [activated]="rla0.isActive"
             [routerLink]="['/']"
             [routerLinkActiveOptions]="{ exact: true }"
+            [title]="'SITEMAP.HOME' | translate"
             routerLinkActive
-            title="首頁"
           >
             <div class="flex items-center" matListItemTitle>
               <div class="flex h-10 w-10 shrink-0 items-center justify-center">
                 <mat-icon [class.text-primary]="rla0.isActive">home</mat-icon>
               </div>
 
-              <span [class.text-primary]="rla0.isActive" class="grow truncate"> 首頁 </span>
+              <span [class.text-primary]="rla0.isActive" class="grow truncate">
+                {{ 'SITEMAP.HOME' | translate }}
+              </span>
             </div>
           </mat-list-item>
 
@@ -83,7 +85,7 @@
           </mat-list-item>
 
           <!-- 語言 -->
-          <mat-list-item class="w-full px-2" title="語言">
+          <mat-list-item class="w-full px-2" [matMenuTriggerFor]="langMenu" title="語言">
             <div class="flex items-center" matListItemTitle>
               <div class="flex h-10 w-10 shrink-0 items-center justify-center">
                 <mat-icon>language</mat-icon>
@@ -138,3 +140,16 @@
     </mat-sidenav-container>
   </div>
 }
+
+<mat-menu #langMenu="matMenu">
+  @for (option of langOptionList; track $index) {
+    <button
+      [class.activated]="option.value === tr.currentLang"
+      (click)="onSelectLang(option.value)"
+      mat-menu-item
+      type="button"
+    >
+      {{ option.label }}
+    </button>
+  }
+</mat-menu>
