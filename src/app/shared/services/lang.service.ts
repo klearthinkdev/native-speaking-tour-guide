@@ -13,8 +13,8 @@ export class LangService {
   private _initialized = false;
 
   constructor(
-    private localeService: LocaleService,
-    private tr: TranslateService,
+    private _localeService: LocaleService,
+    private _tr: TranslateService,
   ) {}
 
   init(): void {
@@ -22,11 +22,11 @@ export class LangService {
       return;
     }
 
-    this.tr.onLangChange.pipe(distinctUntilChanged()).subscribe((e) => {
+    this._tr.onLangChange.pipe(distinctUntilChanged()).subscribe((e) => {
       if (this.validateLang(e.lang)) {
         this.saveLang(e.lang);
 
-        this.localeService.locale = LANG_LOCALE_MAP[e.lang] ?? this.localeService.defaultLocale;
+        this._localeService.locale = LANG_LOCALE_MAP[e.lang] ?? this._localeService.defaultLocale;
       }
     });
 
@@ -36,8 +36,8 @@ export class LangService {
       _lang = this._defaultLang;
     }
 
-    this.tr.setDefaultLang(_lang as string);
-    this.tr.use(_lang as string);
+    this._tr.setDefaultLang(_lang as string);
+    this._tr.use(_lang as string);
 
     this._initialized = true;
   }

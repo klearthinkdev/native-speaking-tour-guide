@@ -46,6 +46,7 @@ import { UserFCs } from './user.models';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserComponent implements OnDestroy {
+  // TODO: CanDeactivate 離開前提醒未儲存的變更
   // TODO: default nickname from AuthService ?
   _code = 'ABCDE';
   _user = 'ubestream999@ubestream.com';

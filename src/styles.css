@@ -103,3 +103,23 @@ mat-form-field .mdc-notched-outline > .mdc-notched-outline__leading {
 mat-form-field .mdc-notched-outline > .mdc-notched-outline__trailing {
   @apply rounded-tr-2xl rounded-br-2xl;
 }
+
+/* snack-bar */
+mat-snack-bar-container.info mat-icon {
+  @apply text-gray-400;
+}
+mat-snack-bar-container.info .mdc-linear-progress__bar-inner {
+  @apply border-gray-400;
+}
+mat-snack-bar-container.success mat-icon {
+  @apply text-green-400;
+}
+mat-snack-bar-container.success .mdc-linear-progress__bar-inner {
+  @apply border-green-400;
+}
+mat-snack-bar-container.error mat-icon {
+  @apply text-red-400;
+}
+mat-snack-bar-container.error .mdc-linear-progress__bar-inner {
+  @apply border-red-400;
+}

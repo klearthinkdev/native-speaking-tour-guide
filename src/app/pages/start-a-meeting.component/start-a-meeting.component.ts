@@ -58,6 +58,7 @@ import { StartAMeetingFCs } from './start-a-meeting.models';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StartAMeetingComponent implements OnDestroy {
+  // TODO: CanDeactivate 離開前提醒未儲存的變更
   // TODO: default name  ?
   _name = '我的會議';
   _langs = [RLang.ZH];
