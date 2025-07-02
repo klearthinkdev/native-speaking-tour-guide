@@ -90,7 +90,7 @@ export class SnackBarService {
   ): void {
     this.clear();
 
-    // this._ref?.dismiss();
+    this._ref?.dismiss();
 
     if (typeof data === 'string') {
       this.add(data, type, duration);
