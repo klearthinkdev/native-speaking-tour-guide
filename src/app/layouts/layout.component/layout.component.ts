@@ -9,6 +9,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LangSwitch } from '../../shared/components/lang.switch/lang.switch';
+import { ThemeSwitch } from '../../shared/components/theme.switch/theme.switch';
 import { Lang, LANG_OPTION_LIST } from '../../shared/enums/lang.enum';
 import { BreakpointsService } from '../../shared/services/breakpoints.service';
 
@@ -27,6 +29,8 @@ import { BreakpointsService } from '../../shared/services/breakpoints.service';
     RouterLinkActive,
     RouterOutlet,
     TranslateModule,
+    LangSwitch,
+    ThemeSwitch,
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',

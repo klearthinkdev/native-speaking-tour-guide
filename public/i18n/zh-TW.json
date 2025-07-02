@@ -15,6 +15,9 @@
     "HOME": "首頁"
   },
   "PAGES": {},
-  "COMPONENTS": {},
+  "COMPONENTS": {
+    "LANG_SWITCH": "語言",
+    "THEME_SWITCH": "外觀"
+  },
   "api": {}
 }

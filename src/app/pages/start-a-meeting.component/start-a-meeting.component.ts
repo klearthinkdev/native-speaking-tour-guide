@@ -36,7 +36,7 @@ import { BreakpointsService } from '../../shared/services/breakpoints.service';
 import { StartAMeetingFCs } from './start-a-meeting.models';
 
 @Component({
-  selector: 'app-start-a-meeting.component',
+  selector: 'app-start-a-meeting',
   imports: [
     AsyncPipe,
     DragDropModule,

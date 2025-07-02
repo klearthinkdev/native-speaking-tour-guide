@@ -15,6 +15,9 @@
     "HOME": "Homepage"
   },
   "PAGES": {},
-  "COMPONENTS": {},
+  "COMPONENTS": {
+    "LANG_SWITCH": "Language",
+    "THEME_SWITCH": "Theme"
+  },
   "api": {}
 }

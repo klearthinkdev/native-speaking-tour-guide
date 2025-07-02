@@ -12,7 +12,7 @@ import { ALL_RLANG_NAME_MAP, RLang } from '../../enums/r-lang.enum';
 import { RLangPickerData } from './rlang.models';
 
 @Component({
-  selector: 'app-rlang.picker',
+  selector: 'app-rlang-picker',
   imports: [
     AsyncPipe,
     I18nSelectPipe,

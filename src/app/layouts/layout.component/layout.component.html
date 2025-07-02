@@ -3,7 +3,7 @@
     <header class="z-10">
       <mat-toolbar class="fixed sm:static">
         <div class="w-page flex items-center">
-          <div class="flex w-full grow">
+          <div class="flex w-full">
             <button (click)="sidenav.toggle()" matIconButton type="button">
               <mat-icon>menu</mat-icon>
             </button>
@@ -11,7 +11,14 @@
             <span class="grow"></span>
           </div>
 
-          <div class="flex w-full grow"></div>
+          <span class="grow"></span>
+
+          <div class="flex w-full">
+            <span class="grow"></span>
+
+            <app-theme-switch class="mr-2"></app-theme-switch>
+            <app-lang-switch></app-lang-switch>
+          </div>
         </div>
       </mat-toolbar>
     </header>
@@ -64,38 +71,6 @@
               </div>
 
               <span [class.text-primary]="rla1.isActive" class="grow truncate"> 個人頁面 </span>
-            </div>
-          </mat-list-item>
-
-          <mat-divider class="mx-2 opacity-50"></mat-divider>
-
-          <!-- 外觀 -->
-          <mat-list-item class="w-full px-2" title="外觀">
-            <div class="flex items-center" matListItemTitle>
-              <div class="flex h-10 w-10 shrink-0 items-center justify-center">
-                <mat-icon>contrast</mat-icon>
-              </div>
-
-              <span class="grow"> 外觀 </span>
-
-              <div matListItemMeta>
-                <mat-icon>chevron_right</mat-icon>
-              </div>
-            </div>
-          </mat-list-item>
-
-          <!-- 語言 -->
-          <mat-list-item class="w-full px-2" [matMenuTriggerFor]="langMenu" title="語言">
-            <div class="flex items-center" matListItemTitle>
-              <div class="flex h-10 w-10 shrink-0 items-center justify-center">
-                <mat-icon>language</mat-icon>
-              </div>
-
-              <span class="grow truncate"> 語言 </span>
-
-              <div matListItemMeta>
-                <mat-icon>chevron_right</mat-icon>
-              </div>
             </div>
           </mat-list-item>
 

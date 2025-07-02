@@ -15,6 +15,9 @@
     "HOME": "ホームページ"
   },
   "PAGES": {},
-  "COMPONENTS": {},
+  "COMPONENTS": {
+    "LANG_SWITCH": "言語",
+    "THEME_SWITCH": "テーマ"
+  },
   "api": {}
 }
