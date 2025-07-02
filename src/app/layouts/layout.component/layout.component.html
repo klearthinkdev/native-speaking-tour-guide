@@ -4,7 +4,6 @@
       <mat-toolbar class="fixed sm:static">
         <div class="w-page flex items-center">
           <div class="flex w-full grow">
-            <!-- TODO: 在會議室 (/meeting) 時，隱藏選單 且不顯示 menu 按鈕 -->
             <button (click)="sidenav.toggle()" matIconButton type="button">
               <mat-icon>menu</mat-icon>
             </button>
@@ -59,7 +58,7 @@
           >
             <div class="flex items-center" matListItemTitle>
               <div class="flex h-10 w-10 shrink-0 items-center justify-center">
-                <mat-icon [class.text-primary]="rla1.isActive">person</mat-icon>
+                <mat-icon [class.text-primary]="rla1.isActive">face</mat-icon>
               </div>
 
               <span [class.text-primary]="rla1.isActive" class="grow truncate"> 個人頁面 </span>
@@ -95,6 +94,26 @@
               <div matListItemMeta>
                 <mat-icon>chevron_right</mat-icon>
               </div>
+            </div>
+          </mat-list-item>
+
+          <mat-divider class="mx-2 opacity-50"></mat-divider>
+
+          <!-- 會員登入 -->
+          <mat-list-item
+            #rla2="routerLinkActive"
+            class="w-full px-2"
+            [activated]="rla2.isActive"
+            [routerLink]="['/login']"
+            routerLinkActive
+            title="會員登入"
+          >
+            <div class="flex items-center" matListItemTitle>
+              <div class="flex h-10 w-10 shrink-0 items-center justify-center">
+                <mat-icon [class.text-primary]="rla2.isActive">person</mat-icon>
+              </div>
+
+              <span [class.text-primary]="rla2.isActive" class="grow truncate"> 會員登入 </span>
             </div>
           </mat-list-item>
         </mat-nav-list>
