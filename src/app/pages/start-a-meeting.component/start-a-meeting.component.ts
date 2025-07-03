@@ -25,6 +25,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
+import { addHours } from 'date-fns';
 import { Subject, takeUntil, tap } from 'rxjs';
 import {
   RLangPickerData,
@@ -33,6 +34,8 @@ import {
 import { RLangPicker } from '../../shared/components/rlang.picker/rlang.picker';
 import { ALL_RLANG_NAME_MAP, RLang } from '../../shared/enums/r-lang.enum';
 import { BreakpointsService } from '../../shared/services/breakpoints.service';
+import { getNextHalfHour } from '../../shared/services/date-utils.service';
+import { ValidatorsExtra } from '../../shared/validators/validators-extra';
 import { StartAMeetingFCs } from './start-a-meeting.models';
 
 @Component({
@@ -75,6 +78,9 @@ export class StartAMeetingComponent implements OnDestroy {
         nonNullable: true,
         validators: [Validators.required, Validators.maxLength(64)],
       }),
+      endDatetime: new FormControl(addHours(getNextHalfHour(), 1), {
+        validators: [Validators.required, ValidatorsExtra.futureDate],
+      }),
     }),
     rlangs: new FormControl(this._langs, { nonNullable: true }),
   });
@@ -88,11 +94,11 @@ export class StartAMeetingComponent implements OnDestroy {
   meetingFG = this.fcs.meeting;
   meetingFCs = {
     name: this.meetingFG.controls['name'],
+    endDatetime: this.meetingFG.controls['endDatetime'],
   };
   get meetingFV() {
     return this.meetingFG.getRawValue();
   }
-  endDatetime: Date | null = this.now;
   get now(): Date {
     const today = new Date();
     const year = today.getFullYear();
@@ -103,7 +109,6 @@ export class StartAMeetingComponent implements OnDestroy {
   }
 
   cache = structuredClone(this.fv);
-  endDatetimeCache = this.endDatetime;
   editing1 = false;
   editing2 = false;
 
@@ -121,8 +126,7 @@ export class StartAMeetingComponent implements OnDestroy {
   }
 
   cancelEditing1(): void {
-    this.meetingFCs['name'].setValue(this.cache.meeting.name);
-    this.endDatetime = this.endDatetimeCache;
+    this.meetingFG.setValue(this.cache.meeting);
 
     this.editing1 = false;
   }
@@ -131,12 +135,11 @@ export class StartAMeetingComponent implements OnDestroy {
     this.meetingFG.markAllAsTouched();
     this.meetingFG.updateValueAndValidity();
 
-    if (this.meetingFG.invalid || this.endDatetime === null) {
+    if (this.meetingFG.invalid) {
       return;
     }
 
     this.cache.meeting = { ...this.meetingFV };
-    this.endDatetimeCache = this.endDatetime;
 
     this.editing1 = false;
   }

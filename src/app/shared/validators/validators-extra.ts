@@ -1,7 +1,12 @@
-import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { futureDateValidator } from './future-date.validator';
 import { passwordMatchValidator } from './password-match.validator';
 
 export class ValidatorsExtra {
+  static futureDate(control: AbstractControl): ValidationErrors | null {
+    return futureDateValidator(control);
+  }
+
   static passwordMatch(paths: [string, string]): ValidatorFn {
     return passwordMatchValidator(paths);
   }

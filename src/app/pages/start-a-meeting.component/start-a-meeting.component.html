@@ -62,18 +62,14 @@
         <mat-form-field class="w-full">
           <mat-label>結束日期</mat-label>
           <input
+            [formControl]="meetingFCs['endDatetime']"
             [matDatepicker]="endDatepicker"
-            [ngModelOptions]="{ standalone: true }"
             [readonly]="!editing1"
-            [(ngModel)]="endDatetime"
+            [(ngModel)]="meetingFCs['endDatetime'].value"
             matInput
             placeholder="選擇結束日期"
             required
           />
-
-          @if (endDatetime === null) {
-            <mat-error>請選擇結束日期</mat-error>
-          }
 
           <mat-datepicker #endDatepicker [disabled]="!editing1" [touchUi]="!queries.SM" />
 
@@ -85,21 +81,27 @@
           />
         </mat-form-field>
 
+        <!-- TODO: 提示會議時間長度 -->
+
         <mat-form-field class="w-full">
           <mat-label>結束時間</mat-label>
           <input
             [disabled]="!editing1"
+            [formControl]="meetingFCs['endDatetime']"
             [matTimepicker]="endTimepicker"
-            [ngModelOptions]="{ standalone: true }"
             [readonly]="!editing1"
-            [(ngModel)]="endDatetime"
+            [(ngModel)]="meetingFCs['endDatetime'].value"
             matInput
             placeholder="選擇結束時間"
             required
           />
 
-          @if (endDatetime === null) {
-            <mat-error>請選擇結束時間</mat-error>
+          @if (meetingFCs['endDatetime'].hasError('required')) {
+            <mat-error>請選擇結束日期和時間</mat-error>
+          } @else if (meetingFCs['endDatetime'].hasError('invalidDate')) {
+            <mat-error>結束日期或時間格式有誤</mat-error>
+          } @else if (meetingFCs['endDatetime'].hasError('futureDate')) {
+            <mat-error>必須晚於現在時間</mat-error>
           }
 
           <mat-timepicker #endTimepicker />
