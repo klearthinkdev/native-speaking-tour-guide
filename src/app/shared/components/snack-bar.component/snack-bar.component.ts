@@ -1,4 +1,4 @@
-import { Component, Inject, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, NgZone, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
@@ -10,6 +10,7 @@ import { Snack } from './snack-bar.models';
   imports: [MatIconModule, MatProgressBarModule],
   templateUrl: './snack-bar.component.html',
   styleUrl: './snack-bar.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SnackBarComponent implements OnInit {
   private frameId: number | null = null;
@@ -20,7 +21,7 @@ export class SnackBarComponent implements OnInit {
 
   constructor(
     @Inject(MAT_SNACK_BAR_DATA) public data: Snack,
-    private ngZone: NgZone,
+    private _ngZone: NgZone,
   ) {
     this.fontIcon = (this.data.type && SNACK_TYPE_ICON_MAP[this.data.type]) ?? '';
   }
@@ -37,7 +38,7 @@ export class SnackBarComponent implements OnInit {
       cancelAnimationFrame(this.frameId);
     }
 
-    this.ngZone.runOutsideAngular(() => {
+    this._ngZone.runOutsideAngular(() => {
       const animate = (currentTime: DOMHighResTimeStamp) => {
         if (!this.startTime) {
           this.startTime = currentTime;
@@ -55,7 +56,7 @@ export class SnackBarComponent implements OnInit {
           }
         }
 
-        this.ngZone.run(() => {
+        this._ngZone.run(() => {
           this.progress = newProgress;
         });
 

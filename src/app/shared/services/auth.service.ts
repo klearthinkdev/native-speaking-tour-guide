@@ -4,6 +4,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, distinctUntilChanged, map, Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Payload } from '../../api/models/user/jwt.models';
+import { ChatSettingsService } from '../components/chat-settings.dialog/chat-settings.service';
 import { tokenGetter, tokenSetter } from './token-accessors';
 
 @Injectable({
@@ -13,7 +14,7 @@ export class AuthService {
   tokenExpire$ = new Subject<void>();
 
   payload$ = new BehaviorSubject<Payload | undefined>(undefined);
-  loggedIn$ = new BehaviorSubject<boolean>(this.validateToken());
+  loggedIn$;
 
   account$ = this.payload$.pipe(
     map((payload) => payload?.sub),
@@ -44,9 +45,12 @@ export class AuthService {
   }
 
   constructor(
-    private _router: Router,
+    private _chatSettingsService: ChatSettingsService,
     private _jwtHelperService: JwtHelperService,
-  ) {}
+    private _router: Router,
+  ) {
+    this.loggedIn$ = new BehaviorSubject<boolean>(this.validateToken());
+  }
 
   validateToken(): boolean {
     const token = this.token;
@@ -81,6 +85,8 @@ export class AuthService {
 
     this.payload = undefined;
     this.loggedIn = false;
+
+    this._chatSettingsService.resetUser();
 
     this._router.navigate([command]);
   }

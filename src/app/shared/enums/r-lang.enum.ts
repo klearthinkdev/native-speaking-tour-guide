@@ -111,3 +111,15 @@ export const ALL_RLANG_OPTION_LIST: OptionList<RLang> = RLANG_INFO_LIST.map(
 );
 
 export const ALL_RLANG_NAME_MAP = i18nSelectMapGenerator(ALL_RLANG_OPTION_LIST, 'value', 'label');
+
+// https://r12a.github.io/app-subtags/
+export const NAVIGATOR_LANGUAGE_RLANG_MAP: { [key: string]: RLang } = {
+  zh: RLang.ZH,
+  'zh-CN': RLang.ZH,
+  'zh-TW': RLang.ZH,
+  'zh-HK': RLang.ZH,
+  'zh-SG': RLang.ZH,
+  ja: RLang.JA,
+  'ja-JP': RLang.JA,
+  // TODO: navigator.language -> rlang mapping
+};

@@ -3,6 +3,15 @@
   "ENUM": {
     "API": {},
     "SHARED": {
+      "MESSAGE_DISPLAY": {
+        "BOTH": "同時顯示",
+        "TRANSCRIPTION": "原文",
+        "TRANSLATION": "譯文"
+      },
+      "MESSAGE_ORDER": {
+        "ASC": "底部",
+        "DESC": "頂端"
+      },
       "THEME": {
         "DARK": "深色",
         "LIGHT": "淺色",

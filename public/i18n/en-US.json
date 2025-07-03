@@ -3,6 +3,15 @@
   "ENUM": {
     "API": {},
     "SHARED": {
+      "MESSAGE_DISPLAY": {
+        "BOTH": "Both",
+        "TRANSCRIPTION": "Original",
+        "TRANSLATION": "Translation"
+      },
+      "MESSAGE_ORDER": {
+        "ASC": "Bottom",
+        "DESC": "Top"
+      },
       "THEME": {
         "DARK": "Dark",
         "LIGHT": "Light",
@@ -19,5 +28,47 @@
     "LANG_SWITCH": "Language",
     "THEME_SWITCH": "Theme"
   },
-  "api": {}
+  "api": {
+    "error": "An unexpected error occurred. Please try again later.",
+    "expiration": "The login authentication has expired. Please log in again.",
+    "success": "Success",
+    "no_server_available": "No servers are available at the moment.",
+    "login": {
+      "success": "Login successful.",
+      "username_required": "Account is a required field.",
+      "password_required": "Account is a required field.",
+      "failure": "Incorrect account or password.",
+      "email.verify.done": "Email verification successful, welcome to log in.",
+      "email.verify.expire": "The verification link has expired, please register again.",
+      "email.verify.failure": "Email verification failed, please register again.",
+      "email.verify.undone": "Please verify your email or register again.",
+      "sms.verify.done": "SMS verification successful, welcome to log in.",
+      "sms.verify.undone": "Please check the SMS on your phone.",
+      "sms.verify.failure": "SMS verification failed, please check the SMS on your phone or register again."
+    },
+    "register": {
+      "email.success": "A verification email has been sent to your email address.",
+      "sms.success": "A verification SMS has been sent to your mobile phone number.",
+      "username_required": "Account is a required field.",
+      "phone_required": "Mobile phone number is a required field.",
+      "username_max_length": "Account has a maximum length of 50 characters.",
+      "email_pattern": "Incorrect email format.",
+      "username_unique": "This account has already been registered.",
+      "phone_unique": "This mobile phone number has already been registered.",
+      "password_required": "Password is a required field.",
+      "password_min_length": "Password must be at least 8 characters long.",
+      "password_max_length": "Password has a maximum length of 50 characters."
+    },
+    "business": {
+      "member": {
+        "not_exists": "Account does not exist."
+      }
+    },
+    "change": {
+      "password": {
+        "not_equals": "Current password is incorrect.",
+        "failure": "Failed to change password."
+      }
+    }
+  }
 }

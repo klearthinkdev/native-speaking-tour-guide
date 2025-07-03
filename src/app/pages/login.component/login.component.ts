@@ -120,8 +120,6 @@ export class LoginComponent implements OnDestroy {
   }
 
   onSkipLogin(): void {
-    // TODO
-
     this._router.navigate(['/']);
   }
 

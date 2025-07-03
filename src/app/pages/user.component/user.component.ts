@@ -1,5 +1,5 @@
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import { I18nSelectPipe, SlicePipe } from '@angular/common';
+import { AsyncPipe, I18nSelectPipe, SlicePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -18,18 +18,21 @@ import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import { Subject, takeUntil, tap } from 'rxjs';
+import { ChatSettingsService } from '../../shared/components/chat-settings.dialog/chat-settings.service';
 import {
   RLangPickerData,
   RLangPickerResult,
 } from '../../shared/components/rlang.picker/rlang.models';
 import { RLangPicker } from '../../shared/components/rlang.picker/rlang.picker';
 import { ALL_RLANG_NAME_MAP, RLang } from '../../shared/enums/r-lang.enum';
+import { AuthService } from '../../shared/services/auth.service';
 import { UserFCs } from './user.models';
 
 @Component({
   selector: 'app-user',
   imports: [
     DragDropModule,
+    AsyncPipe,
     I18nSelectPipe,
     SlicePipe,
     ReactiveFormsModule,
@@ -47,11 +50,9 @@ import { UserFCs } from './user.models';
 })
 export class UserComponent implements OnDestroy {
   // TODO: CanDeactivate 離開前提醒未儲存的變更
-  // TODO: default nickname from AuthService ?
-  _code = 'ABCDE';
-  _user = 'ubestream999@ubestream.com';
-  _langs = [RLang.ZH, RLang.EN, RLang.JA];
 
+  readonly loggedIn$;
+  readonly isHost$;
   readonly allRLangNameMap = ALL_RLANG_NAME_MAP;
 
   private _destroy$ = new Subject<void>();
@@ -60,14 +61,13 @@ export class UserComponent implements OnDestroy {
 
   fg = new FormGroup<UserFCs>({
     aboutMe: new FormGroup({
-      // TODO: 以台灣特有種的英文名稱作為預設暱稱
-      nickname: new FormControl(this._user, {
+      nickname: new FormControl('', {
         nonNullable: true,
         validators: [Validators.required, Validators.maxLength(64)],
       }),
-      code: new FormControl(this._code, { nonNullable: true }),
+      code: new FormControl('', { nonNullable: true }),
     }),
-    rlangs: new FormControl(this._langs, { nonNullable: true }),
+    rlangs: new FormControl([], { nonNullable: true }),
   });
   fcs: UserFCs = {
     aboutMe: this.fg.controls['aboutMe'],
@@ -90,9 +90,19 @@ export class UserComponent implements OnDestroy {
   editing2 = false;
 
   constructor(
+    private _authService: AuthService,
     private _cdr: ChangeDetectorRef,
+    private _chatSettingsService: ChatSettingsService,
     private _matBottomSheet: MatBottomSheet,
-  ) {}
+  ) {
+    this.loggedIn$ = this._authService.loggedIn$;
+    this.isHost$ = this._authService.isHost$;
+
+    const { nickname, code, rlangs } = this._chatSettingsService.settings;
+
+    this.fg.patchValue({ aboutMe: { nickname, code }, rlangs });
+    this.cache = structuredClone(this.fv);
+  }
 
   startEditing1(): void {
     this.editing1 = true;
@@ -116,6 +126,10 @@ export class UserComponent implements OnDestroy {
     }
 
     this.cache.aboutMe = { ...this.aboutMeFV };
+    this._chatSettingsService.settings = {
+      ...this._chatSettingsService.settings,
+      ...this.aboutMeFV,
+    };
 
     this.editing1 = false;
   }
@@ -139,6 +153,10 @@ export class UserComponent implements OnDestroy {
     }
 
     this.cache.rlangs = [...this.fv.rlangs];
+    this._chatSettingsService.settings = {
+      ...this._chatSettingsService.settings,
+      rlangs: [...this.fv.rlangs],
+    };
 
     this.editing2 = false;
   }

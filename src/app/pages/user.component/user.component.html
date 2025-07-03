@@ -45,7 +45,12 @@
           {{ cache.aboutMe.nickname | slice: 0 : 1 }}
         </div>
 
-        <div class="m-auto text-center">訪客</div>
+        <div class="m-auto text-center">
+          {{ (loggedIn$ | async) ? '會員' : '訪客' }}
+          @if (isHost$ | async) {
+            <span>(主持人)</span>
+          }
+        </div>
       </div>
 
       <div class="flex grow flex-col">

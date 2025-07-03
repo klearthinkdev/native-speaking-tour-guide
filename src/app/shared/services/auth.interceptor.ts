@@ -1,4 +1,5 @@
 import {
+  HttpErrorResponse,
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
@@ -7,14 +8,20 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { map, Observable, of, switchMap } from 'rxjs';
+import { catchError, EMPTY, map, Observable, of, switchMap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { BaseAPICode } from '../../api/enums/base-api-code.enum';
 import { BaseAPIResModel } from '../../api/models/base-api.models';
+import { AuthService } from './auth.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private tr: TranslateService) {}
+  constructor(
+    private _authService: AuthService,
+    private _tr: TranslateService,
+  ) {}
 
   intercept(
     req: HttpRequest<BaseAPIResModel<unknown>>,
@@ -25,6 +32,8 @@ export class AuthInterceptor implements HttpInterceptor {
         if (res instanceof HttpResponse) {
           if (req.url.startsWith(environment.baseApiUrl)) {
             if ((res.body as BaseAPIResModel<unknown>).code === BaseAPICode.Forbidden) {
+              this._authService.tokenExpire$.next();
+
               // TODO: refresh token on BaseAPIResModel code 403
             }
 
@@ -33,7 +42,7 @@ export class AuthInterceptor implements HttpInterceptor {
             console.log(res.status, res.body);
 
             return typeof res.body?.msg_key === 'string' && res.body.msg_key.length
-              ? this.tr
+              ? this._tr
                   .get(res.body.msg_key)
                   .pipe(map((msg) => res.clone({ body: { ...res.body, msg } })))
               : of(res);
@@ -41,6 +50,25 @@ export class AuthInterceptor implements HttpInterceptor {
         }
 
         return of(res);
+      }),
+      catchError((err) => {
+        console.error(err);
+
+        let code = BaseAPICode.InternalServerError;
+        let msg_key = 'api.error';
+
+        if (err instanceof HttpErrorResponse && err.status === 403) {
+          code = BaseAPICode.Forbidden;
+          msg_key = 'api.expiration';
+
+          this._authService.tokenExpire$.next();
+
+          return EMPTY;
+        }
+
+        return this._tr
+          .get(msg_key)
+          .pipe(switchMap((msg) => throwError(() => ({ code, msg, msg_key, data: null }))));
       }),
       // TODO: handel code 403 in BaseAPIResModel
       // switchMap((res) => {
