@@ -15,7 +15,7 @@ export class AuthService {
   payload$ = new BehaviorSubject<Payload | undefined>(undefined);
   loggedIn$ = new BehaviorSubject<boolean>(this.validateToken());
 
-  user$ = this.payload$.pipe(
+  account$ = this.payload$.pipe(
     map((payload) => payload?.sub),
     distinctUntilChanged(),
   );

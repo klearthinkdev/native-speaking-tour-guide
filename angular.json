@@ -58,7 +58,7 @@
             ]
           },
           "configurations": {
-            "production": {
+            "prod": {
               "budgets": [
                 {
                   "type": "initial",
@@ -106,13 +106,13 @@
               "sourceMap": true
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "prod"
         },
         "serve": {
           "builder": "@angular/build:dev-server",
           "configurations": {
-            "production": {
-              "buildTarget": "native-speaking-tour-guide:build:production"
+            "prod": {
+              "buildTarget": "native-speaking-tour-guide:build:prod"
             },
             "dev": {
               "buildTarget": "native-speaking-tour-guide:build:dev"
@@ -121,10 +121,7 @@
               "buildTarget": "native-speaking-tour-guide:build:local"
             }
           },
-          "defaultConfiguration": "local",
-          "options": {
-            "proxyConfig": "proxy.config.js"
-          }
+          "defaultConfiguration": "local"
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"

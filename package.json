@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --configuration local --proxy-config proxy/proxy.config.local.js",
+    "start:dev": "ng serve --configuration dev --proxy-config proxy/proxy.config.dev.js",
+    "start:prod": "ng serve --configuration prod --proxy-config proxy/proxy.config.prod.js",
     "build": "ng build",
     "build:dev": "ng build --configuration dev",
     "watch": "ng build --watch --configuration local",

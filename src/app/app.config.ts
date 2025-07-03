@@ -5,7 +5,6 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZoneChangeDetection,
 } from '@angular/core';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
 import { API_PROVIDERS } from './api/api-providers';
 import { routes } from './app.routes';
@@ -22,7 +21,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptorsFromDi()),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     importProvidersFrom([AppJwtModule, AppTranslateModule]),
-    provideAnimationsAsync(),
     ...MAT_PROVIDERS,
     ...API_PROVIDERS,
   ],

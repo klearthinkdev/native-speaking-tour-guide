@@ -7,9 +7,7 @@ export const environment = {
   mock: false,
   version: '0',
 
-  // hostCompanyId: 0 /* FOR LOCAL API */,
-  hostCompanyId: 11 /* FOR DEV API */,
-  // hostCompanyId: 25 /* FOR PROD API */,
+  hostCompanyId: 0,
   baseApiUrl: `/api`,
   allowedDomains: ['/api'],
   disallowedRoutes: ['/api/user/login'],
