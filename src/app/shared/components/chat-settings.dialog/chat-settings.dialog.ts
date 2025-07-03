@@ -7,4 +7,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './chat-settings.dialog.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatSettingsDialog {}
+export class ChatSettingsDialog {
+  // TODO: ChatSettingsDialog
+}

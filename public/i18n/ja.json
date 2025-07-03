@@ -29,46 +29,45 @@
     "THEME_SWITCH": "テーマ"
   },
   "api": {
+    "business": {
+      "member.not_exists": "アカウントが存在しません。"
+    },
+    "change": {
+      "password.failure": "パスワードの変更に失敗しました。",
+      "password.not_equals": "現在のパスワードが間違っています。"
+    },
     "error": "予期せぬエラーが発生しました。しばらくしてからう一度お試しください。",
     "expiration": "ログイン認証の有効期限が切れています。再度ログインしてください。",
-    "success": "成功",
-    "no_server_available": "現在、利用可能なサーバーはありません。",
     "login": {
-      "success": "ログインしました。",
-      "username_required": "アカウントは入力必須項目です。",
-      "password_required": "パスワードは入力必須項目です。",
-      "failure": "アカウントまたはパスワードが間違っています。",
       "email.verify.done": "メールアドレスの認証が完了しました。ログインしてご利用ください。",
       "email.verify.expire": "認証リンクの有効期限が切れました。再度ご登録ください。",
       "email.verify.failure": "メールアドレスの認証に失敗しました。再度ご登録ください。",
       "email.verify.undone": "メール認証を行うか、再度登録してください。",
+      "failure": "アカウントまたはパスワードが間違っています。",
+      "password_required": "パスワードは入力必須項目です。",
       "sms.verify.done": "SMS認証が完了しました。ログインしてご利用ください。",
+      "sms.verify.failure": "SMS認証に失敗しました。お使いの携帯電話のSMSをご確認いただくか、再度ご登録ください。",
       "sms.verify.undone": "お使いの携帯電話のSMSをご確認ください。",
-      "sms.verify.failure": "SMS認証に失敗しました。お使いの携帯電話のSMSをご確認いただくか、再度ご登録ください。"
+      "success": "ログインしました。",
+      "username_required": "アカウントは入力必須項目です。"
     },
+    "no_server_available": "現在、利用可能なサーバーはありません。",
     "register": {
       "email.success": "ご登録のメールアドレスに認証メールを送信しました。",
-      "sms.success": "ご登録の携帯電話番号に認証SMSを送信しました。",
-      "username_required": "アカウントは入力必須項目です。",
-      "phone_required": "携帯電話番号は入力必須項目です。",
-      "username_max_length": "アカウントは最大英数字50桁までです。",
       "email_pattern": "無効なメールアドレス形式。",
-      "username_unique": "このアカウントは既に登録されています。",
-      "phone_unique": "この携帯電話番号は既に登録されています。",
-      "password_required": "パスワードは入力必須項目です。",
+      "password_max_length": "パスワードは最大英数字50桁までです。",
       "password_min_length": "パスワードは英数字8桁以上が必要です。",
-      "password_max_length": "パスワードは最大英数字50桁までです。"
+      "password_required": "パスワードは入力必須項目です。",
+      "phone_required": "携帯電話番号は入力必須項目です。",
+      "phone_unique": "この携帯電話番号は既に登録されています。",
+      "sms.success": "ご登録の携帯電話番号に認証SMSを送信しました。",
+      "username_max_length": "アカウントは最大英数字50桁までです。",
+      "username_required": "アカウントは入力必須項目です。",
+      "username_unique": "このアカウントは既に登録されています。"
     },
-    "business": {
-      "member": {
-        "not_exists": "アカウントが存在しません。"
-      }
+    "reserve": {
+      "chat_record_exceed": "TODO"
     },
-    "change": {
-      "password": {
-        "not_equals": "現在のパスワードが間違っています。",
-        "failure": "パスワードの変更に失敗しました。"
-      }
-    }
+    "success": "成功"
   }
 }

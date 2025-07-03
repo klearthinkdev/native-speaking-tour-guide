@@ -156,7 +156,7 @@
             <div class="flex items-center" matListItemTitle>
               <button
                 [class.hidden]="!editing2"
-                class="mr-2 rounded-full shadow-none not-disabled:bg-error not-disabled:text-white"
+                class="not-disabled:bg-error mr-2 rounded-full shadow-none not-disabled:text-white"
                 [disabled]="fcs['rlangs'].value.length === 1"
                 (click)="remove($index)"
                 matMiniFab
