@@ -19,5 +19,47 @@
     "LANG_SWITCH": "語言",
     "THEME_SWITCH": "外觀"
   },
-  "api": {}
+  "api": {
+    "error": "發生未預期的錯誤，請稍後再試",
+    "expiration": "登入認證已過期，請重新登入",
+    "success": "成功",
+    "no_server_available": "目前無可用的伺服器",
+    "login": {
+      "success": "登入成功",
+      "username_required": "帳號為必填欄位",
+      "password_required": "密碼為必填欄位",
+      "failure": "帳號或密碼有誤",
+      "email.verify.failure": "信箱驗證失敗，請重新註冊",
+      "email.verify.undone": "請檢查您的信箱中的驗證信；或重新註冊一次",
+      "email.verify.done": "信箱驗證成功，歡迎登入使用",
+      "email.verify.expire": "驗證連結已過期，請重新註冊一次",
+      "sms.verify.done": "簡訊驗證成功，歡迎登入使用",
+      "sms.verify.undone": "請檢查您手機上的簡訊",
+      "sms.verify.failure": "簡訊驗證失敗，請檢查您手機上的簡訊；或重新註冊"
+    },
+    "register": {
+      "email.success": "我們已向您的電郵地址發送了一封驗證信",
+      "sms.success": "我們已向您的手機號碼發送了一封驗證簡訊",
+      "username_required": "帳號為必填欄位",
+      "phone_required": "手機號碼為必填欄位",
+      "username_max_length": "帳號最大長度為 50 個字元",
+      "email_pattern": "Email 格式有誤",
+      "username_unique": "此帳號已註冊過",
+      "phone_unique": "此手機號碼已註冊過",
+      "password_required": "密碼為必填欄位",
+      "password_min_length": "密碼最小長度為 8 個字元",
+      "password_max_length": "密碼最大長度為 50 個字元"
+    },
+    "business": {
+      "member": {
+        "not_exists": "帳號不存在"
+      }
+    },
+    "change": {
+      "password": {
+        "not_equals": "舊密碼有誤",
+        "failure": "變更密碼失敗"
+      }
+    }
+  }
 }

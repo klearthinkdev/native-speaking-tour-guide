@@ -62,8 +62,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "2.5MB",
+                  "maximumError": "5MB"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -83,8 +83,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "2.5MB",
+                  "maximumError": "5MB"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -112,19 +112,19 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "native-speaking-tour-guide:build:production",
-              "proxyConfig": "proxy/proxy.config.prod.js"
+              "buildTarget": "native-speaking-tour-guide:build:production"
             },
             "dev": {
-              "buildTarget": "native-speaking-tour-guide:build:dev",
-              "proxyConfig": "proxy/proxy.config.dev.js"
+              "buildTarget": "native-speaking-tour-guide:build:dev"
             },
             "development": {
-              "buildTarget": "native-speaking-tour-guide:build:development",
-              "proxyConfig": "proxy/proxy.config.js"
+              "buildTarget": "native-speaking-tour-guide:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "proxyConfig": "proxy.config.js"
+          }
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"

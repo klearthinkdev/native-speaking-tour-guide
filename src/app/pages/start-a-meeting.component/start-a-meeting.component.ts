@@ -114,8 +114,6 @@ export class StartAMeetingComponent implements OnDestroy {
   ) {}
 
   startEditing1(): void {
-    console.log(this.endDatetime);
-
     this.editing1 = true;
 
     this.nameInput.nativeElement.select();

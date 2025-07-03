@@ -1,14 +1,17 @@
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {
   ApplicationConfig,
   importProvidersFrom,
   provideBrowserGlobalErrorListeners,
   provideZoneChangeDetection,
 } from '@angular/core';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
+import { API_PROVIDERS } from './api/api-providers';
 import { routes } from './app.routes';
 import { MAT_PROVIDERS } from './mat-providers';
 import { AppTranslateModule } from './shared/modules/app-translate.module';
+import { AuthInterceptor } from './shared/services/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,7 +19,10 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(withInterceptorsFromDi()),
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     importProvidersFrom([AppTranslateModule]),
+    provideAnimationsAsync(),
     ...MAT_PROVIDERS,
+    ...API_PROVIDERS,
   ],
 };

@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  mock: false,
   version: '0.1',
 
   /* FOR PROD API */

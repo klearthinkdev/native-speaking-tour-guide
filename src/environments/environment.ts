@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  mock: false,
   version: '0',
 
   baseApiUrl: `/api`,

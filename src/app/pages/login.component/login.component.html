@@ -15,6 +15,7 @@
           <mat-label>帳號</mat-label>
           <input
             [formControl]="fcs['account']"
+            [readonly]="loggingIn"
             autocomplete="username"
             inputmode="text"
             matInput
@@ -36,6 +37,7 @@
           <mat-label>密碼</mat-label>
           <input
             [formControl]="fcs['password']"
+            [readonly]="loggingIn"
             [type]="showPassword ? 'text' : 'password'"
             autocomplete="current-password"
             inputmode="text"
@@ -63,11 +65,19 @@
           }
         </mat-form-field>
 
-        <button class="col-span-1" matButton="filled" type="submit">登入</button>
+        <button class="col-span-1" [disabled]="loggingIn" matButton="filled" type="submit">
+          登入
+        </button>
 
         <div class="col-span-1 my-4">
           <p class="text-gray text-center text-xs">沒有帳號嗎？</p>
-          <button class="w-full" [routerLink]="['/signup']" matButton="tonal" type="button">
+          <button
+            class="w-full"
+            [disabled]="loggingIn"
+            [routerLink]="['/signup']"
+            matButton="tonal"
+            type="button"
+          >
             註冊
           </button>
         </div>
@@ -78,7 +88,13 @@
           <mat-divider class="w-1/2"></mat-divider>
         </div>
 
-        <button class="col-span-1" (click)="onSkipLogin()" matButton type="button">
+        <button
+          class="col-span-1"
+          [disabled]="loggingIn"
+          (click)="onSkipLogin()"
+          matButton
+          type="button"
+        >
           以訪客身份繼續
         </button>
       </form>
