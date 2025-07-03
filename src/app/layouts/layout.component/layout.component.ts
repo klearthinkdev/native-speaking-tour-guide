@@ -4,14 +4,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { LangSwitch } from '../../shared/components/lang.switch/lang.switch';
 import { ThemeSwitch } from '../../shared/components/theme.switch/theme.switch';
-import { Lang, LANG_OPTION_LIST } from '../../shared/enums/lang.enum';
+import { AuthService } from '../../shared/services/auth.service';
 import { BreakpointsService } from '../../shared/services/breakpoints.service';
 
 @Component({
@@ -22,7 +21,6 @@ import { BreakpointsService } from '../../shared/services/breakpoints.service';
     MatDividerModule,
     MatIconModule,
     MatListModule,
-    MatMenuModule,
     MatSidenavModule,
     MatToolbarModule,
     RouterLink,
@@ -37,14 +35,18 @@ import { BreakpointsService } from '../../shared/services/breakpoints.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent {
-  readonly langOptionList = LANG_OPTION_LIST;
+  readonly loggedIn$;
+  readonly isHost$;
 
   constructor(
+    private _authService: AuthService,
     public b: BreakpointsService,
-    public tr: TranslateService,
-  ) {}
+  ) {
+    this.loggedIn$ = this._authService.loggedIn$;
+    this.isHost$ = this._authService.isHost$;
+  }
 
-  onSelectLang(lang: Lang): void {
-    this.tr.use(lang);
+  onLogout(): void {
+    this._authService.logout('/login');
   }
 }

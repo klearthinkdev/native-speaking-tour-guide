@@ -100,7 +100,7 @@
               ],
               "outputHashing": "all"
             },
-            "development": {
+            "local": {
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
@@ -117,11 +117,11 @@
             "dev": {
               "buildTarget": "native-speaking-tour-guide:build:dev"
             },
-            "development": {
-              "buildTarget": "native-speaking-tour-guide:build:development"
+            "local": {
+              "buildTarget": "native-speaking-tour-guide:build:local"
             }
           },
-          "defaultConfiguration": "development",
+          "defaultConfiguration": "local",
           "options": {
             "proxyConfig": "proxy.config.js"
           }

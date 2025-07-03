@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build:dev": "ng build --configuration dev",
-    "watch": "ng build --watch --configuration development",
+    "watch": "ng build --watch --configuration local",
     "test": "ng test",
     "prettier": "prettier --write \"./src/**/*.{ts,html,scss,css,json}\"",
     "prettier:check": "prettier --check \"./src/**/*.{ts,html,scss,css,json}\""
@@ -22,6 +22,7 @@
     "@angular/material-date-fns-adapter": "20.0.3",
     "@angular/platform-browser": "^20.0.0",
     "@angular/router": "^20.0.0",
+    "@auth0/angular-jwt": "^5.2.0",
     "@ngx-translate/core": "^16.0.4",
     "@ngx-translate/http-loader": "^16.0.1",
     "@tailwindcss/postcss": "^4.1.10",

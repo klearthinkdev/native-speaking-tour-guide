@@ -12,6 +12,7 @@ import { AbstractUserService } from '../../api/abstract/abstract-user.service';
 import { BaseAPIResModel } from '../../api/models/base-api.models';
 import { LoginReq, LoginRes } from '../../api/models/user/login.models';
 import { FooterComponent } from '../../layouts/footer.component/footer.component';
+import { AuthService } from '../../shared/services/auth.service';
 import { SnackBarService } from '../../shared/services/snack-bar.service';
 import { LoginFCs } from './login.models';
 
@@ -57,6 +58,7 @@ export class LoginComponent implements OnDestroy {
   loggingIn = false;
 
   constructor(
+    private _authService: AuthService,
     private _cdr: ChangeDetectorRef,
     private _router: Router,
     private _snackBarService: SnackBarService,
@@ -94,21 +96,17 @@ export class LoginComponent implements OnDestroy {
   }
 
   handleLogin(res: LoginRes): void {
-    // TODO: AuthService
-    // const { token } = res.data;
+    const { token } = res.data;
 
-    // this._authService.token = token;
+    this._authService.token = token;
 
-    // if (this._authService.validateToken()) {
-    //   this._authService.signedIn = true;
+    if (this._authService.validateToken()) {
+      this._authService.loggedIn = true;
 
-    //   this._snackBarService.success(res.msg);
+      this._snackBarService.success(res.msg);
 
-    //   this._router.navigate(['/']);
-    // }
-
-    this._snackBarService.success(res.msg);
-    this._router.navigate(['/']);
+      this._router.navigate(['/']);
+    }
   }
 
   onError(err: BaseAPIResModel<null>): Observable<never> {

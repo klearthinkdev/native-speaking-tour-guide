@@ -7,9 +7,14 @@ export const environment = {
   mock: false,
   version: '0',
 
+  // hostCompanyId: 0 /* FOR LOCAL API */,
+  hostCompanyId: 11 /* FOR DEV API */,
+  // hostCompanyId: 25 /* FOR PROD API */,
   baseApiUrl: `/api`,
   allowedDomains: ['/api'],
   disallowedRoutes: ['/api/user/login'],
+
+  tokenKey: 'dev:native-speaking-tour-guide:token',
 };
 
 /*

@@ -10,6 +10,7 @@ import { provideRouter } from '@angular/router';
 import { API_PROVIDERS } from './api/api-providers';
 import { routes } from './app.routes';
 import { MAT_PROVIDERS } from './mat-providers';
+import { AppJwtModule } from './shared/modules/app-jwt.module';
 import { AppTranslateModule } from './shared/modules/app-translate.module';
 import { AuthInterceptor } from './shared/services/auth.interceptor';
 
@@ -20,7 +21,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withInterceptorsFromDi()),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    importProvidersFrom([AppTranslateModule]),
+    importProvidersFrom([AppJwtModule, AppTranslateModule]),
     provideAnimationsAsync(),
     ...MAT_PROVIDERS,
     ...API_PROVIDERS,

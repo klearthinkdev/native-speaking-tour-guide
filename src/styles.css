@@ -21,8 +21,6 @@
   --color-primary-800: #ffb4a1;
   --color-primary-900: #ffdbd2;
 
-  --color-error: #ba1a1a;
-
   /* font-weight */
   --font-weight-thin: 300;
   --font-weight-normal: 400;
@@ -112,14 +110,14 @@ mat-snack-bar-container.info .mdc-linear-progress__bar-inner {
   @apply border-gray-400;
 }
 mat-snack-bar-container.success mat-icon {
-  @apply text-green-400;
+  @apply text-green-500;
 }
 mat-snack-bar-container.success .mdc-linear-progress__bar-inner {
-  @apply border-green-400;
+  @apply border-green-500;
 }
 mat-snack-bar-container.error mat-icon {
-  @apply text-red-400;
+  @apply text-red-500;
 }
 mat-snack-bar-container.error .mdc-linear-progress__bar-inner {
-  @apply border-red-400;
+  @apply border-red-500;
 }
