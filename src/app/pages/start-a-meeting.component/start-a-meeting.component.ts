@@ -24,9 +24,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterLink } from '@angular/router';
 import { addHours } from 'date-fns';
 import { Subject, takeUntil, tap } from 'rxjs';
+import { ChatroomService } from '../../api/chatroom.service';
 import {
   RLangPickerData,
   RLangPickerResult,
@@ -54,7 +54,6 @@ import { StartAMeetingFCs } from './start-a-meeting.models';
     MatListModule,
     MatTimepickerModule,
     MatToolbarModule,
-    RouterLink,
   ],
   templateUrl: './start-a-meeting.component.html',
   styleUrl: './start-a-meeting.component.css',
@@ -62,9 +61,8 @@ import { StartAMeetingFCs } from './start-a-meeting.models';
 })
 export class StartAMeetingComponent implements OnDestroy {
   // TODO: CanDeactivate 離開前提醒未儲存的變更
-  // TODO: default name  ?
-  _name = '我的會議';
-  _langs = [RLang.ZH];
+  _name = '我的會議'; // TODO: default name?
+  _langs = [RLang.ZH, RLang.EN]; // TODO: 預選 3-4 種最常用語言？
 
   readonly allRLangNameMap = ALL_RLANG_NAME_MAP;
 
@@ -111,9 +109,11 @@ export class StartAMeetingComponent implements OnDestroy {
   cache = structuredClone(this.fv);
   editing1 = false;
   editing2 = false;
+  starting = false;
 
   constructor(
     private _cdr: ChangeDetectorRef,
+    private _chatroomService: ChatroomService,
     private _matBottomSheet: MatBottomSheet,
     public b: BreakpointsService,
   ) {}
@@ -207,6 +207,17 @@ export class StartAMeetingComponent implements OnDestroy {
     moveItemInArray(rlangs, event.previousIndex, event.currentIndex);
 
     this.fcs['rlangs'].setValue(rlangs);
+  }
+
+  onStartAMeeting(): void {
+    this.fg.markAllAsTouched();
+    this.fg.updateValueAndValidity();
+
+    if (this.fg.invalid || this.starting) {
+      return;
+    }
+
+    // TODO: _chatroomService
   }
 
   ngOnDestroy(): void {

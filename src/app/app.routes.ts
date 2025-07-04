@@ -6,6 +6,7 @@ import { MeetingComponent } from './pages/meeting/meeting.component/meeting.comp
 import { SignupComponent } from './pages/signup.component/signup.component';
 import { StartAMeetingComponent } from './pages/start-a-meeting.component/start-a-meeting.component';
 import { UserComponent } from './pages/user.component/user.component';
+import { hostGuard } from './shared/guards/host.guard';
 
 export const routes: Routes = [
   {
@@ -31,11 +32,17 @@ export const routes: Routes = [
       {
         path: 'start-a-meeting',
         component: StartAMeetingComponent,
+        canActivate: [hostGuard],
       },
     ],
   },
   {
     path: 'meeting',
-    component: MeetingComponent,
+    children: [
+      {
+        path: 'room/:code',
+        component: MeetingComponent,
+      },
+    ],
   },
 ];
