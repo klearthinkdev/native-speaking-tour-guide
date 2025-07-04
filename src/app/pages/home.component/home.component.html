@@ -7,32 +7,36 @@
         解決語別限制及翻譯不便等問題，讓外籍旅客輕鬆暢遊臺灣，實踐「智慧科技島．數位新社會」的願景
       </div>
 
-      <div class="flex grow items-start">
+      <form class="flex grow items-start" [formGroup]="fg" (ngSubmit)="onEnterMeetingRoom()">
         <mat-form-field class="mr-2 w-full">
           <input
+            [formControl]="fcs['roomCode']"
             inputmode="text"
             matInput
             maxlength="6"
             placeholder="輸入會議代碼"
-            required
             type="text"
-            value="123456"
           />
 
           <mat-icon matPrefix>keyboard</mat-icon>
 
           <button
             class="mr-2 shadow-none"
-            [routerLink]="['/meeting', 'room']"
+            [disabled]="fcs['roomCode'].value === ''"
             matMiniFab
             matSuffix
             matTooltip="加入"
-            type="button"
+            type="submit"
           >
             <mat-icon>send</mat-icon>
           </button>
+
+          @if (fcs['roomCode'].hasError('roomCode')) {
+            <mat-error>會議代碼格式有誤</mat-error>
+          }
         </mat-form-field>
 
+        <!-- TODO: 掃描 QR code -->
         <button
           class="shadow-none"
           [routerLink]="['/meeting', 'room']"
@@ -42,7 +46,7 @@
         >
           <mat-icon>qr_code</mat-icon>
         </button>
-      </div>
+      </form>
     </div>
   </div>
 

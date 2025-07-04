@@ -11,7 +11,7 @@
         @if (!editing1) {
           <button
             class="shadow-none"
-            [disabled]="editing2"
+            [disabled]="editing2 || starting"
             (click)="startEditing1()"
             matMiniFab
             matTooltip="編輯"
@@ -109,6 +109,7 @@
           }
 
           <mat-timepicker #endTimepicker />
+
           <mat-timepicker-toggle
             class="mr-2"
             [disabled]="!editing1"
@@ -125,7 +126,7 @@
         @if (!editing2) {
           <button
             class="shadow-none"
-            [disabled]="editing1"
+            [disabled]="editing1 || starting"
             (click)="startEditing2()"
             matMiniFab
             matTooltip="編輯"
@@ -162,7 +163,7 @@
             <div class="flex items-center" matListItemTitle>
               <button
                 [class.hidden]="!editing2"
-                class="not-disabled:bg-error mr-2 rounded-full shadow-none not-disabled:text-white"
+                class="mr-2 rounded-full shadow-none not-disabled:bg-red-500 not-disabled:text-white"
                 [disabled]="fcs['rlangs'].value.length === 1"
                 (click)="remove($index)"
                 matMiniFab
@@ -211,7 +212,11 @@
       <div class="flex">
         <span class="grow"></span>
 
-        <button [disabled]="fg.invalid" matButton="filled" type="submit">
+        <button
+          [disabled]="editing1 || editing2 || fg.invalid || starting"
+          matButton="filled"
+          type="submit"
+        >
           開始會議
 
           <!-- TODO: spinner -->

@@ -5,7 +5,7 @@ import { RLang } from '../../enums/r-lang.enum';
 import { ColorPairFCs } from '../color-pair.component/color-pair.models';
 
 type UserInfo = {
-  code: string;
+  userCode: string;
   nickname: string;
   rlangs: Array<RLang>;
 };

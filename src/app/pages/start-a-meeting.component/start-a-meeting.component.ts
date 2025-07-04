@@ -24,9 +24,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { Router } from '@angular/router';
 import { addHours } from 'date-fns';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { EMPTY, finalize, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { ChatroomService } from '../../api/chatroom.service';
+import { BaseAPIResModel } from '../../api/models/base-api.models';
+import {
+  CreateChatroomReq,
+  CreateChatroomRes,
+} from '../../api/models/chatroom/create-chatroom.models';
 import {
   RLangPickerData,
   RLangPickerResult,
@@ -115,6 +121,7 @@ export class StartAMeetingComponent implements OnDestroy {
     private _cdr: ChangeDetectorRef,
     private _chatroomService: ChatroomService,
     private _matBottomSheet: MatBottomSheet,
+    private _router: Router,
     public b: BreakpointsService,
   ) {}
 
@@ -216,8 +223,43 @@ export class StartAMeetingComponent implements OnDestroy {
     if (this.fg.invalid || this.starting) {
       return;
     }
+    this.starting = true;
 
-    // TODO: _chatroomService
+    const req = this.buildCreateChatroomReq();
+
+    this._chatroomService
+      .CreateChatroom(req)
+      .pipe(
+        takeUntil(this._destroy$),
+        finalize(() => {
+          this.starting = false;
+
+          this._cdr.markForCheck();
+        }),
+      )
+      .subscribe({
+        next: this.handleCreateChatroom.bind(this),
+        error: this.onError.bind(this),
+      });
+  }
+
+  buildCreateChatroomReq(): CreateChatroomReq {
+    const { name, endDatetime } = this.meetingFV;
+
+    return {
+      room_name: name,
+      end_time: (endDatetime as Date).valueOf(),
+    };
+  }
+
+  handleCreateChatroom(res: CreateChatroomRes): void {
+    this._router.navigate(['/meeting', 'room', res.data]);
+  }
+
+  onError(err: BaseAPIResModel<null>): Observable<never> {
+    console.error(err);
+
+    return EMPTY;
   }
 
   ngOnDestroy(): void {

@@ -70,7 +70,7 @@
             type="text"
           />
 
-          <span class="mr-2" matSuffix> #{{ aboutMeFCs['code'].value }} </span>
+          <span class="mr-2" matSuffix> #{{ aboutMeFCs['userCode'].value }} </span>
 
           @if (aboutMeFCs['nickname'].hasError('required')) {
             <mat-error>請輸入顯示暱稱</mat-error>
@@ -171,7 +171,12 @@
     <div class="flex">
       <span class="grow"></span>
 
-      <button [disabled]="fg.invalid" [routerLink]="['/']" matButton="filled" type="button">
+      <button
+        [disabled]="editing1 || editing2 || fg.invalid"
+        [routerLink]="['/']"
+        matButton="filled"
+        type="button"
+      >
         返回首頁
       </button>
     </div>

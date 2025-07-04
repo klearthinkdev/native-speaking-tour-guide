@@ -1,6 +1,7 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { futureDateValidator } from './future-date.validator';
 import { passwordMatchValidator } from './password-match.validator';
+import { roomCodeValidator } from './room-code.validator';
 
 export class ValidatorsExtra {
   static futureDate(control: AbstractControl): ValidationErrors | null {
@@ -9,6 +10,10 @@ export class ValidatorsExtra {
 
   static passwordMatch(paths: [string, string]): ValidatorFn {
     return passwordMatchValidator(paths);
+  }
+
+  static roomCode(control: AbstractControl): ValidationErrors | null {
+    return roomCodeValidator(control);
   }
 }
 

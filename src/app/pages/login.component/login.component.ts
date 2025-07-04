@@ -72,12 +72,9 @@ export class LoginComponent implements OnDestroy {
     if (this.fg.invalid || this.loggingIn) {
       return;
     }
+    this.loggingIn = true;
 
-    const { account, password } = this.fv;
-    const req: LoginReq = {
-      account,
-      password,
-    };
+    const req = this.buildLoginReq();
 
     this._userService
       .Login(req)
@@ -93,6 +90,15 @@ export class LoginComponent implements OnDestroy {
         next: this.handleLogin.bind(this),
         error: this.onError.bind(this),
       });
+  }
+
+  buildLoginReq(): LoginReq {
+    const { account, password } = this.fv;
+
+    return {
+      account,
+      password,
+    };
   }
 
   handleLogin(res: LoginRes): void {

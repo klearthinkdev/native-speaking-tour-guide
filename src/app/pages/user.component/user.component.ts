@@ -65,7 +65,7 @@ export class UserComponent implements OnDestroy {
         nonNullable: true,
         validators: [Validators.required, Validators.maxLength(64)],
       }),
-      code: new FormControl('', { nonNullable: true }),
+      userCode: new FormControl('', { nonNullable: true }),
     }),
     rlangs: new FormControl([], { nonNullable: true }),
   });
@@ -79,7 +79,7 @@ export class UserComponent implements OnDestroy {
   aboutMeFG = this.fg.controls['aboutMe'];
   aboutMeFCs = {
     nickname: this.aboutMeFG.controls['nickname'],
-    code: this.aboutMeFG.controls['code'],
+    userCode: this.aboutMeFG.controls['userCode'],
   };
   get aboutMeFV() {
     return this.aboutMeFG.getRawValue();
@@ -98,9 +98,9 @@ export class UserComponent implements OnDestroy {
     this.loggedIn$ = this._authService.loggedIn$;
     this.isHost$ = this._authService.isHost$;
 
-    const { nickname, code, rlangs } = this._chatSettingsService.settings;
+    const { nickname, userCode, rlangs } = this._chatSettingsService.settings;
 
-    this.fg.patchValue({ aboutMe: { nickname, code }, rlangs });
+    this.fg.patchValue({ aboutMe: { nickname, userCode }, rlangs });
     this.cache = structuredClone(this.fv);
   }
 

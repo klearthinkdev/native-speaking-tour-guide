@@ -20,7 +20,7 @@ export class ChatSettingsService {
     tranHexColors: [],
     trxnHexColors: [HexColor.black, HexColor.white],
     //
-    code: genCode(),
+    userCode: genCode(),
     nickname: genNickname(),
     rlangs: [NAVIGATOR_LANGUAGE_RLANG_MAP[navigator.language] ?? RLang.EN],
   };
@@ -67,7 +67,7 @@ export class ChatSettingsService {
   resetUser(): void {
     this.settings = {
       ...this.settings,
-      code: genCode(),
+      userCode: genCode(),
       nickname: genNickname(),
       rlangs: [NAVIGATOR_LANGUAGE_RLANG_MAP[navigator.language] ?? RLang.EN],
     };

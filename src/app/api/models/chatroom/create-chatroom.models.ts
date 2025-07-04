@@ -6,4 +6,4 @@ export type CreateChatroomReq = {
   end_time: number;
 };
 
-export type CreateChatroomRes = BaseAPIResModel<string | null>;
+export type CreateChatroomRes = BaseAPIResModel<string>;
