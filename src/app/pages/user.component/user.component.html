@@ -70,7 +70,22 @@
             type="text"
           />
 
-          <span class="mr-2" matSuffix> #{{ aboutMeFCs['userCode'].value }} </span>
+          @if (editing1) {
+            <button
+              class="mr-2 shadow-none"
+              [disabled]="!editing1"
+              (click)="setRandomNickname()"
+              matMiniFab
+              matSuffix
+              matTooltip="隨機"
+              type="button"
+            >
+              <mat-icon>casino</mat-icon>
+            </button>
+          }
+
+          <mat-hint align="start">#{{ aboutMeFCs['userCode'].value }}</mat-hint>
+          <mat-hint align="end">{{ aboutMeFCs['nickname'].value.length }} / 64</mat-hint>
 
           @if (aboutMeFCs['nickname'].hasError('required')) {
             <mat-error>請輸入顯示暱稱</mat-error>

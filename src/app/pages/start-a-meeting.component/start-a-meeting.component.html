@@ -57,6 +57,8 @@
           type="text"
         />
 
+        <mat-hint align="end">{{ meetingFCs['name'].value.length }} / 64</mat-hint>
+
         @if (meetingFCs['name'].hasError('required')) {
           <mat-error>請輸入會議名稱</mat-error>
         }
@@ -213,13 +215,17 @@
         <span class="grow"></span>
 
         <button
+          class="relative"
           [disabled]="editing1 || editing2 || fg.invalid || starting"
           matButton="filled"
           type="submit"
         >
-          開始會議
-
-          <!-- TODO: spinner -->
+          <span [class.invisible]="starting">開始會議</span>
+          @if (starting) {
+            <div class="spinner">
+              <mat-spinner diameter="24"></mat-spinner>
+            </div>
+          }
         </button>
       </div>
     </form>

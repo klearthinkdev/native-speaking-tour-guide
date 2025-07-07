@@ -27,6 +27,8 @@
 
           <mat-icon matPrefix>person</mat-icon>
 
+          <mat-hint align="end">{{ fcs['account'].value.length }} / 64</mat-hint>
+
           @if (fcs['account'].hasError('required')) {
             <mat-error>請輸入帳號 (電郵地址)</mat-error>
           } @else if (fcs['account'].hasError('minlength')) {

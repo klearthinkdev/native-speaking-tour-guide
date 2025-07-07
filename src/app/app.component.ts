@@ -1,7 +1,15 @@
+import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { distinctUntilChanged, filter } from 'rxjs';
-import { environment } from '../environments/environment';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {
+  NavigationCancel,
+  NavigationEnd,
+  NavigationError,
+  NavigationStart,
+  Router,
+  RouterOutlet,
+} from '@angular/router';
+import { distinctUntilChanged, filter, map } from 'rxjs';
 import { MeetingRoomService } from './pages/meeting/meeting-room.component/meeting-room.service';
 import { AuthService } from './shared/services/auth.service';
 import { BreakpointsService } from './shared/services/breakpoints.service';
@@ -11,22 +19,34 @@ import { ThemeService } from './shared/services/theme.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [AsyncPipe, MatProgressSpinnerModule, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
-  protected version = environment.version;
+  readonly blocking$;
 
   constructor(
     private _authService: AuthService,
     private _b: BreakpointsService,
     private _langService: LangService,
     private _meetingRoomService: MeetingRoomService,
+    private _router: Router,
     private _snackBarService: SnackBarService,
     private _th: ThemeService,
   ) {
+    this.blocking$ = this._router.events.pipe(
+      filter(
+        (e) =>
+          e instanceof NavigationStart ||
+          e instanceof NavigationEnd ||
+          e instanceof NavigationCancel ||
+          e instanceof NavigationError,
+      ),
+      map((e) => e instanceof NavigationStart),
+    );
+
     this._b.init();
     this._langService.init();
     this._th.init();

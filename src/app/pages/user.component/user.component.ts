@@ -26,6 +26,7 @@ import {
 import { RLangPicker } from '../../shared/components/rlang.picker/rlang.picker';
 import { ALL_RLANG_NAME_MAP, RLang } from '../../shared/enums/r-lang.enum';
 import { AuthService } from '../../shared/services/auth.service';
+import { genNickname } from '../../shared/services/utils.service';
 import { UserFCs } from './user.models';
 
 @Component({
@@ -159,6 +160,17 @@ export class UserComponent implements OnDestroy {
     };
 
     this.editing2 = false;
+  }
+
+  setRandomNickname(): void {
+    const { nickname } = this.aboutMeFV;
+    let next: string;
+
+    do {
+      next = genNickname();
+    } while (next === nickname);
+
+    this.aboutMeFCs['nickname'].setValue(next);
   }
 
   openRLangPicker(): void {

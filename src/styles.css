@@ -66,6 +66,17 @@ body {
   @apply m-auto w-full max-w-7xl;
 }
 
+/* spinner */
+.spinner-box {
+  @apply relative box-border min-h-60 w-full;
+}
+.spinner {
+  @apply absolute top-0 right-0 bottom-0 left-0 z-10 flex cursor-progress items-center justify-center;
+}
+.blocking.spinner {
+  @apply fixed;
+}
+
 /* form */
 .form-box {
   @apply grid auto-rows-min gap-4;

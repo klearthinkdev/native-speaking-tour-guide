@@ -1,1 +1,7 @@
 <router-outlet />
+
+@if (blocking$ | async) {
+  <div class="blocking spinner" appStopClickPropagation>
+    <mat-spinner diameter="64"></mat-spinner>
+  </div>
+}

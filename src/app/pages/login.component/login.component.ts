@@ -5,6 +5,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router, RouterLink } from '@angular/router';
 import { EMPTY, finalize, Observable, Subject, takeUntil } from 'rxjs';
@@ -24,6 +25,7 @@ import { LoginFCs } from './login.models';
     MatDividerModule,
     MatFormFieldModule,
     MatIconModule,
+    MatProgressSpinnerModule,
     MatInputModule,
     MatTooltipModule,
     RouterLink,

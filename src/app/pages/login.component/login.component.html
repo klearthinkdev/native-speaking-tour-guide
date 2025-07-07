@@ -65,10 +65,13 @@
           }
         </mat-form-field>
 
-        <button class="col-span-1" [disabled]="loggingIn" matButton="filled" type="submit">
-          登入
-
-          <!-- TODO: spinner -->
+        <button class="relative col-span-1" [disabled]="loggingIn" matButton="filled" type="submit">
+          <span [class.invisible]="loggingIn">登入</span>
+          @if (loggingIn) {
+            <div class="spinner">
+              <mat-spinner diameter="24"></mat-spinner>
+            </div>
+          }
         </button>
 
         <div class="col-span-1 my-4">
