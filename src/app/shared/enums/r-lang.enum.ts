@@ -37,6 +37,12 @@ export enum RLang {
   // /* 33 */ TE = 'te', // 泰盧固語
 }
 
+export enum ZH {
+  CHS = 'chs', // 中文（简体）
+  CHT = 'cht', // 中文（繁体）
+  ZH = 'zh',
+}
+
 const RLANG_INFO_LIST = [
   /*  1 */
   { value: RLang.ZH, clabel: '華語', olabel: '中文' },

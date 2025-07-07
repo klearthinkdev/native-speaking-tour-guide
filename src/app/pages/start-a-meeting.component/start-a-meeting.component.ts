@@ -41,6 +41,7 @@ import { RLangPicker } from '../../shared/components/rlang.picker/rlang.picker';
 import { ALL_RLANG_NAME_MAP, RLang } from '../../shared/enums/r-lang.enum';
 import { BreakpointsService } from '../../shared/services/breakpoints.service';
 import { getNextHalfHour } from '../../shared/services/date-utils.service';
+import { RecorderService } from '../../shared/services/recorder.service';
 import { ValidatorsExtra } from '../../shared/validators/validators-extra';
 import { StartAMeetingFCs } from './start-a-meeting.models';
 
@@ -68,7 +69,7 @@ import { StartAMeetingFCs } from './start-a-meeting.models';
 export class StartAMeetingComponent implements OnDestroy {
   // TODO: CanDeactivate 離開前提醒未儲存的變更
   _name = '我的會議'; // TODO: default name?
-  _langs = [RLang.ZH, RLang.EN]; // TODO: 預選 3-4 種最常用語言？
+  _langs = [RLang.ZH, RLang.EN, RLang.JA]; // TODO: 預選 3-4 種最常用語言？
 
   readonly allRLangNameMap = ALL_RLANG_NAME_MAP;
 
@@ -121,6 +122,7 @@ export class StartAMeetingComponent implements OnDestroy {
     private _cdr: ChangeDetectorRef,
     private _chatroomService: ChatroomService,
     private _matBottomSheet: MatBottomSheet,
+    private _rec: RecorderService,
     private _router: Router,
     public b: BreakpointsService,
   ) {}
@@ -253,6 +255,11 @@ export class StartAMeetingComponent implements OnDestroy {
   }
 
   handleCreateChatroom(res: CreateChatroomRes): void {
+    const { rlangs } = this.fv;
+
+    this._rec.params.candidates = rlangs;
+    this._rec.save();
+
     this._router.navigate(['/meeting', 'room', res.data]);
   }
 

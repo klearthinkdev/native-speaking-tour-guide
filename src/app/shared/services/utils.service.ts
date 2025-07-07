@@ -46,3 +46,7 @@ export const genNickname = (): string => {
 
   return randomNickname;
 };
+
+export const scrollIntoView = (el: HTMLElement, options?: ScrollIntoViewOptions): void => {
+  el.scrollIntoView(options);
+};

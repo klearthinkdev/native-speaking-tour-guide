@@ -19,7 +19,12 @@
       }
     }
   },
-  "MESSAGE": {},
+  "MESSAGE": {
+    "ANOTHER_USAGE": "Your account is being used elsewhere. The service on this page will be interrupted.",
+    "MIC_PERMISSION_DENIED": "Microphone permission denied.",
+    "NO_QUOTA": "Your service quota has been used up. Please top up to continue using.",
+    "TERMINATED": "Your session will time out due to inactivity."
+  },
   "SITEMAP": {
     "HOME": "Homepage"
   },

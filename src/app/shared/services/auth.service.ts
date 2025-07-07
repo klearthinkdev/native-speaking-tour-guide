@@ -34,11 +34,14 @@ export class AuthService {
   get payload() {
     return this.payload$.getValue();
   }
-  set payload(value) {
-    this.payload$.next(value);
-  }
   get loggedIn() {
     return this.loggedIn$.getValue();
+  }
+  get isHost() {
+    return this.payload?.companyId === environment.hostCompanyId;
+  }
+  set payload(value) {
+    this.payload$.next(value);
   }
   set loggedIn(value) {
     this.loggedIn$.next(value);

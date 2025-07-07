@@ -19,7 +19,12 @@
       }
     }
   },
-  "MESSAGE": {},
+  "MESSAGE": {
+    "ANOTHER_USAGE": "您的帳號在其他地方使用服務，當前頁面服務將中斷。",
+    "MIC_PERMISSION_DENIED": "無法取得麥克風權限。",
+    "NO_QUOTA": "您的服務額度已用完，請加值以繼續使用。",
+    "TERMINATED": "閒置時間過長，服務將自動中斷。"
+  },
   "SITEMAP": {
     "HOME": "首頁"
   },

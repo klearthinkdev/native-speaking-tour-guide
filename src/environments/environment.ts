@@ -13,6 +13,7 @@ export const environment = {
   disallowedRoutes: ['/api/user/login'],
 
   tokenKey: 'dev:native-speaking-tour-guide:token',
+  roomIdKey: 'dev:native-speaking-tour-guide:roomId',
 };
 
 /*

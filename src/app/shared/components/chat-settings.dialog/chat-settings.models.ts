@@ -16,7 +16,7 @@ export type ChatSettings = {
   fontSize: number;
   order: MessageOrder;
   timestamp: boolean;
-  tranHexColors: Array<[string, string]>;
+  tranHexColors: [string, string];
   trxnHexColors: [string, string];
 } & UserInfo;
 

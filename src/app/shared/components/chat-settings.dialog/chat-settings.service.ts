@@ -17,8 +17,8 @@ export class ChatSettingsService {
     order: MessageOrder.ASC,
     autoScroll: true,
     timestamp: false,
-    tranHexColors: [],
     trxnHexColors: [HexColor.black, HexColor.white],
+    tranHexColors: [HexColor.black, HexColor.white],
     //
     userCode: genCode(),
     nickname: genNickname(),

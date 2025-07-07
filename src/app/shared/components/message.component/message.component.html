@@ -1,0 +1,94 @@
+<div
+  [ngClass]="[
+    hasTwoSides && flexRowReverse ? (settings.align ? 'invisible' : 'hidden') : 'visible',
+    flexRowReverse ? 'flex-row-reverse' : 'flex-row',
+  ]"
+  class="flex"
+  [inputs]="{ last, autoScroll: settings.autoScroll, order: settings.order }"
+  appScrollXIntoView
+>
+  <div
+    [ngClass]="flexRowReverse ? 'items-end' : 'items-start'"
+    class="flex max-w-10/12 flex-col px-3 py-1"
+  >
+    <div
+      [class.hidden]="positionRight"
+      class="mb-1 pl-4 text-start text-xs text-gray-700 opacity-75 dark:text-gray-300"
+    >
+      {{ xExtension.user }}
+    </div>
+
+    <div
+      [ngStyle]="{
+        'font-size': settings.fontSize / 16 + 'rem',
+        'line-height': (settings.fontSize / 16) * (14 / 9) + 'rem',
+      }"
+      class="bg-light dark:bg-dark relative rounded-3xl p-3"
+    >
+      <!-- 原文: trxnList -->
+      @if (settings.transcription) {
+        @for (trxn of xExtension.trxnList; track $index) {
+          <div
+            [ngStyle]="{
+              color: trxn.hexColor,
+              'font-size': settings.fontSize / 20 + 'rem',
+              'line-height': (settings.fontSize / 20) * (14 / 9) + 'rem',
+            }"
+            class="opacity-75"
+            [hidden]="trxn.hidden"
+          >
+            {{ trxn.text }}
+          </div>
+        }
+      }
+      <!--  -->
+      @if (
+        settings.transcription &&
+        xExtension.trxnList &&
+        settings.translation &&
+        xExtension.tranList.length
+      ) {
+        <mat-divider
+          [ngStyle]="{
+            'margin-top': settings.fontSize / 64 + 'rem',
+            'margin-bottom': settings.fontSize / 80 + 'rem',
+          }"
+        ></mat-divider>
+      }
+      <!-- 譯文: tranList -->
+      @if (settings.translation) {
+        @for (tran of xExtension.tranList; track $index) {
+          <div [ngStyle]="{ color: tran.hexColor }" [hidden]="tran.hidden">
+            {{ tran.text }}
+          </div>
+        }
+        @if (showTranslating) {
+          <div class="flex">
+            <div class="animate-delay-300 animate-bounce">.</div>
+            <div class="animate-delay-500 animate-bounce">.</div>
+            <div class="animate-delay-700 animate-bounce">.</div>
+          </div>
+        }
+      }
+
+      <div
+        [ngClass]="
+          flexRowReverse
+            ? 'border-l-light dark:border-l-dark -right-3 rotate-45'
+            : 'border-r-light dark:border-r-dark -left-3 -rotate-45'
+        "
+        class="absolute -bottom-1 h-0 w-0 border-x-12 border-y-4 border-solid border-transparent"
+      ></div>
+    </div>
+
+    <!-- 時間戳: unixTime -->
+    @if (settings.timestamp) {
+      <div
+        [ngClass]="positionRight ? 'text-end' : 'text-start'"
+        class="mt-1 px-4 text-xs text-gray-700 opacity-75 dark:text-gray-300"
+      >
+        {{ xExtension.unixTime | dateFnsFormat: 'PPpp' : locale }}
+      </div>
+    }
+  </div>
+</div>

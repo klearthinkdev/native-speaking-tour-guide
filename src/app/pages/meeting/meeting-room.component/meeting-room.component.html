@@ -1,7 +1,30 @@
-<div class="h-dvh">
+<div class="h-page-h sm:h-sm-page-h">
   <div class="w-page flex h-full flex-col">
     <div class="grow bg-primary/15">
-      <!-- TODO -->
+      <app-single-sided [chatLogs]="(chatLogs$ | async)!"></app-single-sided>
+    </div>
+
+    <div
+      class="fixed right-0 bottom-0 left-0 z-50 flex h-[56px] items-center justify-center sm:h-[64px]"
+    >
+      <button
+        class="mr-2"
+        [disabled]="!(rec.initialized$ | async)"
+        (click)="onStartRecorder()"
+        matButton="filled"
+        type="button"
+      >
+        Start
+      </button>
+
+      <button
+        class="bg-red-500 text-white"
+        (click)="stopRecorder()"
+        matButton="filled"
+        type="button"
+      >
+        Stop
+      </button>
     </div>
   </div>
 </div>

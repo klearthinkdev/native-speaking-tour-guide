@@ -10,4 +10,5 @@ export const environment = {
   disallowedRoutes: ['https://aispeakin.com/api/user/login'],
 
   tokenKey: 'native-speaking-tour-guide:token',
+  roomIdKey: 'native-speaking-tour-guide:roomId',
 };

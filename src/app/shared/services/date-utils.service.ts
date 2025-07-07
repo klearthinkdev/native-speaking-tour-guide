@@ -1,4 +1,4 @@
-import { addHours, setMinutes, setSeconds } from 'date-fns';
+import { addHours, setMilliseconds, setMinutes, setSeconds } from 'date-fns';
 
 export const getNextHalfHour = (date: Date = new Date()): Date => {
   const currentMinutes = date.getMinutes();
@@ -11,6 +11,7 @@ export const getNextHalfHour = (date: Date = new Date()): Date => {
   }
 
   next = setSeconds(next, 0);
+  next = setMilliseconds(next, 0);
 
   return next;
 };
