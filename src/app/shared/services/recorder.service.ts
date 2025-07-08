@@ -5,7 +5,7 @@ import { TravelchatWS } from '../classes/travelchat-ws';
 import { CMD_R, CMD_S } from '../enums/cmd.enum';
 import { RLang } from '../enums/r-lang.enum';
 import { WSProxy } from '../enums/ws-proxy.enum';
-import { WSArgs, WSConfig, WSMessage, WSParams, WSServer } from '../models/ws.models';
+import { WSArgs, WSConfig, WSMessageR, WSParams, WSServer } from '../models/ws.models';
 import { WakeLockService } from './wake-lock.service';
 
 @Injectable({
@@ -41,7 +41,7 @@ export class RecorderService {
   connected$ = new BehaviorSubject<boolean>(false);
   recording$ = new BehaviorSubject<boolean>(false);
 
-  wsMessage$ = new Subject<WSMessage>();
+  wsMessage$ = new Subject<WSMessageR>();
   rebuildWS$ = new Subject<WSServer>();
 
   window!: Window & typeof globalThis;
@@ -206,7 +206,7 @@ export class RecorderService {
 
           this._reconnect_count = 0;
 
-          // TODO: 1007 ADD_RLANG
+          // TODO: WS 連線成功後，傳 1007 新增語言
         }
       });
       ws.addEventListener('message', ({ data }: MessageEvent<unknown>) => {
@@ -215,21 +215,21 @@ export class RecorderService {
         }
 
         try {
-          const wsMessage: WSMessage = JSON.parse(data);
+          const wsMessage: WSMessageR = JSON.parse(data);
 
-          if (wsMessage.cmd === CMD_R.OK) {
+          if (wsMessage.cmd === CMD_R._100_OK) {
             ws.accepted = true;
 
             this.connected = true;
 
             this._reconnect_count = 0;
 
-            ws.send(
-              JSON.stringify({
-                cmd: CMD_S.SET_SPEAKER,
-                data: ws.username,
-              }),
-            );
+            ws.sendCMD({
+              cmd: CMD_S._1001_SET_SPEAKER,
+              data: ws.username,
+            });
+
+            // TODO: WS 連線成功後，傳 1007 新增語言
           }
 
           this.wsMessage$.next(wsMessage);

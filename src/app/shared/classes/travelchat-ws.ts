@@ -1,7 +1,7 @@
 import { CMD_S } from '../enums/cmd.enum';
 import { RLang } from '../enums/r-lang.enum';
 import { WSProxy } from '../enums/ws-proxy.enum';
-import { WSArgs } from '../models/ws.models';
+import { WSArgs, WSMessageS } from '../models/ws.models';
 
 export class TravelchatWS extends WebSocket {
   readonly CLOSE_CODE_MANUALLY = 3999;
@@ -69,12 +69,16 @@ export class TravelchatWS extends WebSocket {
     this.addEventListener('error', this.onerror);
   }
 
+  sendCMD(wsMessage: WSMessageS): void {
+    this.send(JSON.stringify(wsMessage));
+  }
+
   override onopen = () => {
     console.warn('--- onopen() ---', this.readyState);
 
     if (this._isHost) {
       const value = {
-        cmd: CMD_S.HOST_HANDSHAKE,
+        cmd: CMD_S._1000_HOST_HANDSHAKE,
         data: {
           server_name: this._server_name,
           candidates: this._candidates,

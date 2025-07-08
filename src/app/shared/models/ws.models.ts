@@ -1,4 +1,4 @@
-import { CMD_R } from '../enums/cmd.enum';
+import { CMD_R, CMD_S } from '../enums/cmd.enum';
 import { RLang } from '../enums/r-lang.enum';
 import { WSProxy } from '../enums/ws-proxy.enum';
 
@@ -33,10 +33,20 @@ export type WSParams = {
   enable_tts: boolean;
 };
 
-// TODO: define enum DATA_R & DATA_S
-export type WSMessage =
+export type WSMessageR =
   | {
-      cmd: CMD_R.STREAM_TEXT;
+      cmd:
+        | CMD_R._100_OK
+        | CMD_R._102_NO_QUOTA
+        | CMD_R._103_TERMINATED
+        | CMD_R._104_ANOTHER_USAGE
+        | CMD_R._105_SPEAKER
+        | CMD_R._109_SPEAKER_CHANGED
+        | CMD_R._110_HAND_UP_USER_CHANGED;
+      data: string;
+    }
+  | {
+      cmd: CMD_R._101_STREAM_TEXT | CMD_R._107_MESSAGE;
       data: {
         chatRoomId: number;
         message: string;
@@ -44,8 +54,29 @@ export type WSMessage =
       };
     }
   | {
-      cmd: Exclude<CMD_R, CMD_R.STREAM_TEXT>;
+      cmd: CMD_R._106_HAND_UP_USERS;
+      data: Array<string>;
+    }
+  | {
+      cmd: CMD_R._108_MEETING_ROOM_CLOSED;
+      data: null;
+    };
+
+export type WSMessageS =
+  | {
+      cmd:
+        | CMD_S._1001_SET_SPEAKER
+        | CMD_S._1002_SEND_MESSAGE
+        | CMD_S._1004_HAND_UP
+        | CMD_S._1006_REMOVE_HAND_UP_USER;
       data: string;
+    }
+  | {
+      cmd: CMD_S._1003_GET_SPEAKER | CMD_S._1005_GET_HAND_UP_USERS;
+    }
+  | {
+      cmd: CMD_S._1007_ADD_RLANG;
+      data: RLang;
     };
 
 export type WSSession = {

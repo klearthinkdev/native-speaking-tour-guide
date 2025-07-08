@@ -44,7 +44,7 @@ import {
 import { SingleSidedComponent } from '../../../shared/components/single-sided.component/single-sided.component';
 import { StopClickPropagationDirective } from '../../../shared/directives/stop-click-propagation.directive';
 import { CMD_R, CMD_R_MESSAGE_MAP } from '../../../shared/enums/cmd.enum';
-import { WSMessage, WSServer, WSSession } from '../../../shared/models/ws.models';
+import { WSMessageR, WSServer } from '../../../shared/models/ws.models';
 import { AuthService } from '../../../shared/services/auth.service';
 import { ConfirmService } from '../../../shared/services/confirm.service';
 import { MediaDeviceService } from '../../../shared/services/media-device.service';
@@ -81,17 +81,6 @@ export class MeetingRoomComponent implements OnDestroy {
 
   ready = false;
   joining = false;
-
-  /**
-   * TODO
-   *
-   * 1. 檢核 code 規則，非法則提示錯誤訊息，並返回首頁
-   * 2. 若 localStorage 存在 chatroom token，讀取 localStorage 中的對話紀錄
-   * 3. 連線成功，加入會議後，儲存 chatroom token 於 localStorage
-   * 4. 正常結束連線，離開會議時，清除 localStorage 中的 chatroom token 和對話紀錄
-   *
-   * 離開頁面前，若連線未中斷，確認離開並中斷連線
-   */
 
   constructor(
     private _authService: AuthService,
@@ -138,6 +127,10 @@ export class MeetingRoomComponent implements OnDestroy {
       .subscribe((server) => this.onRebuildWS(server));
 
     this.saveChatLogsInterval$.pipe(takeUntil(this._destroy$)).subscribe(() => this.saveChatLogs());
+
+    // TODO: 避免多位主持人
+    // EntryChatroom 前取得查詢會議資訊，將 owner 指定為主持人
+    // (目前須以 chatroom id 查詢，改為 chatroom code ?)
 
     this.onJoinMeeting();
   }
@@ -204,10 +197,6 @@ export class MeetingRoomComponent implements OnDestroy {
     this._meetingRoomService.load(res.data);
 
     this.rec.init();
-
-    // TODO: WS 連線
-    // 避免多位主持人：WS 連線前，取得 chatroom token (entryChatroom) 查詢會議資訊 (x: 資料非即時)
-    // TODO: WS 連線成功後，傳 1007 新增語言
   }
 
   async onStartRecorder(): Promise<void> {
@@ -321,35 +310,30 @@ export class MeetingRoomComponent implements OnDestroy {
     this.saveChatLogs();
   }
 
-  private handleWSMessage(wsMessage: WSMessage): void {
+  private handleWSMessage(wsMessage: WSMessageR): void {
     switch (wsMessage.cmd) {
-      case CMD_R.OK:
-        try {
-          const { sessionId }: WSSession = JSON.parse(wsMessage.data);
-        } catch (err) {
-          console.error(err);
-        }
+      case CMD_R._100_OK:
         break;
-      case CMD_R.STREAM_TEXT:
+      case CMD_R._101_STREAM_TEXT:
         const { chatRoomId, message, user } = wsMessage.data;
 
         this.handleStreamText({ chatRoomId, streamText: message, user });
         break;
-      case CMD_R.NO_QUOTA:
-      case CMD_R.TERMINATED:
-      case CMD_R.ANOTHER_USAGE:
+      case CMD_R._102_NO_QUOTA:
+      case CMD_R._103_TERMINATED:
+      case CMD_R._104_ANOTHER_USAGE:
         this._snackBarService.error(CMD_R_MESSAGE_MAP[wsMessage.cmd]);
 
         this.stopRecorder();
         break;
       // TODO: handle CMD_R
-      case CMD_R.SPEAKER:
-      case CMD_R.HAND_UP_USERS:
-      case CMD_R.MESSAGE:
-      case CMD_R.MEETING_ROOM_CLOSED:
-      case CMD_R.SPEAKER_CHANGED:
-      case CMD_R.HAND_UP_USERS_CHANGED:
-        console.warn(wsMessage.cmd);
+      case CMD_R._105_SPEAKER:
+      case CMD_R._106_HAND_UP_USERS:
+      case CMD_R._107_MESSAGE:
+      case CMD_R._108_MEETING_ROOM_CLOSED:
+      case CMD_R._109_SPEAKER_CHANGED:
+      case CMD_R._110_HAND_UP_USER_CHANGED:
+        console.warn(`*** ${wsMessage.cmd} ***`);
         console.log(wsMessage.data);
         break;
     }
