@@ -7,6 +7,8 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   distinctUntilChanged,
@@ -18,6 +20,7 @@ import {
   Subject,
   takeUntil,
 } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 import { AbstractChatroomService } from '../../../api/abstract/abstract-chatroom.service';
 import { Identity } from '../../../api/enums/chatroom/identity.enum';
 import { ServerType } from '../../../api/enums/stream-server/server-type.enum';
@@ -46,7 +49,7 @@ import { MeetingRoomService } from './meeting-room.service';
 
 @Component({
   selector: 'app-meeting-room',
-  imports: [AsyncPipe, MatButtonModule, SingleSidedComponent],
+  imports: [AsyncPipe, MatButtonModule, MatIconModule, MatToolbarModule, SingleSidedComponent],
   templateUrl: './meeting-room.component.html',
   styleUrl: './meeting-room.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -119,6 +122,14 @@ export class MeetingRoomComponent implements OnDestroy {
     this.onJoinMeeting();
   }
 
+  mock(event: MouseEvent): void {
+    if (!environment.production && event.altKey && event.metaKey) {
+      console.warn('mock()');
+
+      this._meetingRoomService.mock(`${new Date().valueOf()}`);
+    }
+  }
+
   onJoinMeeting(): void {
     if (this._code === null || this.joining) {
       return;
@@ -163,7 +174,7 @@ export class MeetingRoomComponent implements OnDestroy {
 
   handleEntryChatroom(res: EntryChatroomRes): void {
     if (res.data === null) {
-      this._snackBarService.error('找不到你要加入的會議，會議可能已結束');
+      this._snackBarService.error('找不到你要加入的會議，會議可能已經結束');
 
       this._router.navigate(['']);
 
@@ -240,8 +251,10 @@ export class MeetingRoomComponent implements OnDestroy {
     await this.rec.start(deviceId, { server, roomToken, isHost, username });
   }
 
-  stopRecorder(): void {
-    this.rec.stop(true);
+  async stopRecorder(): Promise<void> {
+    await this.rec.stop(true);
+
+    this._router.navigate(['']);
   }
 
   onError(err: BaseAPIResModel<null>): Observable<never> {

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, interval, take } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { SOURCE } from '../../../api-mock/data/meeting-room.data';
 import { Payload, RoomUser } from '../../../api/models/chatroom/jwt.models';
 import { MessageO, MessageX } from '../../../shared/components/message.component/message.models';
 import { MessagePosition } from '../../../shared/enums/message-position.enum';
-import { RLang, ZH } from '../../../shared/enums/r-lang.enum';
+import { ZH } from '../../../shared/enums/r-lang.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,20 @@ export class MeetingRoomService {
   }
 
   constructor(private _jwtHelperService: JwtHelperService) {}
+
+  mock(prefix: string, options: { period: number } = { period: 3000 }): void {
+    if (this._username === undefined) {
+      return;
+    }
+
+    const source = SOURCE(this._username);
+
+    interval(options.period)
+      .pipe(take(source.length))
+      .subscribe((i) => {
+        this.addOrUpdate(source[i], prefix);
+      });
+  }
 
   load(roomToken: string): void {
     try {
@@ -83,8 +98,6 @@ export class MeetingRoomService {
   addOrUpdate(o: MessageO, prefix: string): void {
     const x = this.transform(o, prefix);
 
-    console.log(x);
-
     const chatLogs = this.chatLogs;
     const i = chatLogs.findIndex((m) => m.mid === x.mid);
 
@@ -106,9 +119,7 @@ export class MeetingRoomService {
         })),
       tranList: Object.entries(o.translations)
         .filter(([lang, text]) => text?.trim().length)
-        .filter(([lang]) =>
-          o.language === RLang.ZH ? lang === ZH.ZH : ![o.language, ZH.CHS, ZH.CHT].includes(lang),
-        )
+        .filter(([lang]) => ![o.language, ZH.CHS, ZH.CHT].includes(lang))
         .map(([lang, text]) => ({
           lang,
           text,
