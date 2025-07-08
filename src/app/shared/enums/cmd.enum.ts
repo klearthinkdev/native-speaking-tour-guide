@@ -39,7 +39,6 @@ type Flow =
       notifyAll: boolean;
     };
 
-// TODO: check FLOWS
 const FLOWS: Array<Flow> = [
   {
     send: CMD_S.HOST_HANDSHAKE, // 1000
@@ -71,8 +70,6 @@ const FLOWS: Array<Flow> = [
   },
   {
     send: CMD_S.REMOVE_HAND_UP_USER, // 1006
-    receive: CMD_R.HAND_UP_USERS_CHANGED, // 110
-    notifyAll: true,
   },
   {
     send: CMD_S.ADD_RLANG, // 1007

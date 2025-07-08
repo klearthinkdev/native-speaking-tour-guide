@@ -24,7 +24,6 @@ export class RecorderService {
     proxy: WSProxy.MULTI_DEFAULT,
     dict_type: '',
     enable_tts: false,
-    accept_speaker_label_command: true,
   };
 
   private _localStorageKey = 'recorder-config';
@@ -207,12 +206,7 @@ export class RecorderService {
 
           this._reconnect_count = 0;
 
-          ws.send(
-            JSON.stringify({
-              cmd: CMD_S.SET_SPEAKER,
-              data: ws.username,
-            }),
-          );
+          // TODO: 1007 ADD_RLANG
         }
       });
       ws.addEventListener('message', ({ data }: MessageEvent<unknown>) => {

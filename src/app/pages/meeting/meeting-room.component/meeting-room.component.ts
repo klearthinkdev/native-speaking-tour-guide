@@ -1,4 +1,4 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -23,6 +23,7 @@ import {
 } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { AbstractChatroomService } from '../../../api/abstract/abstract-chatroom.service';
+import { BaseAPICode } from '../../../api/enums/base-api-code.enum';
 import { Identity } from '../../../api/enums/chatroom/identity.enum';
 import { ServerType } from '../../../api/enums/stream-server/server-type.enum';
 import { BaseAPIResModel } from '../../../api/models/base-api.models';
@@ -49,16 +50,19 @@ import { RecorderService } from '../../../shared/services/recorder.service';
 import { SnackBarService } from '../../../shared/services/snack-bar.service';
 import { ROOM_CODE_REGEXP } from '../../../shared/validators/room-code.validator';
 import { MeetingRoomService } from './meeting-room.service';
+import { WaitingAreaComponent } from './waiting-area.component/waiting-area.component';
 
 @Component({
   selector: 'app-meeting-room',
   imports: [
     AsyncPipe,
+    NgClass,
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
     MatToolbarModule,
     SingleSidedComponent,
+    WaitingAreaComponent,
   ],
   templateUrl: './meeting-room.component.html',
   styleUrl: './meeting-room.component.css',
@@ -71,6 +75,7 @@ export class MeetingRoomComponent implements OnDestroy {
   private _destroy$ = new Subject<void>();
   private _code: string | null = null;
 
+  ready = false;
   joining = false;
 
   /**
@@ -168,11 +173,11 @@ export class MeetingRoomComponent implements OnDestroy {
   buildEntryChatroomReq(code: string): EntryChatroomReq {
     const account = this._authService.payload?.sub ?? '';
     const isHost = this._authService.isHost;
-    const { nickname, rlangs } = this._chatSettingsService.settings;
+    const { nickname, userCode, rlangs } = this._chatSettingsService.settings;
 
     return {
       room_code: code,
-      username: isHost ? account : nickname,
+      username: isHost ? account : `${nickname}#${userCode}`,
       identity: isHost
         ? Identity.HOST
         : this._authService.loggedIn
@@ -202,8 +207,6 @@ export class MeetingRoomComponent implements OnDestroy {
   }
 
   async onStartRecorder(): Promise<void> {
-    // TODO: 確認顯示暱稱、麥克風輸入裝置等
-
     await this._mediaDeviceService.getDevices();
 
     const { denied, deviceId } = this._mediaDeviceService;
@@ -213,6 +216,9 @@ export class MeetingRoomComponent implements OnDestroy {
 
       return;
     }
+    this.ready = true;
+
+    this._cdr.markForCheck();
 
     const { roomToken, username } = this._meetingRoomService;
 
@@ -229,16 +235,26 @@ export class MeetingRoomComponent implements OnDestroy {
       return;
     }
 
-    this._streamServerService
-      .Dispatch({
-        type: ServerType.WSS,
-        server: this.rec.server?.name ?? null,
-      })
-      .pipe(takeUntil(this._destroy$))
-      .subscribe({
-        next: this.handleDispatch.bind(this, deviceId, roomToken, username, isHost),
-        error: this.onError.bind(this),
+    if (isHost) {
+      this._streamServerService
+        .Dispatch({
+          type: ServerType.WSS,
+          server: this.rec.server?.name ?? null,
+        })
+        .pipe(takeUntil(this._destroy$))
+        .subscribe({
+          next: this.handleDispatch.bind(this, deviceId, roomToken, username, isHost),
+          error: this.onError.bind(this),
+        });
+    } else {
+      // TODO
+      this.handleDispatch(deviceId, roomToken, username, isHost, {
+        code: BaseAPICode.OK,
+        msg: '',
+        msg_key: '',
+        data: environment.server,
       });
+    }
   }
 
   async handleDispatch(
@@ -266,8 +282,7 @@ export class MeetingRoomComponent implements OnDestroy {
     this._confirmService
       .confirm(
         new ConfirmDialogData({
-          title: '離開會議',
-          content: '確認離開會議？',
+          title: '確認離開會議？',
           confirmButtonText: '離開',
           confirmButtonClass: 'bg-red-500 text-white',
         }),

@@ -125,6 +125,7 @@ export class MeetingRoomService {
           text,
         })),
       unixTime: new Date().valueOf(),
+      user: o.label,
     };
   }
 }

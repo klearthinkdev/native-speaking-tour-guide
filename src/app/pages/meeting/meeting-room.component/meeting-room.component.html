@@ -22,50 +22,51 @@
   </mat-toolbar>
 </header>
 
-<div class="h-dvh py-[56px] sm:py-[64px]" (dblclick)="mock($event)">
-  <div class="w-page flex h-full flex-col">
-    <div class="grow bg-primary/15">
+<div
+  [ngClass]="ready ? 'py-[56px] sm:py-[64px]' : 'pt-[56px] sm:pt-[64px]'"
+  class="h-dvh"
+  (dblclick)="mock($event)"
+>
+  <div class="w-page h-full bg-primary/15">
+    @if (ready) {
       <app-single-sided [chatLogs]="(chatLogs$ | async)!"></app-single-sided>
-    </div>
+    } @else {
+      <app-waiting-area
+        [disabled]="!(rec.initialized$ | async)"
+        (ready)="onStartRecorder()"
+      ></app-waiting-area>
+    }
   </div>
 </div>
 
-<div class="z-10">
-  <mat-toolbar class="fixed right-0 bottom-0 left-0 touch-manipulation">
-    <div class="w-page flex items-center">
-      <div class="flex w-full">
-        <button class="mr-2" matIconButton type="button">
-          <mat-icon>waving_hand</mat-icon>
-        </button>
+@if (ready) {
+  <div class="z-10">
+    <mat-toolbar class="fixed right-0 bottom-0 left-0 touch-manipulation">
+      <div class="w-page flex items-center">
+        <div class="flex w-full">
+          <button class="mr-2" matIconButton type="button">
+            <mat-icon>waving_hand</mat-icon>
+          </button>
+
+          <span class="grow"></span>
+        </div>
 
         <span class="grow"></span>
+
+        <div class="flex w-full">
+          <span class="grow"></span>
+
+          <button matIconButton type="button">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+        </div>
       </div>
-
-      <span class="grow"></span>
-
-      <div class="flex w-full">
-        <span class="grow"></span>
-
-        <button matIconButton type="button">
-          <mat-icon>more_horiz</mat-icon>
-        </button>
-      </div>
-    </div>
-  </mat-toolbar>
-</div>
+    </mat-toolbar>
+  </div>
+}
 
 @if (joining) {
   <div class="blocking spinner" appStopClickPropagation>
     <mat-spinner diameter="64"></mat-spinner>
   </div>
 }
-
-<!-- <button
-  class="mr-2"
-  [disabled]="!(rec.initialized$ | async)"
-  (click)="onStartRecorder()"
-  matButton="filled"
-  type="button"
->
-  Start
-</button> -->

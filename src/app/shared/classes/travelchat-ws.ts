@@ -23,7 +23,6 @@ export class TravelchatWS extends WebSocket {
   private _proxy: WSProxy = WSProxy.MULTI_DEFAULT;
   private _dict_type: string = '';
   private _enable_tts: boolean = false;
-  private _accept_speaker_label_command: boolean = true;
 
   override binaryType: BinaryType = 'arraybuffer';
 
@@ -64,8 +63,6 @@ export class TravelchatWS extends WebSocket {
       this._proxy = params.proxy ?? this._proxy;
       this._dict_type = params.dict_type ?? this._dict_type;
       this._enable_tts = params.enable_tts ?? this._enable_tts;
-      this._accept_speaker_label_command =
-        params.accept_speaker_label_command ?? this._accept_speaker_label_command;
     }
 
     this.addEventListener('open', this.onopen);
@@ -90,7 +87,6 @@ export class TravelchatWS extends WebSocket {
           proxy: this._proxy !== WSProxy.DEFAULT ? this._proxy : undefined,
           dict_type: this._dict_type !== '' ? this._dict_type : undefined,
           enable_tts: this._enable_tts ? '1' : '0',
-          accept_speaker_label_command: this._accept_speaker_label_command ? 1 : 0,
         },
       };
 

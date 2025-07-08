@@ -31,7 +31,6 @@ export type WSParams = {
   proxy: WSProxy;
   dict_type: string;
   enable_tts: boolean;
-  accept_speaker_label_command: boolean;
 };
 
 // TODO: define enum DATA_R & DATA_S

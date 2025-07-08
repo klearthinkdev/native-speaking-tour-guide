@@ -12,6 +12,8 @@ export const environment = {
   allowedDomains: ['/api'],
   disallowedRoutes: ['/api/user/login'],
 
+  server: { server: '', url: '' },
+
   tokenKey: 'dev:native-speaking-tour-guide:token',
   roomIdKey: 'dev:native-speaking-tour-guide:roomId',
 };

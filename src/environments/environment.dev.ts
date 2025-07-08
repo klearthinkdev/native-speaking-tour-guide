@@ -9,6 +9,8 @@ export const environment = {
   allowedDomains: ['dev.aispeak.in'],
   disallowedRoutes: ['https://dev.aispeak.in/api/user/login'],
 
+  server: { server: 's8', url: 'wss://devws.aispeak.in/' },
+
   tokenKey: 'local:native-speaking-tour-guide:token',
   roomIdKey: 'local:native-speaking-tour-guide:roomId',
 };
