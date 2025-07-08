@@ -2,7 +2,7 @@
   <mat-toolbar class="fixed top-0 right-0 left-0">
     <div class="w-page flex items-center">
       <div class="flex w-full">
-        <button (click)="stopRecorder()" matIconButton type="button">
+        <button (click)="onStopRecorder()" matIconButton type="button">
           <mat-icon>close</mat-icon>
         </button>
 
@@ -53,6 +53,12 @@
     </div>
   </mat-toolbar>
 </div>
+
+@if (joining) {
+  <div class="blocking spinner" appStopClickPropagation>
+    <mat-spinner diameter="64"></mat-spinner>
+  </div>
+}
 
 <!-- <button
   class="mr-2"

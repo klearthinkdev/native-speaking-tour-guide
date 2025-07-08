@@ -1,4 +1,5 @@
 @import 'tailwindcss' important;
+@source inline("bg-red-500 text-white");
 
 @custom-variant dark (&:where(.dark, .dark *));
 

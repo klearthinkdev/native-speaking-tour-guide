@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -32,6 +33,7 @@ import {
 import { DispatchRes } from '../../../api/models/stream-server/dispatch.models';
 import { StreamServerService } from '../../../api/stream-server.service';
 import { ChatSettingsService } from '../../../shared/components/chat-settings.dialog/chat-settings.service';
+import { ConfirmDialogData } from '../../../shared/components/confirm.dialog/confirm.models';
 import {
   isMessageTTS,
   MessageO,
@@ -41,6 +43,7 @@ import { SingleSidedComponent } from '../../../shared/components/single-sided.co
 import { CMD_R, CMD_R_MESSAGE_MAP } from '../../../shared/enums/cmd.enum';
 import { WSMessage, WSServer, WSSession } from '../../../shared/models/ws.models';
 import { AuthService } from '../../../shared/services/auth.service';
+import { ConfirmService } from '../../../shared/services/confirm.service';
 import { MediaDeviceService } from '../../../shared/services/media-device.service';
 import { RecorderService } from '../../../shared/services/recorder.service';
 import { SnackBarService } from '../../../shared/services/snack-bar.service';
@@ -49,7 +52,14 @@ import { MeetingRoomService } from './meeting-room.service';
 
 @Component({
   selector: 'app-meeting-room',
-  imports: [AsyncPipe, MatButtonModule, MatIconModule, MatToolbarModule, SingleSidedComponent],
+  imports: [
+    AsyncPipe,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatToolbarModule,
+    SingleSidedComponent,
+  ],
   templateUrl: './meeting-room.component.html',
   styleUrl: './meeting-room.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -68,8 +78,8 @@ export class MeetingRoomComponent implements OnDestroy {
    *
    * 1. 檢核 code 規則，非法則提示錯誤訊息，並返回首頁
    * 2. 若 localStorage 存在 chatroom token，讀取 localStorage 中的對話紀錄
-   * 3. 連線成功，加入會議室後，儲存 chatroom token 於 localStorage
-   * 4. 正常結束連線，離開會議室時，清除 localStorage 中的 chatroom token 和對話紀錄
+   * 3. 連線成功，加入會議後，儲存 chatroom token 於 localStorage
+   * 4. 正常結束連線，離開會議時，清除 localStorage 中的 chatroom token 和對話紀錄
    *
    * 離開頁面前，若連線未中斷，確認離開並中斷連線
    */
@@ -77,8 +87,9 @@ export class MeetingRoomComponent implements OnDestroy {
   constructor(
     private _authService: AuthService,
     private _cdr: ChangeDetectorRef,
-    private _chatSettingsService: ChatSettingsService,
     private _chatroomService: AbstractChatroomService,
+    private _chatSettingsService: ChatSettingsService,
+    private _confirmService: ConfirmService,
     private _mediaDeviceService: MediaDeviceService,
     private _meetingRoomService: MeetingRoomService,
     private _route: ActivatedRoute,
@@ -186,7 +197,7 @@ export class MeetingRoomComponent implements OnDestroy {
     this.rec.init();
 
     // TODO: WS 連線
-    // 避免多位主持人：WS 連線前，取得 chatroom token (entryChatroom) 查詢會議室資訊 (x: 資料非即時)
+    // 避免多位主持人：WS 連線前，取得 chatroom token (entryChatroom) 查詢會議資訊 (x: 資料非即時)
     // TODO: WS 連線成功後，傳 1007 新增語言
   }
 
@@ -249,6 +260,23 @@ export class MeetingRoomComponent implements OnDestroy {
     };
 
     await this.rec.start(deviceId, { server, roomToken, isHost, username });
+  }
+
+  onStopRecorder(): void {
+    this._confirmService
+      .confirm(
+        new ConfirmDialogData({
+          title: '離開會議',
+          content: '確認離開會議？',
+          confirmButtonText: '離開',
+          confirmButtonClass: 'bg-red-500 text-white',
+        }),
+      )
+      .pipe(
+        takeUntil(this._destroy$),
+        filter((res) => res === true),
+      )
+      .subscribe(() => this.stopRecorder());
   }
 
   async stopRecorder(): Promise<void> {

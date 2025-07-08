@@ -1,0 +1,24 @@
+<div mat-dialog-title>@if (data.title.length) { <span>{{ data.title | translate }}</span> }</div>
+
+<mat-dialog-content
+  >@if (data.content.length) { <span>{{ data.content | translate }}</span> }</mat-dialog-content
+>
+
+<mat-dialog-actions>
+  @if (data.cancelButtonText.length) {
+  <button [mat-dialog-close]="false" matButton type="button">
+    {{ data.cancelButtonText | translate }}
+  </button>
+
+  <span class="grow"></span>
+  }
+
+  <button
+    [ngClass]="data.confirmButtonClass"
+    [mat-dialog-close]="true"
+    matButton="filled"
+    type="submit"
+  >
+    {{ data.confirmButtonText | translate }}
+  </button>
+</mat-dialog-actions>

@@ -1,5 +1,8 @@
 {
-  "ACTION": {},
+  "ACTION": {
+    "CANCEL": "キャンセル",
+    "CONFIRM": "確認"
+  },
   "ENUM": {
     "API": {},
     "SHARED": {
