@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   distinctUntilChanged,
@@ -41,6 +42,7 @@ import {
   MessageTTS,
 } from '../../../shared/components/message.component/message.models';
 import { SingleSidedComponent } from '../../../shared/components/single-sided.component/single-sided.component';
+import { StopClickPropagationDirective } from '../../../shared/directives/stop-click-propagation.directive';
 import { CMD_R, CMD_R_MESSAGE_MAP } from '../../../shared/enums/cmd.enum';
 import { WSMessage, WSServer, WSSession } from '../../../shared/models/ws.models';
 import { AuthService } from '../../../shared/services/auth.service';
@@ -61,7 +63,9 @@ import { WaitingAreaComponent } from './waiting-area.component/waiting-area.comp
     MatIconModule,
     MatProgressSpinnerModule,
     MatToolbarModule,
+    MatTooltipModule,
     SingleSidedComponent,
+    StopClickPropagationDirective,
     WaitingAreaComponent,
   ],
   templateUrl: './meeting-room.component.html',
@@ -393,9 +397,9 @@ export class MeetingRoomComponent implements OnDestroy {
   }
 
   @HostListener('window:beforeunload', ['$event'])
-  beforeWindowUnload(event: Event): void {
+  async beforeWindowUnload(event: Event): Promise<void> {
     if (this.rec.recording) {
-      this.stopRecorder();
+      await this.stopRecorder();
     }
 
     this.saveChatLogs();

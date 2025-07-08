@@ -1,14 +1,21 @@
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { filter, Subject, takeUntil } from 'rxjs';
+import { combineLatest, filter, Subject, takeUntil } from 'rxjs';
 import { ConfirmDialogData } from '../../shared/components/confirm.dialog/confirm.models';
 import { LangSwitch } from '../../shared/components/lang.switch/lang.switch';
 import { ThemeSwitch } from '../../shared/components/theme.switch/theme.switch';
@@ -26,6 +33,7 @@ import { ConfirmService } from '../../shared/services/confirm.service';
     MatListModule,
     MatSidenavModule,
     MatToolbarModule,
+    MatTooltipModule,
     RouterLink,
     RouterLinkActive,
     RouterOutlet,
@@ -37,19 +45,36 @@ import { ConfirmService } from '../../shared/services/confirm.service';
   styleUrl: './layout.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LayoutComponent implements OnDestroy {
+export class LayoutComponent implements AfterViewInit, OnDestroy {
   readonly loggedIn$;
   readonly isHost$;
 
+  private _viewInit$ = new Subject<void>();
   private _destroy$ = new Subject<void>();
+
+  @ViewChild(MatSidenav) sidenav!: MatSidenav;
 
   constructor(
     private _authService: AuthService,
     private _confirmService: ConfirmService,
+    private _router: Router,
     public b: BreakpointsService,
   ) {
     this.loggedIn$ = this._authService.loggedIn$;
     this.isHost$ = this._authService.isHost$;
+
+    combineLatest([this._viewInit$, this._router.events])
+      .pipe(takeUntil(this._destroy$))
+      .subscribe(([viewInit, e]) => {
+        if (e instanceof NavigationEnd && !this.b.queries.MD) {
+          this.sidenav.close();
+        }
+      });
+  }
+
+  ngAfterViewInit(): void {
+    this._viewInit$.next();
+    this._viewInit$.complete();
   }
 
   onLogout(): void {

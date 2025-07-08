@@ -8,6 +8,7 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
+import { MatDividerModule } from '@angular/material/divider';
 import { Locale } from 'date-fns';
 import { ScrollXIntoViewDirective } from '../../directives/scroll-x-into-view.directive';
 import { MESSAGE_POSITION_OBJ } from '../../enums/message-position.enum';
@@ -16,7 +17,7 @@ import { MessageSettings, MessageX, MessageXExtension } from './message.models';
 
 @Component({
   selector: 'app-message',
-  imports: [NgClass, NgStyle, ScrollXIntoViewDirective, DateFnsFormatPipe],
+  imports: [NgClass, NgStyle, MatDividerModule, ScrollXIntoViewDirective, DateFnsFormatPipe],
   templateUrl: './message.component.html',
   styleUrl: './message.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

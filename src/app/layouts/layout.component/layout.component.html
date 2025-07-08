@@ -11,7 +11,13 @@
             <span class="grow"></span>
           </div>
 
-          <span class="grow"></span>
+          <img
+            class="h-14 w-auto shrink-0"
+            alt="Logo_Lockup"
+            height="56"
+            src="Logo_Lockup.png"
+            width="auto"
+          />
 
           <div class="flex w-full">
             <span class="grow"></span>
@@ -28,8 +34,7 @@
     >
       <mat-sidenav
         #sidenav
-        [class.pb-12]="isHost$ | async"
-        class="w-80"
+        class="w-80 pb-12"
         [fixedInViewport]="!queries.MD"
         [fixedTopGap]="queries.MD ? 0 : queries.SM ? 64 : 56"
         [mode]="queries.MD ? 'side' : 'over'"
@@ -74,45 +79,38 @@
               <span [class.text-primary]="rla1.isActive" class="grow truncate"> 個人頁面 </span>
             </div>
           </mat-list-item>
-
-          <mat-divider class="mx-2 opacity-50"></mat-divider>
-
-          @if (loggedIn$ | async) {
-            <mat-list-item class="w-full px-2" (click)="onLogout()" title="會員登出">
-              <div class="flex items-center text-red-500" matListItemTitle>
-                <div class="flex h-10 w-10 shrink-0 items-center justify-center">
-                  <mat-icon>logout</mat-icon>
-                </div>
-
-                <span class="grow truncate"> 會員登出 </span>
-              </div>
-            </mat-list-item>
-          } @else {
-            <!-- 會員登入 -->
-            <mat-list-item
-              #rla2="routerLinkActive"
-              class="w-full px-2"
-              [activated]="rla2.isActive"
-              [routerLink]="['/login']"
-              routerLinkActive
-              title="會員登入"
-            >
-              <div class="flex items-center" matListItemTitle>
-                <div class="flex h-10 w-10 shrink-0 items-center justify-center">
-                  <mat-icon [class.text-primary]="rla2.isActive">person</mat-icon>
-                </div>
-
-                <span [class.text-primary]="rla2.isActive" class="grow truncate"> 會員登入 </span>
-              </div>
-            </mat-list-item>
-          }
         </mat-nav-list>
 
-        @if (isHost$ | async) {
-          <div
-            class="absolute right-0 bottom-0 left-0 z-10 mx-2 flex h-12 items-center px-2"
-            title="發起會議"
-          >
+        <div
+          class="absolute right-0 bottom-0 left-0 z-10 mx-2 flex h-12 items-center px-2"
+          title="發起會議"
+        >
+          @if (loggedIn$ | async) {
+            <!-- 會員登出 -->
+            <button
+              class="mr-2 shadow-none"
+              (click)="onLogout()"
+              matMiniFab
+              matTooltip="會員登出"
+              type="button"
+            >
+              <mat-icon>logout</mat-icon>
+            </button>
+          } @else {
+            <!-- 會員登入 -->
+            <button
+              class="mr-2 shadow-none"
+              [routerLink]="['/login']"
+              matMiniFab
+              matTooltip="會員登入"
+              type="button"
+            >
+              <mat-icon>person</mat-icon>
+            </button>
+          }
+
+          @if (isHost$ | async) {
+            <!-- 發起會議 -->
             <button
               class="grow"
               [routerLink]="['/start-a-meeting']"
@@ -123,8 +121,8 @@
 
               發起會議
             </button>
-          </div>
-        }
+          }
+        </div>
       </mat-sidenav>
 
       <mat-sidenav-content>

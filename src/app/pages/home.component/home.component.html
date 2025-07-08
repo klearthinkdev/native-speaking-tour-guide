@@ -10,6 +10,7 @@
       <form class="flex grow items-start" [formGroup]="fg" (ngSubmit)="onEnterMeetingRoom()">
         <mat-form-field class="mr-2 w-full">
           <input
+            class="font-mono"
             [formControl]="fcs['roomCode']"
             inputmode="text"
             matInput

@@ -2,14 +2,15 @@
   <mat-toolbar class="fixed top-0 right-0 left-0">
     <div class="w-page flex items-center">
       <div class="flex w-full">
-        <button (click)="onStopRecorder()" matIconButton type="button">
+        <button (click)="onStopRecorder()" matIconButton matTooltip="離開會議" type="button">
           <mat-icon>close</mat-icon>
         </button>
 
         <span class="grow"></span>
       </div>
 
-      <span class="grow"></span>
+      <!-- TODO: 顯示會議代碼 -->
+      <span class="grow font-mono"></span>
 
       <div class="flex w-full">
         <span class="grow"></span>
@@ -27,7 +28,16 @@
   class="h-dvh"
   (dblclick)="mock($event)"
 >
-  <div class="w-page h-full bg-primary/15">
+  <!-- TODO: 確認 logo 擺放大小和位置 -->
+  <div class="w-page relative h-full bg-primary/15">
+    <img
+      class="absolute top-0 left-0 mr-auto h-14 w-auto shrink-0 opacity-50"
+      alt="Logo_Lockup"
+      height="56"
+      src="Logo_Lockup.png"
+      width="auto"
+    />
+
     @if (ready) {
       <app-single-sided [chatLogs]="(chatLogs$ | async)!"></app-single-sided>
     } @else {
@@ -36,6 +46,14 @@
         (ready)="onStartRecorder()"
       ></app-waiting-area>
     }
+
+    <img
+      class="absolute right-0 bottom-0 ml-auto h-14 w-auto shrink-0 opacity-50"
+      alt="Logo_Lockup"
+      height="56"
+      src="Logo_Lockup.png"
+      width="auto"
+    />
   </div>
 </div>
 
@@ -66,7 +84,7 @@
 }
 
 @if (joining) {
-  <div class="blocking spinner" appStopClickPropagation>
+  <div class="blocking spinner bg-black/5" appStopClickPropagation>
     <mat-spinner diameter="64"></mat-spinner>
   </div>
 }
