@@ -61,6 +61,13 @@ body {
 * {
   scrollbar-width: thin;
 }
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none !important;
+}
+.scrollbar-hidden {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
 
 /* page */
 .w-page {

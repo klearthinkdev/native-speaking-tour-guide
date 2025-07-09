@@ -9,12 +9,14 @@
         <span class="grow"></span>
       }
       @for (x of chatLogs; track x.mid) {
+        <!-- TODO: owner -->
         <app-message
           class="snap-start"
           [hasTwoSides]="false"
           [last]="$last"
           [locale]="inputs.locale!"
           [opposite]="false"
+          [owner]="'ta.motc.001'"
           [settings]="inputs.settings!"
           [x]="x"
         ></app-message>

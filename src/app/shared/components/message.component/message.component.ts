@@ -25,6 +25,7 @@ import { MessageSettings, MessageX, MessageXExtension } from './message.models';
 export class MessageComponent implements OnInit, OnChanges {
   @Input() locale!: Locale;
   @Input() x!: MessageX;
+  @Input() owner?: string;
   @Input() settings!: MessageSettings;
   @Input() opposite = false;
   @Input() hasTwoSides = false;
@@ -42,11 +43,6 @@ export class MessageComponent implements OnInit, OnChanges {
 
   transcriptZHFlag = false;
   translationZHFlag = false;
-
-  transcriptChtText = '';
-  transcriptChsText = '';
-  translationChtText = '';
-  translationChsText = '';
 
   ngOnInit(): void {
     this.positionRight = this.x.position === MESSAGE_POSITION_OBJ.Right;

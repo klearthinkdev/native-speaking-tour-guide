@@ -1,6 +1,6 @@
 <div class="grid h-page-h grid-cols-2 gap-4 sm:h-sm-page-h">
-  <form class="col-span-2 flex flex-col gap-4 md:col-span-1" [formGroup]="fg">
-    <div class="mt-4 flex items-center text-2xl">
+  <form class="form-box col-span-2 grid-cols-1 gap-4 md:col-span-1" [formGroup]="fg">
+    <div class="col-span-1 my-4 flex items-center text-2xl">
       <span class="grow"> 關於我 </span>
 
       @if (!editing1) {
@@ -37,7 +37,7 @@
       }
     </div>
 
-    <div class="my-8 flex flex-col gap-4 lg:flex-row" [formGroup]="aboutMeFG">
+    <div class="col-span-1 flex flex-col gap-4 lg:flex-row" [formGroup]="aboutMeFG">
       <div class="grow-0">
         <div
           class="m-auto mb-2 flex h-15 w-15 items-center justify-center rounded-full bg-primary/15 text-2xl text-primary"
@@ -94,7 +94,7 @@
       </div>
     </div>
 
-    <div class="mt-4 flex items-center text-2xl">
+    <div class="col-span-1 mt-8 flex items-center text-2xl">
       <span class="grow"> 偏好語言 </span>
 
       @if (!editing2) {
@@ -131,7 +131,7 @@
       }
     </div>
 
-    <mat-list (cdkDropListDropped)="drop($event)" cdkDropList>
+    <mat-list class="col-span-1" (cdkDropListDropped)="drop($event)" cdkDropList>
       @for (rlang of fcs['rlangs'].value; track $index) {
         <mat-list-item [cdkDragData]="rlang" cdkDrag>
           <div class="flex items-center" matListItemTitle>
@@ -183,7 +183,7 @@
       }
     </mat-list>
 
-    <div class="flex">
+    <div class="col-span-1 mt-8 flex">
       <span class="grow"></span>
 
       <button

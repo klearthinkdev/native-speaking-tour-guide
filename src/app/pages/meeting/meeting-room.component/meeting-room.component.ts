@@ -36,12 +36,14 @@ import { DispatchRes } from '../../../api/models/stream-server/dispatch.models';
 import { StreamServerService } from '../../../api/stream-server.service';
 import { ChatSettingsService } from '../../../shared/components/chat-settings.dialog/chat-settings.service';
 import { ConfirmDialogData } from '../../../shared/components/confirm.dialog/confirm.models';
+import { LangSwitch } from '../../../shared/components/lang.switch/lang.switch';
 import {
   isMessageTTS,
   MessageO,
   MessageTTS,
 } from '../../../shared/components/message.component/message.models';
 import { SingleSidedComponent } from '../../../shared/components/single-sided.component/single-sided.component';
+import { ThemeSwitch } from '../../../shared/components/theme.switch/theme.switch';
 import { StopClickPropagationDirective } from '../../../shared/directives/stop-click-propagation.directive';
 import { CMD_R, CMD_R_MESSAGE_MAP } from '../../../shared/enums/cmd.enum';
 import { WSMessageR, WSServer } from '../../../shared/models/ws.models';
@@ -67,17 +69,19 @@ import { WaitingAreaComponent } from './waiting-area.component/waiting-area.comp
     SingleSidedComponent,
     StopClickPropagationDirective,
     WaitingAreaComponent,
+    ThemeSwitch,
+    LangSwitch,
   ],
   templateUrl: './meeting-room.component.html',
   styleUrl: './meeting-room.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeetingRoomComponent implements OnDestroy {
+  readonly code: string | null = null;
   readonly chatLogs$;
   readonly saveChatLogsInterval$ = interval(15 * 1000);
 
   private _destroy$ = new Subject<void>();
-  private _code: string | null = null;
 
   ready = false;
   joining = false;
@@ -96,9 +100,9 @@ export class MeetingRoomComponent implements OnDestroy {
     private _streamServerService: StreamServerService,
     public rec: RecorderService,
   ) {
-    this._code = this._route.snapshot.paramMap.get('code');
+    this.code = this._route.snapshot.paramMap.get('code');
 
-    if (this._code === null || !ROOM_CODE_REGEXP.test(this._code)) {
+    if (this.code === null || !ROOM_CODE_REGEXP.test(this.code)) {
       this._snackBarService.error('會議代碼格式有誤');
 
       this._router.navigate(['']);
@@ -144,12 +148,12 @@ export class MeetingRoomComponent implements OnDestroy {
   }
 
   onJoinMeeting(): void {
-    if (this._code === null || this.joining) {
+    if (this.code === null || this.joining) {
       return;
     }
     this.joining = true;
 
-    const req = this.buildEntryChatroomReq(this._code);
+    const req = this.buildEntryChatroomReq(this.code);
 
     this._chatroomService
       .EntryChatroom(req)

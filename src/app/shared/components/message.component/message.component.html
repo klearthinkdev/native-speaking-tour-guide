@@ -15,8 +15,7 @@
       [class.hidden]="positionRight"
       class="mb-1 pl-4 text-start text-xs text-gray-700 opacity-75 dark:text-gray-300"
     >
-      <!-- TODO: 替換 owner username 為 主持人 -->
-      {{ xExtension.user === 'ta.motc.001' ? '主持人' : xExtension.user }}
+      {{ xExtension.user === owner ? '主持人' : xExtension.user }}
     </div>
 
     <div
@@ -24,7 +23,8 @@
         'font-size': settings.fontSize / 16 + 'rem',
         'line-height': (settings.fontSize / 16) * (14 / 9) + 'rem',
       }"
-      class="relative rounded-3xl bg-light p-3 dark:bg-dark"
+      [ngClass]="positionRight ? 'bg-primary-900 dark:bg-primary-100' : 'bg-light dark:bg-dark'"
+      class="relative rounded-3xl p-3"
     >
       <!-- 原文: trxnList -->
       @if (settings.transcription) {
@@ -49,12 +49,12 @@
         settings.translation &&
         xExtension.tranList.length
       ) {
-        <!-- TODO: opacity-75 ? border-color ? -->
         <mat-divider
           [ngStyle]="{
             'margin-top': settings.fontSize / 64 + 'rem',
             'margin-bottom': settings.fontSize / 80 + 'rem',
           }"
+          class="border-gray-700 opacity-75 dark:border-gray-300"
         ></mat-divider>
       }
       <!-- 譯文: tranList -->
@@ -76,8 +76,14 @@
       <div
         [ngClass]="
           flexRowReverse
-            ? '-right-3 rotate-45 border-l-light dark:border-l-dark'
-            : '-left-3 -rotate-45 border-r-light dark:border-r-dark'
+            ? '-right-3 rotate-45 ' +
+              (positionRight
+                ? 'border-l-primary-900 dark:border-l-primary-100'
+                : 'border-l-light dark:border-l-dark')
+            : '-left-3 -rotate-45 ' +
+              (positionRight
+                ? 'border-r-primary-900 dark:border-r-primary-100'
+                : 'border-r-light dark:border-r-dark')
         "
         class="absolute -bottom-1 h-0 w-0 border-x-12 border-y-4 border-solid border-transparent"
       ></div>

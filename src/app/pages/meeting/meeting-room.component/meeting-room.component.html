@@ -9,15 +9,17 @@
         <span class="grow"></span>
       </div>
 
-      <!-- TODO: 顯示會議代碼 -->
-      <span class="grow font-mono"></span>
+      <!-- TODO: room name & code -->
+      <span class="grow font-mono">{{ code }}</span>
 
       <div class="flex w-full">
         <span class="grow"></span>
 
-        <button matIconButton type="button">
-          <mat-icon>group</mat-icon>
-        </button>
+        <app-theme-switch></app-theme-switch>
+
+        <app-lang-switch></app-lang-switch>
+
+        <!-- TODO: view QR code / room code & view participants -->
       </div>
     </div>
   </mat-toolbar>
@@ -25,13 +27,21 @@
 
 <div
   [ngClass]="ready ? 'py-[56px] sm:py-[64px]' : 'pt-[56px] sm:pt-[64px]'"
-  class="h-dvh"
+  class="h-dvh bg-primary/15"
   (dblclick)="mock($event)"
 >
   <!-- TODO: 確認 logo 擺放大小和位置 -->
-  <div class="w-page relative h-full bg-primary/15">
+  <div class="w-page relative h-full bg-white dark:bg-black">
     <img
       class="absolute top-0 left-0 mr-auto h-14 w-auto shrink-0 opacity-50"
+      alt="Logo_Lockup"
+      height="56"
+      src="Logo_Lockup.png"
+      width="auto"
+    />
+
+    <img
+      class="absolute right-0 bottom-0 ml-auto h-14 w-auto shrink-0 opacity-50"
       alt="Logo_Lockup"
       height="56"
       src="Logo_Lockup.png"
@@ -46,14 +56,6 @@
         (ready)="onStartRecorder()"
       ></app-waiting-area>
     }
-
-    <img
-      class="absolute right-0 bottom-0 ml-auto h-14 w-auto shrink-0 opacity-50"
-      alt="Logo_Lockup"
-      height="56"
-      src="Logo_Lockup.png"
-      width="auto"
-    />
   </div>
 </div>
 
