@@ -5,7 +5,7 @@ import { TravelchatWS } from '../classes/travelchat-ws';
 import { CMD_R, CMD_S } from '../enums/cmd.enum';
 import { RLang } from '../enums/r-lang.enum';
 import { WSProxy } from '../enums/ws-proxy.enum';
-import { WSArgs, WSConfig, WSMessageR, WSParams, WSServer } from '../models/ws.models';
+import { WSArgs, WSConfig, WSMessageR, WSMessageS, WSParams, WSServer } from '../models/ws.models';
 import { WakeLockService } from './wake-lock.service';
 
 @Injectable({
@@ -160,7 +160,10 @@ export class RecorderService {
     this.save();
   }
 
-  async start(deviceId: string, { server, roomToken, username, isHost }: WSArgs): Promise<void> {
+  async start(
+    deviceId: string,
+    { server, roomToken, username, isHost, rlang }: WSArgs,
+  ): Promise<void> {
     console.warn('start()');
 
     if (!this._initialized) {
@@ -168,7 +171,7 @@ export class RecorderService {
     }
     await this._wakeLockService.requestScreen();
 
-    this.buildWS({ server, roomToken, username, isHost });
+    this.buildWS({ server, roomToken, username, isHost, rlang });
     await this.buildStream(deviceId);
   }
 
@@ -182,7 +185,17 @@ export class RecorderService {
     await this._wakeLockService.releaseScreen();
   }
 
-  buildWS({ server, roomToken, username, isHost }: WSArgs): void {
+  wsSendCMD(wsMessage: WSMessageS): void {
+    if (this.ws === null) {
+      console.error('sendCMD() failed: ws is null', wsMessage);
+
+      return;
+    }
+
+    this.ws.sendCMD(wsMessage);
+  }
+
+  buildWS({ server, roomToken, username, isHost, rlang }: WSArgs): void {
     if (this.server !== undefined) {
       server = this.server;
     }
@@ -190,12 +203,21 @@ export class RecorderService {
     console.warn('buildWS()');
     console.log('server:', server);
     console.log('roomToken:', roomToken);
+    console.log('username:', username);
+    console.log('rlang:', rlang);
     console.log('isHost:', isHost);
 
     try {
       this._prefix = `${new Date().valueOf()}`;
 
-      const ws = new TravelchatWS({ server, params: this.params, roomToken, username, isHost });
+      const ws = new TravelchatWS({
+        server,
+        params: this.params,
+        roomToken,
+        username,
+        isHost,
+        rlang,
+      });
       this.ws = ws;
 
       ws.addEventListener('open', () => {
@@ -205,9 +227,10 @@ export class RecorderService {
           this._connected = true;
 
           this._reconnect_count = 0;
-
-          // TODO: WS 連線成功後，傳 1007 新增語言
         }
+
+        this.wsSendCMD({ cmd: CMD_S._1003_GET_SPEAKER });
+        this.wsSendCMD({ cmd: CMD_S._1007_ADD_RLANG, data: rlang });
       });
       ws.addEventListener('message', ({ data }: MessageEvent<unknown>) => {
         if (typeof data !== 'string' || data.length === 0) {
@@ -224,12 +247,10 @@ export class RecorderService {
 
             this._reconnect_count = 0;
 
-            ws.sendCMD({
+            this.wsSendCMD({
               cmd: CMD_S._1001_SET_SPEAKER,
               data: ws.username,
             });
-
-            // TODO: WS 連線成功後，傳 1007 新增語言
           }
 
           this.wsMessage$.next(wsMessage);
@@ -260,11 +281,11 @@ export class RecorderService {
     }
   }
 
-  rebuildWS({ server, roomToken, username, isHost }: WSArgs): void {
+  rebuildWS({ server, roomToken, username, isHost, rlang }: WSArgs): void {
     console.warn('rebuildWS()');
 
     this.abortWS(false);
-    this.buildWS({ server, roomToken, username, isHost });
+    this.buildWS({ server, roomToken, username, isHost, rlang });
   }
 
   async buildStream(deviceId: string): Promise<void> {

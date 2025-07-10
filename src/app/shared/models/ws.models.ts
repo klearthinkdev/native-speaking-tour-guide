@@ -8,6 +8,7 @@ export type WSArgs = {
   roomToken: string;
   username: string;
   isHost: boolean;
+  rlang: RLang;
 };
 
 export type WSConfig = {

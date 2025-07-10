@@ -9,8 +9,8 @@ export class TravelchatWS extends WebSocket {
   private _accepted = false;
   private _manuallyClosed = false;
 
-  private _isHost = false;
   private _username: string;
+  private _isHost = false;
 
   private _server_name: string;
   private _candidates: Array<RLang> = [RLang.ZH, RLang.EN, RLang.JA]; // TODO: 預選 3-4 種最常用語言？
@@ -48,8 +48,8 @@ export class TravelchatWS extends WebSocket {
   constructor({ server, params, roomToken, username, isHost }: WSArgs) {
     super(`${server.url}ws/travelchat?t=${roomToken}`);
 
-    this._isHost = isHost;
     this._username = username;
+    this._isHost = isHost;
     this._server_name = server.name;
 
     if (params !== undefined) {

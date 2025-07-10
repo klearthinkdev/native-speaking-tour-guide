@@ -1,7 +1,7 @@
 <header class="z-10">
   <mat-toolbar class="fixed top-0 right-0 left-0">
     <div class="w-page flex items-center">
-      <div class="flex w-full">
+      <div class="flex w-20 shrink-0 grow-0">
         <button (click)="onStopRecorder()" matIconButton matTooltip="離開會議" type="button">
           <mat-icon>close</mat-icon>
         </button>
@@ -9,17 +9,17 @@
         <span class="grow"></span>
       </div>
 
-      <!-- TODO: room name & code -->
-      <span class="grow font-mono">{{ code }}</span>
+      <span class="grow truncate text-center font-mono">
+        {{ code }}
+      </span>
 
-      <div class="flex w-full">
+      <div class="flex w-20 shrink-0 grow-0">
         <span class="grow"></span>
 
-        <app-theme-switch></app-theme-switch>
-
-        <app-lang-switch></app-lang-switch>
-
         <!-- TODO: view QR code / room code & view participants -->
+        <button matIconButton matTooltip="會議資訊" type="button">
+          <mat-icon>info_outline</mat-icon>
+        </button>
       </div>
     </div>
   </mat-toolbar>
@@ -49,7 +49,10 @@
     />
 
     @if (ready) {
-      <app-single-sided [chatLogs]="(chatLogs$ | async)!"></app-single-sided>
+      <app-single-sided
+        [chatLogs]="(chatLogs$ | async)!"
+        [owner]="(owner$ | async)!"
+      ></app-single-sided>
     } @else {
       <app-waiting-area
         [disabled]="!(rec.initialized$ | async)"
@@ -85,7 +88,7 @@
   </div>
 }
 
-@if (joining) {
+@if (joining || querying) {
   <div class="blocking spinner bg-black/5" appStopClickPropagation>
     <mat-spinner diameter="64"></mat-spinner>
   </div>

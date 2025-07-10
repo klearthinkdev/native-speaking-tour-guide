@@ -2,14 +2,6 @@
   <div class="flex grow gap-4">
     <div class="flex w-full items-center justify-center">
       <form class="form-box w-full max-w-80 grid-cols-1" [formGroup]="fg" (ngSubmit)="onLogin()">
-        <img
-          class="m-auto h-14 w-auto shrink-0"
-          alt="Logo_Lockup"
-          height="56"
-          src="Logo_Lockup.png"
-          width="auto"
-        />
-
         <!-- 帳號 account -->
         <mat-form-field class="col-span-1">
           <mat-label>帳號</mat-label>
@@ -75,7 +67,7 @@
         </button>
 
         <div class="col-span-1 my-4">
-          <p class="text-gray text-center text-xs">沒有帳號嗎？</p>
+          <p class="text-gray mb-1 text-center text-xs">沒有帳號嗎？</p>
           <button
             class="w-full"
             [disabled]="loggingIn"

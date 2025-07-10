@@ -24,7 +24,6 @@ import {
 } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { AbstractChatroomService } from '../../../api/abstract/abstract-chatroom.service';
-import { BaseAPICode } from '../../../api/enums/base-api-code.enum';
 import { Identity } from '../../../api/enums/chatroom/identity.enum';
 import { ServerType } from '../../../api/enums/stream-server/server-type.enum';
 import { BaseAPIResModel } from '../../../api/models/base-api.models';
@@ -32,20 +31,20 @@ import {
   EntryChatroomReq,
   EntryChatroomRes,
 } from '../../../api/models/chatroom/entry-chatroom.models';
+import { InfoRes } from '../../../api/models/chatroom/info.models';
 import { DispatchRes } from '../../../api/models/stream-server/dispatch.models';
 import { StreamServerService } from '../../../api/stream-server.service';
 import { ChatSettingsService } from '../../../shared/components/chat-settings.dialog/chat-settings.service';
 import { ConfirmDialogData } from '../../../shared/components/confirm.dialog/confirm.models';
-import { LangSwitch } from '../../../shared/components/lang.switch/lang.switch';
 import {
   isMessageTTS,
   MessageO,
   MessageTTS,
 } from '../../../shared/components/message.component/message.models';
 import { SingleSidedComponent } from '../../../shared/components/single-sided.component/single-sided.component';
-import { ThemeSwitch } from '../../../shared/components/theme.switch/theme.switch';
 import { StopClickPropagationDirective } from '../../../shared/directives/stop-click-propagation.directive';
 import { CMD_R, CMD_R_MESSAGE_MAP } from '../../../shared/enums/cmd.enum';
+import { RLang } from '../../../shared/enums/r-lang.enum';
 import { WSMessageR, WSServer } from '../../../shared/models/ws.models';
 import { AuthService } from '../../../shared/services/auth.service';
 import { ConfirmService } from '../../../shared/services/confirm.service';
@@ -69,8 +68,6 @@ import { WaitingAreaComponent } from './waiting-area.component/waiting-area.comp
     SingleSidedComponent,
     StopClickPropagationDirective,
     WaitingAreaComponent,
-    ThemeSwitch,
-    LangSwitch,
   ],
   templateUrl: './meeting-room.component.html',
   styleUrl: './meeting-room.component.css',
@@ -79,12 +76,14 @@ import { WaitingAreaComponent } from './waiting-area.component/waiting-area.comp
 export class MeetingRoomComponent implements OnDestroy {
   readonly code: string | null = null;
   readonly chatLogs$;
+  readonly owner$;
   readonly saveChatLogsInterval$ = interval(15 * 1000);
 
   private _destroy$ = new Subject<void>();
 
   ready = false;
   joining = false;
+  querying = false;
 
   constructor(
     private _authService: AuthService,
@@ -111,6 +110,7 @@ export class MeetingRoomComponent implements OnDestroy {
     }
 
     this.chatLogs$ = this._meetingRoomService.chatLogs$;
+    this.owner$ = this._meetingRoomService.owner$;
 
     this._mediaDeviceService.deviceId$
       .pipe(
@@ -190,7 +190,9 @@ export class MeetingRoomComponent implements OnDestroy {
   }
 
   handleEntryChatroom(res: EntryChatroomRes): void {
-    if (res.data === null) {
+    const roomToken = res.data;
+
+    if (roomToken === null) {
       this._snackBarService.error('找不到你要加入的會議，會議可能已經結束');
 
       this._router.navigate(['']);
@@ -198,9 +200,46 @@ export class MeetingRoomComponent implements OnDestroy {
       return;
     }
 
-    this._meetingRoomService.load(res.data);
+    try {
+      this._meetingRoomService.load(roomToken);
+    } catch (err) {
+      this._snackBarService.error({ key: 'api.error' });
+
+      this._router.navigate(['']);
+
+      return;
+    }
+
+    this.onQueryMeetingInfo(this._meetingRoomService.roomId as string);
 
     this.rec.init();
+  }
+
+  onQueryMeetingInfo(roomId: string): void {
+    this.querying = true;
+
+    this._chatroomService
+      .Info({ roomId })
+      .pipe(
+        takeUntil(this._destroy$),
+        finalize(() => {
+          this.querying = false;
+
+          this._cdr.markForCheck();
+        }),
+      )
+      .subscribe({
+        next: this.handleInfo.bind(this),
+        error: this.onError.bind(this),
+      });
+  }
+
+  handleInfo(res: InfoRes): void {
+    this._meetingRoomService.meetingRoom = res.data;
+
+    this._cdr.markForCheck();
+
+    console.log(res.data);
   }
 
   async onStartRecorder(): Promise<void> {
@@ -218,8 +257,9 @@ export class MeetingRoomComponent implements OnDestroy {
     this._cdr.markForCheck();
 
     const { roomToken, username } = this._meetingRoomService;
+    const { rlangs } = this._chatSettingsService.settings;
 
-    this.startRecorder(deviceId, roomToken, username, this._authService.isHost);
+    this.startRecorder(deviceId, roomToken, username, this._authService.isHost, rlangs[0]);
   }
 
   startRecorder(
@@ -227,6 +267,7 @@ export class MeetingRoomComponent implements OnDestroy {
     roomToken: string | undefined,
     username: string | undefined,
     isHost: boolean,
+    rlang: RLang,
   ): void {
     if (deviceId === undefined || roomToken === undefined || username === undefined) {
       return;
@@ -240,16 +281,18 @@ export class MeetingRoomComponent implements OnDestroy {
         })
         .pipe(takeUntil(this._destroy$))
         .subscribe({
-          next: this.handleDispatch.bind(this, deviceId, roomToken, username, isHost),
+          next: this.handleDispatch.bind(this, deviceId, roomToken, username, isHost, rlang),
           error: this.onError.bind(this),
         });
     } else {
-      // TODO
-      this.handleDispatch(deviceId, roomToken, username, isHost, {
-        code: BaseAPICode.OK,
-        msg: '',
-        msg_key: '',
-        data: environment.server,
+      const { server, url } = environment.server;
+
+      this.rec.start(deviceId, {
+        server: { name: server, url },
+        roomToken,
+        username,
+        isHost,
+        rlang,
       });
     }
   }
@@ -259,6 +302,7 @@ export class MeetingRoomComponent implements OnDestroy {
     roomToken: string,
     username: string,
     isHost: boolean,
+    rlang: RLang,
     res: DispatchRes,
   ): Promise<void> {
     if (res.data === null && res.msg_key) {
@@ -272,7 +316,7 @@ export class MeetingRoomComponent implements OnDestroy {
       url: res.data.url,
     };
 
-    await this.rec.start(deviceId, { server, roomToken, isHost, username });
+    this.rec.start(deviceId, { server, roomToken, username, isHost, rlang });
   }
 
   onStopRecorder(): void {
@@ -307,11 +351,11 @@ export class MeetingRoomComponent implements OnDestroy {
     this._destroy$.next();
     this._destroy$.complete();
 
+    this.saveChatLogs();
+
     if (this.rec.recording) {
       this.stopRecorder();
     }
-
-    this.saveChatLogs();
   }
 
   private handleWSMessage(wsMessage: WSMessageR): void {
@@ -319,9 +363,7 @@ export class MeetingRoomComponent implements OnDestroy {
       case CMD_R._100_OK:
         break;
       case CMD_R._101_STREAM_TEXT:
-        const { chatRoomId, message, user } = wsMessage.data;
-
-        this.handleStreamText({ chatRoomId, streamText: message, user });
+        this.handleStreamText(wsMessage.data.message);
         break;
       case CMD_R._102_NO_QUOTA:
       case CMD_R._103_TERMINATED:
@@ -332,10 +374,28 @@ export class MeetingRoomComponent implements OnDestroy {
         break;
       // TODO: handle CMD_R
       case CMD_R._105_SPEAKER:
+        console.warn(`*** ${wsMessage.cmd} ***`);
+        console.log(wsMessage.data);
+
+        this._meetingRoomService.speaker = wsMessage.data;
+
+        break;
       case CMD_R._106_HAND_UP_USERS:
+        console.warn(`*** ${wsMessage.cmd} ***`);
+        console.log(wsMessage.data);
+        break;
       case CMD_R._107_MESSAGE:
+        console.warn(`*** ${wsMessage.cmd} ***`);
+        console.log(wsMessage.data);
+        break;
       case CMD_R._108_MEETING_ROOM_CLOSED:
+        console.warn(`*** ${wsMessage.cmd} ***`);
+        console.log(wsMessage.data);
+        break;
       case CMD_R._109_SPEAKER_CHANGED:
+        console.warn(`*** ${wsMessage.cmd} ***`);
+        console.log(wsMessage.data);
+        break;
       case CMD_R._110_HAND_UP_USER_CHANGED:
         console.warn(`*** ${wsMessage.cmd} ***`);
         console.log(wsMessage.data);
@@ -343,8 +403,7 @@ export class MeetingRoomComponent implements OnDestroy {
     }
   }
 
-  private handleStreamText(res: { chatRoomId: number; streamText: string; user: string }): void {
-    const { streamText, user } = res;
+  private handleStreamText(streamText: string): void {
     const { prefix } = this.rec;
 
     try {
@@ -367,6 +426,7 @@ export class MeetingRoomComponent implements OnDestroy {
 
   private onRebuildWS(server: WSServer): void {
     const { roomToken, username } = this._meetingRoomService;
+    const { rlangs } = this._chatSettingsService.settings;
 
     if (roomToken === undefined || username === undefined) {
       return;
@@ -377,6 +437,7 @@ export class MeetingRoomComponent implements OnDestroy {
       roomToken,
       username,
       isHost: this._authService.isHost,
+      rlang: rlangs[0],
     });
   }
 
@@ -385,11 +446,11 @@ export class MeetingRoomComponent implements OnDestroy {
   }
 
   @HostListener('window:beforeunload', ['$event'])
-  async beforeWindowUnload(event: Event): Promise<void> {
-    if (this.rec.recording) {
-      await this.stopRecorder();
-    }
-
+  beforeWindowUnload(event: Event): void {
     this.saveChatLogs();
+
+    if (this.rec.recording) {
+      this.stopRecorder();
+    }
   }
 }

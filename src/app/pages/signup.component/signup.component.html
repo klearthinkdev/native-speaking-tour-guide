@@ -2,14 +2,6 @@
   <div class="flex grow gap-4">
     <div class="flex w-full items-center justify-center">
       <form class="form-box w-full max-w-80 grid-cols-1" [formGroup]="fg" (ngSubmit)="onSignup()">
-        <img
-          class="m-auto h-14 w-auto shrink-0"
-          alt="Logo_Lockup"
-          height="56"
-          src="Logo_Lockup.png"
-          width="auto"
-        />
-
         <!-- 帳號 (電郵地址) account -->
         <mat-form-field class="col-span-1">
           <mat-label>帳號 (電郵地址)</mat-label>
@@ -131,7 +123,7 @@
         </mat-form-field>
 
         <div class="col-span-1">
-          <p class="text-gray text-center text-xs">
+          <p class="text-gray mb-1 text-center text-xs">
             點擊「<span>註冊</span>」即表示您同意我們的《<a class="link" [routerLink]="[]"
               >服務條款</a
             >》和《<a class="link" [routerLink]="[]">隱私權政策</a>》。
@@ -140,7 +132,7 @@
         </div>
 
         <div class="col-span-1 my-4">
-          <p class="text-gray text-center text-xs">已經有帳號嗎？</p>
+          <p class="text-gray mb-1 text-center text-xs">已經有帳號嗎？</p>
           <button class="w-full" [routerLink]="['/login']" matButton="tonal" type="button">
             登入
           </button>

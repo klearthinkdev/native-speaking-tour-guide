@@ -39,6 +39,7 @@ export class SingleSidedComponent implements AfterViewInit, OnDestroy {
   private _destroy$ = new Subject<void>();
 
   @Input() chatLogs: Array<MessageX> = [];
+  @Input() owner?: string;
 
   @ViewChild('box') box!: ElementRef<HTMLElement>;
   boxEl!: HTMLElement;

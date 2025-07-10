@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject, interval, take } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, interval, map, take } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { SOURCE } from '../../../api-mock/data/meeting-room.data';
+import { MeetingRoom } from '../../../api/models/chatroom/info.models';
 import { Payload, RoomUser } from '../../../api/models/chatroom/jwt.models';
 import { MessageO, MessageX } from '../../../shared/components/message.component/message.models';
 import { MessagePosition } from '../../../shared/enums/message-position.enum';
@@ -19,9 +20,21 @@ export class MeetingRoomService {
   private _username?: string;
 
   chatLogs$ = new BehaviorSubject<Array<MessageX>>([]);
+  meetingRoom$ = new BehaviorSubject<MeetingRoom | undefined>(undefined);
+  // TODO
+  speaker$ = new BehaviorSubject<string | undefined>(undefined);
+  handUpUsers$ = new BehaviorSubject<Array<string>>([]);
+
+  owner$ = this.meetingRoom$.pipe(
+    map((meetingRoom) => meetingRoom?.owner),
+    distinctUntilChanged(),
+  );
 
   get roomToken() {
     return this._roomToken;
+  }
+  get roomId() {
+    return this._roomId;
   }
   get username() {
     return this._username;
@@ -31,6 +44,24 @@ export class MeetingRoomService {
   }
   set chatLogs(value) {
     this.chatLogs$.next(value);
+  }
+  get meetingRoom() {
+    return this.meetingRoom$.getValue();
+  }
+  set meetingRoom(value) {
+    this.meetingRoom$.next(value);
+  }
+  get speaker() {
+    return this.speaker$.getValue();
+  }
+  set speaker(value) {
+    this.speaker$.next(value);
+  }
+  get handUpUsers() {
+    return this.handUpUsers$.getValue();
+  }
+  set handUpUsers(value) {
+    this.handUpUsers$.next(value);
   }
 
   constructor(private _jwtHelperService: JwtHelperService) {}
@@ -50,19 +81,16 @@ export class MeetingRoomService {
   }
 
   load(roomToken: string): void {
-    try {
-      const payload = this._jwtHelperService.decodeToken<Payload>(roomToken);
-      this._roomToken = roomToken;
+    const payload = this._jwtHelperService.decodeToken<Payload>(roomToken);
+    this._roomToken = roomToken;
 
-      const roomUser: RoomUser = JSON.parse(payload!.json);
-      this._roomId = roomUser.roomId;
-      this._username = roomUser.username;
-    } catch (err) {
-      console.error(err);
-    }
+    const roomUser: RoomUser = JSON.parse(payload!.json);
+    this._roomId = roomUser.roomId;
+    this._username = roomUser.username;
 
     if (this._roomId !== localStorage.getItem(this._roomIdKey)) {
       localStorage.setItem(this._roomIdKey, this._roomId ?? '');
+      localStorage.setItem(this._chatLogsKey, JSON.stringify([]));
 
       this.chatLogs = [];
 
