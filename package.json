@@ -8,6 +8,7 @@
     "start:prod": "ng serve --configuration prod --proxy-config proxy/proxy.config.prod.js",
     "build": "ng build",
     "build:dev": "ng build --configuration dev",
+    "build:gh-pages": "ng build --configuration dev --base-href=https://klearthinkdev.github.io/native-speaking-tour-guide/",
     "watch": "ng build --watch --configuration local",
     "test": "ng test",
     "prettier": "prettier --write \"./src/**/*.{ts,html,scss,css,json}\"",
