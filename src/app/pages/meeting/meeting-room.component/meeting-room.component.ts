@@ -7,6 +7,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -36,6 +37,8 @@ import { DispatchRes } from '../../../api/models/stream-server/dispatch.models';
 import { StreamServerService } from '../../../api/stream-server.service';
 import { ChatSettingsService } from '../../../shared/components/chat-settings.dialog/chat-settings.service';
 import { ConfirmDialogData } from '../../../shared/components/confirm.dialog/confirm.models';
+import { MeetingRoomInfoDialog } from '../../../shared/components/meeting-room-info.dialog/meeting-room-info.dialog';
+import { MeetingRoomInfoDialogData } from '../../../shared/components/meeting-room-info.dialog/meeting-room-info.models';
 import {
   isMessageTTS,
   MessageO,
@@ -91,6 +94,7 @@ export class MeetingRoomComponent implements OnDestroy {
     private _chatroomService: AbstractChatroomService,
     private _chatSettingsService: ChatSettingsService,
     private _confirmService: ConfirmService,
+    private _matDialog: MatDialog,
     private _mediaDeviceService: MediaDeviceService,
     private _meetingRoomService: MeetingRoomService,
     private _route: ActivatedRoute,
@@ -341,6 +345,21 @@ export class MeetingRoomComponent implements OnDestroy {
     this._router.navigate(['']);
   }
 
+  openMeetingRoomInfoDialog(): void {
+    const { roomId } = this._meetingRoomService;
+
+    if (roomId === undefined) {
+      return;
+    }
+
+    const data: MeetingRoomInfoDialogData = { roomId };
+
+    this._matDialog.open<MeetingRoomInfoDialog, MeetingRoomInfoDialogData, undefined>(
+      MeetingRoomInfoDialog,
+      { data },
+    );
+  }
+
   onError(err: BaseAPIResModel<null>): Observable<never> {
     console.error(err);
 
@@ -395,6 +414,8 @@ export class MeetingRoomComponent implements OnDestroy {
       case CMD_R._109_SPEAKER_CHANGED:
         console.warn(`*** ${wsMessage.cmd} ***`);
         console.log(wsMessage.data);
+
+        this._meetingRoomService.speaker = wsMessage.data;
         break;
       case CMD_R._110_HAND_UP_USER_CHANGED:
         console.warn(`*** ${wsMessage.cmd} ***`);

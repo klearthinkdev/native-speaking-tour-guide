@@ -25,3 +25,8 @@ export type User = {
   account: string;
   join_time: number;
 };
+
+export type UserExtension = User & {
+  nickname: string;
+  userCode: string;
+};

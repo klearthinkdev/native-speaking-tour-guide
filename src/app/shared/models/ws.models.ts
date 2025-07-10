@@ -77,7 +77,7 @@ export type WSMessageS =
     }
   | {
       cmd: CMD_S._1007_ADD_RLANG;
-      data: RLang;
+      data: Array<RLang>;
     };
 
 export type WSSession = {

@@ -6,6 +6,10 @@ import {
   MAT_FORM_FIELD_DEFAULT_OPTIONS,
   MatFormFieldDefaultOptions,
 } from '@angular/material/form-field';
+import {
+  MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS,
+  MatProgressSpinnerDefaultOptions,
+} from '@angular/material/progress-spinner';
 
 import { zhTW } from 'date-fns/locale';
 
@@ -39,6 +43,10 @@ const FORM_FIELD_DEFAULT_OPTIONS: MatFormFieldDefaultOptions = {
   appearance: 'outline',
 };
 
+const PROGRESS_SPINNER_DEFAULT_OPTIONS: MatProgressSpinnerDefaultOptions = {
+  diameter: 48,
+};
+
 export const MAT_PROVIDERS = [
   {
     provide: MAT_CARD_CONFIG,
@@ -53,5 +61,9 @@ export const MAT_PROVIDERS = [
   {
     provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
     useValue: FORM_FIELD_DEFAULT_OPTIONS,
+  },
+  {
+    provide: MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS,
+    useValue: PROGRESS_SPINNER_DEFAULT_OPTIONS,
   },
 ];

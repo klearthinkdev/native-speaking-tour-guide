@@ -25,7 +25,7 @@
         <mat-icon>casino</mat-icon>
       </button>
 
-      <mat-hint align="start">#{{ fcs['userCode'].value }}</mat-hint>
+      <mat-hint class="font-mono" align="start">#{{ fcs['userCode'].value }}</mat-hint>
       <mat-hint align="end">{{ fcs['nickname'].value.length }} / 64</mat-hint>
 
       @if (fcs['nickname'].hasError('required')) {

@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, Inject, NgZone, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  NgZone,
+  OnInit,
+} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
@@ -21,6 +28,7 @@ export class SnackBarComponent implements OnInit {
 
   constructor(
     @Inject(MAT_SNACK_BAR_DATA) public data: Snack,
+    private _cdr: ChangeDetectorRef,
     private _ngZone: NgZone,
   ) {
     this.fontIcon = (this.data.type && SNACK_TYPE_ICON_MAP[this.data.type]) ?? '';
@@ -58,6 +66,8 @@ export class SnackBarComponent implements OnInit {
 
         this._ngZone.run(() => {
           this.progress = newProgress;
+
+          this._cdr.markForCheck();
         });
 
         if (this.progress < 100) {

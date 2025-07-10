@@ -1,0 +1,45 @@
+<div mat-dialog-title>{{ '會議資訊' | translate}}</div>
+
+<mat-dialog-content>
+  <span>Speaker: {{ speaker$ | async}}</span>
+
+  <mat-list class="spinner-box">
+    @for (user of users$ | async; track $index) {
+    <mat-list-item>
+      <div
+        class="mx-2 mt-2 flex h-10 w-10 items-center justify-center rounded-full bg-primary/15 text-base text-primary"
+        matListItemAvatar
+      >
+        {{ user.account | slice: 0 : 1 }}
+      </div>
+
+      <div matListItemTitle>
+        <span class="truncate" [title]="user.nickname">{{ user.nickname }}</span>
+      </div>
+
+      <div class="font-mono" matListItemLine>
+        @if (user.account === (owner$ | async)) {
+        <span class="mr-2 bg-primary/15 px-1 py-0.5 text-primary">主持人</span>
+        }
+        <span>{{ user.userCode ? '#' : '' }}</span><span>{{ user.userCode }}</span>
+      </div>
+
+      @if (user.account === (speaker$ | async)) {
+      <div matListItemMeta>
+        <mat-icon>campaign</mat-icon>
+      </div>
+      }
+    </mat-list-item>
+    } @if (querying) {
+    <div class="spinner">
+      <mat-spinner></mat-spinner>
+    </div>
+    }
+  </mat-list>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button [mat-dialog-close]="false" matButton type="button">{{ '關閉' | translate }}</button>
+
+  <span class="grow"></span>
+</mat-dialog-actions>

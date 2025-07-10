@@ -227,10 +227,10 @@ export class RecorderService {
           this._connected = true;
 
           this._reconnect_count = 0;
-        }
 
-        this.wsSendCMD({ cmd: CMD_S._1003_GET_SPEAKER });
-        this.wsSendCMD({ cmd: CMD_S._1007_ADD_RLANG, data: rlang });
+          this.wsSendCMD({ cmd: CMD_S._1003_GET_SPEAKER });
+          this.wsSendCMD({ cmd: CMD_S._1007_ADD_RLANG, data: [rlang] });
+        }
       });
       ws.addEventListener('message', ({ data }: MessageEvent<unknown>) => {
         if (typeof data !== 'string' || data.length === 0) {
@@ -251,6 +251,9 @@ export class RecorderService {
               cmd: CMD_S._1001_SET_SPEAKER,
               data: ws.username,
             });
+
+            this.wsSendCMD({ cmd: CMD_S._1003_GET_SPEAKER });
+            this.wsSendCMD({ cmd: CMD_S._1007_ADD_RLANG, data: [rlang] });
           }
 
           this.wsMessage$.next(wsMessage);

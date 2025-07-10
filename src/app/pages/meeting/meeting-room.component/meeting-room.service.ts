@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject, distinctUntilChanged, interval, map, take } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, interval, map, Observable, take } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { SOURCE } from '../../../api-mock/data/meeting-room.data';
-import { MeetingRoom } from '../../../api/models/chatroom/info.models';
+import { MeetingRoom, UserExtension } from '../../../api/models/chatroom/info.models';
 import { Payload, RoomUser } from '../../../api/models/chatroom/jwt.models';
 import { MessageO, MessageX } from '../../../shared/components/message.component/message.models';
 import { MessagePosition } from '../../../shared/enums/message-position.enum';
@@ -27,6 +27,24 @@ export class MeetingRoomService {
 
   owner$ = this.meetingRoom$.pipe(
     map((meetingRoom) => meetingRoom?.owner),
+    distinctUntilChanged(),
+  );
+  users$: Observable<Array<UserExtension>> = this.meetingRoom$.pipe(
+    map((meetingRoom) =>
+      (meetingRoom?.users ?? []).map((user) => {
+        let nickname = user.account;
+        let userCode = '';
+
+        const lastHashIndex = user.account.indexOf('#');
+
+        if (lastHashIndex !== -1) {
+          nickname = user.account.substring(0, lastHashIndex);
+          userCode = user.account.substring(lastHashIndex + 1);
+        }
+
+        return { ...user, nickname, userCode };
+      }),
+    ),
     distinctUntilChanged(),
   );
 

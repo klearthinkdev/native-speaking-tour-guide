@@ -17,9 +17,16 @@
         <span class="grow"></span>
 
         <!-- TODO: view QR code / room code & view participants -->
-        <button matIconButton matTooltip="會議資訊" type="button">
-          <mat-icon>info_outline</mat-icon>
-        </button>
+        @if (ready) {
+          <button
+            (click)="openMeetingRoomInfoDialog()"
+            matIconButton
+            matTooltip="會議資訊"
+            type="button"
+          >
+            <mat-icon>info_outline</mat-icon>
+          </button>
+        }
       </div>
     </div>
   </mat-toolbar>
