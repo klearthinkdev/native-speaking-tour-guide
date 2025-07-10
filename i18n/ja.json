@@ -44,6 +44,9 @@
       "password.failure": "パスワードの変更に失敗しました。",
       "password.not_equals": "現在のパスワードが間違っています。"
     },
+    "chat": {
+      "create_record_duplicate": "TODO: api.chat.create_record_duplicate"
+    },
     "error": "予期せぬエラーが発生しました。しばらくしてからう一度お試しください。",
     "expiration": "ログイン認証の有効期限が切れています。再度ログインしてください。",
     "login": {
@@ -74,7 +77,7 @@
       "username_unique": "このアカウントは既に登録されています。"
     },
     "reserve": {
-      "chat_record_exceed": "TODO"
+      "chat_record_exceed": "TODO: api.reserve.chat_record_exceed"
     },
     "success": "成功"
   }
