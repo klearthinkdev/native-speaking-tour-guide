@@ -45,7 +45,7 @@
       "password.not_equals": "Current password is incorrect."
     },
     "chat": {
-      "create_record_duplicate": "TODO: api.chat.create_record_duplicate"
+      "create_record_duplicate": "You currently have a meeting in progress."
     },
     "error": "An unexpected error occurred. Please try again later.",
     "expiration": "The login authentication has expired. Please log in again.",
@@ -77,7 +77,7 @@
       "username_unique": "This account has already been registered."
     },
     "reserve": {
-      "chat_record_exceed": "TODO: api.reserve.chat_record_exceed"
+      "chat_record_exceed": "The time slot you selected is fully booked."
     },
     "success": "Success"
   }

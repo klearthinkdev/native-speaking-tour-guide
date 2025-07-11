@@ -45,7 +45,7 @@
       "password.not_equals": "現在のパスワードが間違っています。"
     },
     "chat": {
-      "create_record_duplicate": "TODO: api.chat.create_record_duplicate"
+      "create_record_duplicate": "現在、進行中の会議が1つあります。"
     },
     "error": "予期せぬエラーが発生しました。しばらくしてからう一度お試しください。",
     "expiration": "ログイン認証の有効期限が切れています。再度ログインしてください。",
@@ -77,7 +77,7 @@
       "username_unique": "このアカウントは既に登録されています。"
     },
     "reserve": {
-      "chat_record_exceed": "TODO: api.reserve.chat_record_exceed"
+      "chat_record_exceed": "The time slot you selected is fully booked."
     },
     "success": "成功"
   }

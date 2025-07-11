@@ -45,7 +45,7 @@
       "password.not_equals": "舊密碼有誤"
     },
     "chat": {
-      "create_record_duplicate": "TODO: api.chat.create_record_duplicate"
+      "create_record_duplicate": "您目前已有進行中的一場會議"
     },
     "error": "發生未預期的錯誤，請稍後再試",
     "expiration": "登入認證已過期，請重新登入",
@@ -77,7 +77,7 @@
       "username_unique": "此帳號已註冊過"
     },
     "reserve": {
-      "chat_record_exceed": "TODO: api.reserve.chat_record_exceed"
+      "chat_record_exceed": "您選擇的時段預約已額滿"
     },
     "success": "成功"
   }
