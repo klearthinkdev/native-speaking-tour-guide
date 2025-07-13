@@ -1,7 +1,51 @@
 {
   "ACTION": {
+    "BACK_TO_HOME": "Back to Home",
     "CANCEL": "Cancel",
-    "CONFIRM": "Confirm"
+    "CLOSE": "Close",
+    "CONFIRM": "Confirm",
+    "EDIT": "Edit",
+    "HAND_OVER_MIC": "Hand over the Microphone",
+    "HIDE_PASSWORD": "Hide Password",
+    "JOIN_MEETING": "Join Meeting",
+    "LEAVE_MEETING": "Leave Meeting",
+    "LOGIN": "Log In",
+    "LOGOUT": "Logout",
+    "RANDOM": "Random",
+    "SCAN_QR_CODE": "Scan QR Code",
+    "SELECT_MIC": "Select Microphone",
+    "SHOW_PASSWORD": "Show Password",
+    "SIGN_UP": "Sign Up",
+    "START": "Start",
+    "START_A_MEETING": "Start a Meeting",
+    "UPDATE": "Update"
+  },
+  "COMPONENTS": {
+    "CONFIRM_LEAVE_MEETING": {
+      "CONFIRM_BUTTON_TEXT": "Leave",
+      "TITLE": "Are you sure you want to leave the meeting?"
+    },
+    "CONFIRM_LOGOUT": {
+      "CONFIRM_BUTTON_TEXT": "Logout",
+      "TITLE": "Are you sure you want to log out?"
+    },
+    "CONFIRM_REQUEST_TO_SPEAK": {
+      "TITLE": "Request to speak?"
+    },
+    "LANG_SWITCH": "Interface Language",
+    "MEETING_ROOM_INFO": {
+      "LABEL": {
+        "ALL": "All",
+        "WAITING_TO_SPEAK": "Waiting to Speak"
+      },
+      "TEXT": {
+        "NO_ONE_WAITING_TO_SPEAK": "No one is currently waiting to speak."
+      },
+      "TITLE": {
+        "ATTENDEES": "Attendees"
+      }
+    },
+    "THEME_SWITCH": "Theme"
   },
   "ENUM": {
     "API": {},
@@ -24,17 +68,146 @@
   },
   "MESSAGE": {
     "ANOTHER_USAGE": "Your account is being used elsewhere. The service on this page will be interrupted.",
+    "MEETING_ROOM_CLOSED": "The meeting time has ended. Thank you for using our service!",
     "MIC_PERMISSION_DENIED": "Microphone permission denied.",
     "NO_QUOTA": "Your service quota has been used up. Please top up to continue using.",
+    "SPEAKER_CHANGED": "You are now the current speaker.",
     "TERMINATED": "Your session will time out due to inactivity."
   },
-  "SITEMAP": {
-    "HOME": "Homepage"
+  "PAGES": {
+    "HOME": {
+      "MESSAGE": {
+        "ROOM_CODE": "Incorrect meeting code format."
+      },
+      "PLACEHOLDER": {
+        "ROOM_CODE": "Enter Meeting Code"
+      },
+      "SUB_TITLE": "Solving language barriers and translation inconveniences, allowing foreign visitors to effortlessly explore Taiwan, and realizing the vision of a \"Smart Technology Island, Digital New Society.\"",
+      "TITLE": "Real-time Voice Translation and Tour Guide Services for Everyone"
+    },
+    "LOGIN": {
+      "LABEL": {
+        "ACCOUNT": "Account",
+        "PASSWORD": "Password"
+      },
+      "MESSAGE": {
+        "ACCOUNT_REQUIRED": "Please enter your account.",
+        "PASSWORD_REQUIRED": "Please enter your password."
+      },
+      "PLACEHOLDER": {
+        "ACCOUNT": "Enter Account",
+        "PASSWORD": "Enter Password"
+      },
+      "TEXT": {
+        "CONTINUE_AS_GUEST": "Continue as Guest",
+        "NO_ACCOUNT": "Don't have an account?",
+        "OR": "Or"
+      }
+    },
+    "MEETING": {
+      "LABEL": {
+        "MICROPHONE": "Microphone",
+        "NICKNAME": "Nickname"
+      },
+      "MESSAGE": {
+        "NICKNAME_REQUIRED": "Please enter nickname.",
+        "NOT_FOUND": "The meeting you are trying to join cannot be found; it may have already ended.",
+        "ROOM_CODE": "Incorrect meeting code format."
+      },
+      "PLACEHOLDER": {
+        "MICROPHONE": "Select Microphone",
+        "NICKNAME": "Enter Nickname"
+      }
+    },
+    "PRIVACY_POLICY": {
+      "TITLE": "Privacy Policy"
+    },
+    "SIGNUP": {
+      "LABEL": {
+        "ACCOUNT": "Account (Email)",
+        "CONFIRM_PASSWORD": "Confirm Password",
+        "PASSWORD": "Password",
+        "PHONE": "Mobile Phone Number"
+      },
+      "MESSAGE": {
+        "ACCOUNT_EMAIL": "Incorrect email format.",
+        "ACCOUNT_MINLENGTH": "Account must be at least 8 characters long.",
+        "ACCOUNT_REQUIRED": "Please enter your account.",
+        "CONFIRM_PASSWORD_REQUIRED": "Please re-enter password.",
+        "PASSWORD_MATCH": "The passwords entered do not match. Please try again.",
+        "PASSWORD_MINLENGTH": "Password must be at least 8 characters long.",
+        "PASSWORD_PATTERN": "Incorrect password format.",
+        "PASSWORD_REQUIRED": "Please enter your password.",
+        "PHONE_PATTERN": "Incorrect mobile phone number format.",
+        "PHONE_REQUIRED": "Please enter your mobile phone number."
+      },
+      "PLACEHOLDER": {
+        "ACCOUNT": "Enter Account",
+        "CONFIRM_PASSWORD": "Re-enter Password",
+        "PASSWORD": "Enter Password",
+        "PHONE": "Enter Mobile Phone Number"
+      },
+      "TEXT": {
+        "AGREE_TERMS_1": "By clicking \"",
+        "AGREE_TERMS_2": "\", you agree to our ",
+        "AGREE_TERMS_3": " and ",
+        "AGREE_TERMS_4": ".",
+        "HAVE_AN_ACCOUNT": "Already have an account?"
+      }
+    },
+    "START_A_MEETING": {
+      "LABEL": {
+        "END_DATE": "End Date",
+        "END_TIME": "End Time",
+        "NAME": "Meeting Name"
+      },
+      "MESSAGE": {
+        "END_DATETIME_FUTURE_DATE": "Must be later than the current time.",
+        "END_DATETIME_INVALID_DATE": "Incorrect end date or time format.",
+        "END_DATETIME_REQUIRED": "Please select the end date and time.",
+        "NAME_REQUIRED": "Please enter meeting name."
+      },
+      "PLACEHOLDER": {
+        "END_DATE": "Select End Date",
+        "END_TIME": "Select End Time",
+        "NAME": "Enter Meeting Name"
+      },
+      "TITLE": {
+        "MEETING_DETAILS": "Meeting Details",
+        "SUPPORTED_LANGUAGES": "Supported Languages"
+      }
+    },
+    "TERMS": {
+      "TITLE": "Terms of Service"
+    },
+    "USER": {
+      "LABEL": {
+        "NICKNAME": "Nickname"
+      },
+      "MESSAGE": {
+        "NICKNAME_REQUIRED": "Please enter nickname."
+      },
+      "PLACEHOLDER": {
+        "NAME": "Enter Nickname"
+      },
+      "TEXT": {
+        "GUEST": "Guest",
+        "HOST": "Host",
+        "MEMBER": "Member"
+      },
+      "TITLE": {
+        "ABOUT_ME": "About Me",
+        "LANGUAGE_PREFERENCE": "Language Preference"
+      }
+    }
   },
-  "PAGES": {},
-  "COMPONENTS": {
-    "LANG_SWITCH": "Language",
-    "THEME_SWITCH": "Theme"
+  "SITEMAP": {
+    "HOME": "Homepage",
+    "USER": "Profile Page"
+  },
+  "TEXT": {
+    "HOST": "Host",
+    "SPEAKER": "Speaker"
   },
   "api": {
     "business": {

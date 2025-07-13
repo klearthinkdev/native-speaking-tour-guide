@@ -1,7 +1,51 @@
 {
   "ACTION": {
+    "BACK_TO_HOME": "ホームに戻る",
     "CANCEL": "キャンセル",
-    "CONFIRM": "確認"
+    "CLOSE": "閉じる",
+    "CONFIRM": "確認",
+    "EDIT": "編集",
+    "HAND_OVER_MIC": "マイクを譲る",
+    "HIDE_PASSWORD": "パスワードの非表示",
+    "JOIN_MEETING": "会議に参加",
+    "LEAVE_MEETING": "会議を退出",
+    "LOGIN": "ログイン",
+    "LOGOUT": "ログアウト",
+    "RANDOM": "ランダム",
+    "SCAN_QR_CODE": "QRコードをスキャン",
+    "SELECT_MIC": "マイクを選択します",
+    "SHOW_PASSWORD": "パスワードの表示",
+    "SIGN_UP": "登録",
+    "START": "開始",
+    "START_A_MEETING": "会議を開始",
+    "UPDATE": "更新"
+  },
+  "COMPONENTS": {
+    "CONFIRM_LEAVE_MEETING": {
+      "CONFIRM_BUTTON_TEXT": "退出",
+      "TITLE": "会議を退出しますか？"
+    },
+    "CONFIRM_LOGOUT": {
+      "CONFIRM_BUTTON_TEXT": "ログアウト",
+      "TITLE": "ログアウトしますか？"
+    },
+    "CONFIRM_REQUEST_TO_SPEAK": {
+      "TITLE": "発言をリクエストしますか？"
+    },
+    "LANG_SWITCH": "表示言語",
+    "MEETING_ROOM_INFO": {
+      "LABEL": {
+        "ALL": "すべて",
+        "WAITING_TO_SPEAK": "発言待機中"
+      },
+      "TEXT": {
+        "NO_ONE_WAITING_TO_SPEAK": "現在、発言待機中の人はいません。"
+      },
+      "TITLE": {
+        "ATTENDEES": "参加者"
+      }
+    },
+    "THEME_SWITCH": "テーマ"
   },
   "ENUM": {
     "API": {},
@@ -24,17 +68,146 @@
   },
   "MESSAGE": {
     "ANOTHER_USAGE": "このアカウントは他の場所にサービスが利用されているため、只今サービスが中断されます。",
+    "MEETING_ROOM_CLOSED": "会議時間が終了しました。ご利用いただきありがとうございます！",
     "MIC_PERMISSION_DENIED": "マイクのアクセスが許可されていません。",
     "NO_QUOTA": "サービス枠がなくなりました。引き続きご利用いただくためには、チャージしてください。",
+    "SPEAKER_CHANGED": "あなたは現在の発言者になりました。",
     "TERMINATED": "長時間操作がないため、接続が自動的に切断します。"
   },
-  "SITEMAP": {
-    "HOME": "ホームページ"
+  "PAGES": {
+    "HOME": {
+      "MESSAGE": {
+        "ROOM_CODE": "会議コードの形式が正しくありません。"
+      },
+      "PLACEHOLDER": {
+        "ROOM_CODE": "会議コードを入力"
+      },
+      "SUB_TITLE": "言葉の壁や翻訳の不便さを解消し、外国人旅行者が台湾を気軽に満喫できるようにすることで、「スマートテクノロジー島・デジタル新社会」のビジョンを実現します",
+      "TITLE": "誰でも使えるリアルタイム音声翻訳・観光ガイドサービス"
+    },
+    "LOGIN": {
+      "LABEL": {
+        "ACCOUNT": "アカウント",
+        "PASSWORD": "パスワード"
+      },
+      "MESSAGE": {
+        "ACCOUNT_REQUIRED": "アカウントを入力してください。",
+        "PASSWORD_REQUIRED": "パスワードを入力してください。"
+      },
+      "PLACEHOLDER": {
+        "ACCOUNT": "アカウントを入力",
+        "PASSWORD": "パスワードを入力"
+      },
+      "TEXT": {
+        "CONTINUE_AS_GUEST": "ゲストとして続行",
+        "NO_ACCOUNT": "アカウントをお持ちではありませんか？",
+        "OR": "または"
+      }
+    },
+    "MEETING": {
+      "LABEL": {
+        "MICROPHONE": "マイク",
+        "NICKNAME": "ニックネーム"
+      },
+      "MESSAGE": {
+        "NICKNAME_REQUIRED": "ニックネームを入力してください。",
+        "NOT_FOUND": "参加しようとしている会議が見つかりません。会議はすでに終了した可能性があります。",
+        "ROOM_CODE": "会議コードの形式が正しくありません。"
+      },
+      "PLACEHOLDER": {
+        "MICROPHONE": "マイクを選択します",
+        "NICKNAME": "ニックネームを入力"
+      }
+    },
+    "PRIVACY_POLICY": {
+      "TITLE": "個人情報保護方針"
+    },
+    "SIGNUP": {
+      "LABEL": {
+        "ACCOUNT": "アカウント (メールアドレス)",
+        "CONFIRM_PASSWORD": "パスワードの確認",
+        "PASSWORD": "パスワード",
+        "PHONE": "携帯電話番号"
+      },
+      "MESSAGE": {
+        "ACCOUNT_EMAIL": "無効なメールアドレス形式。",
+        "ACCOUNT_MINLENGTH": "アカウントは英数字8桁以上が必要です。",
+        "ACCOUNT_REQUIRED": "アカウントを入力してください。",
+        "CONFIRM_PASSWORD_REQUIRED": "パスワードをもう一度入力してください。",
+        "PASSWORD_MATCH": "入力されたパスワードが一致しません。もう一度入力してください。",
+        "PASSWORD_MINLENGTH": "パスワードは英数字8桁以上が必要です。",
+        "PASSWORD_PATTERN": "無効なパスワード形式。",
+        "PASSWORD_REQUIRED": "パスワードを入力してください。",
+        "PHONE_PATTERN": "無効な携帯電話番号形式。",
+        "PHONE_REQUIRED": "携帯電話番号を入力してください。"
+      },
+      "PLACEHOLDER": {
+        "ACCOUNT": "アカウントを入力",
+        "CONFIRM_PASSWORD": "パスワードをもう一度入力",
+        "PASSWORD": "パスワードを入力",
+        "PHONE": "携帯電話番号を入力"
+      },
+      "TEXT": {
+        "AGREE_TERMS_1": "「",
+        "AGREE_TERMS_2": "」をクリックすると、弊社の《",
+        "AGREE_TERMS_3": "》と《",
+        "AGREE_TERMS_4": "》に同意したことになります。",
+        "HAVE_AN_ACCOUNT": "すでにアカウントをお持ちですか？"
+      }
+    },
+    "START_A_MEETING": {
+      "LABEL": {
+        "END_DATE": "終了日",
+        "END_TIME": "終了時刻",
+        "NAME": "会議名"
+      },
+      "MESSAGE": {
+        "END_DATETIME_FUTURE_DATE": "現在時刻より後に設定してください。",
+        "END_DATETIME_INVALID_DATE": "終了日時または時刻の形式が正しくありません。",
+        "END_DATETIME_REQUIRED": "終了日時を選択してください。",
+        "NAME_REQUIRED": "会議名を入力してください。"
+      },
+      "PLACEHOLDER": {
+        "END_DATE": "終了日を選択します",
+        "END_TIME": "終了時刻を選択します",
+        "NAME": "会議名を入力"
+      },
+      "TITLE": {
+        "MEETING_DETAILS": "会議の詳細",
+        "SUPPORTED_LANGUAGES": "対応言語"
+      }
+    },
+    "TERMS": {
+      "TITLE": "利用規約"
+    },
+    "USER": {
+      "LABEL": {
+        "NICKNAME": "ニックネーム"
+      },
+      "MESSAGE": {
+        "NICKNAME_REQUIRED": "ニックネームを入力してください。"
+      },
+      "PLACEHOLDER": {
+        "NAME": "ニックネームを入力"
+      },
+      "TEXT": {
+        "GUEST": "ゲスト",
+        "HOST": "ホスト",
+        "MEMBER": "会員"
+      },
+      "TITLE": {
+        "ABOUT_ME": "プロフィール",
+        "LANGUAGE_PREFERENCE": "優先言語"
+      }
+    }
   },
-  "PAGES": {},
-  "COMPONENTS": {
-    "LANG_SWITCH": "言語",
-    "THEME_SWITCH": "テーマ"
+  "SITEMAP": {
+    "HOME": "ホームページ",
+    "USER": "プロフィールページ"
+  },
+  "TEXT": {
+    "HOST": "ホスト",
+    "SPEAKER": "発言者"
   },
   "api": {
     "business": {

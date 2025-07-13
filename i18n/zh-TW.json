@@ -1,7 +1,51 @@
 {
   "ACTION": {
+    "BACK_TO_HOME": "返回首頁",
     "CANCEL": "取消",
-    "CONFIRM": "確認"
+    "CLOSE": "關閉",
+    "CONFIRM": "確認",
+    "EDIT": "編輯",
+    "HAND_OVER_MIC": "轉交麥克風",
+    "HIDE_PASSWORD": "隱藏密碼",
+    "JOIN_MEETING": "加入會議",
+    "LEAVE_MEETING": "離開會議",
+    "LOGIN": "登入",
+    "LOGOUT": "登出",
+    "RANDOM": "隨機",
+    "SCAN_QR_CODE": "掃描 QR 碼",
+    "SELECT_MIC": "選擇麥克風",
+    "SHOW_PASSWORD": "顯示密碼",
+    "SIGN_UP": "註冊",
+    "START": "發起",
+    "START_A_MEETING": "發起會議",
+    "UPDATE": "更新"
+  },
+  "COMPONENTS": {
+    "CONFIRM_LEAVE_MEETING": {
+      "CONFIRM_BUTTON_TEXT": "離開",
+      "TITLE": "確認離開會議？"
+    },
+    "CONFIRM_LOGOUT": {
+      "CONFIRM_BUTTON_TEXT": "登出",
+      "TITLE": "確認登出？"
+    },
+    "CONFIRM_REQUEST_TO_SPEAK": {
+      "TITLE": "請求發言？"
+    },
+    "LANG_SWITCH": "介面語言",
+    "MEETING_ROOM_INFO": {
+      "LABEL": {
+        "ALL": "全部",
+        "WAITING_TO_SPEAK": "等候發言"
+      },
+      "TEXT": {
+        "NO_ONE_WAITING_TO_SPEAK": "目前沒有人在等候發言"
+      },
+      "TITLE": {
+        "ATTENDEES": "與會人員"
+      }
+    },
+    "THEME_SWITCH": "外觀"
   },
   "ENUM": {
     "API": {},
@@ -24,17 +68,146 @@
   },
   "MESSAGE": {
     "ANOTHER_USAGE": "您的帳號在其他地方使用服務，當前頁面服務將中斷。",
+    "MEETING_ROOM_CLOSED": "會議時間已結束，感謝您的使用！",
     "MIC_PERMISSION_DENIED": "無法取得麥克風權限。",
     "NO_QUOTA": "您的服務額度已用完，請加值以繼續使用。",
+    "SPEAKER_CHANGED": "您已成為當前發言者。",
     "TERMINATED": "閒置時間過長，服務將自動中斷。"
   },
-  "SITEMAP": {
-    "HOME": "首頁"
+  "PAGES": {
+    "HOME": {
+      "MESSAGE": {
+        "ROOM_CODE": "會議代碼格式有誤"
+      },
+      "PLACEHOLDER": {
+        "ROOM_CODE": "輸入會議代碼"
+      },
+      "SUB_TITLE": "解決語別限制及翻譯不便等問題，讓外籍旅客輕鬆暢遊臺灣，實踐「智慧科技島．數位新社會」的願景",
+      "TITLE": "適合所有人使用的即時語音翻譯和導覽服務"
+    },
+    "LOGIN": {
+      "LABEL": {
+        "ACCOUNT": "帳號",
+        "PASSWORD": "密碼"
+      },
+      "MESSAGE": {
+        "ACCOUNT_REQUIRED": "請輸入帳號",
+        "PASSWORD_REQUIRED": "請輸入密碼"
+      },
+      "PLACEHOLDER": {
+        "ACCOUNT": "輸入帳號",
+        "PASSWORD": "輸入密碼"
+      },
+      "TEXT": {
+        "CONTINUE_AS_GUEST": "以訪客身份繼續",
+        "NO_ACCOUNT": "沒有帳號嗎？",
+        "OR": "或"
+      }
+    },
+    "MEETING": {
+      "LABEL": {
+        "MICROPHONE": "麥克風",
+        "NICKNAME": "顯示暱稱"
+      },
+      "MESSAGE": {
+        "NICKNAME_REQUIRED": "請輸入顯示暱稱",
+        "NOT_FOUND": "找不到您要加入的會議，會議可能已經結束",
+        "ROOM_CODE": "會議代碼格式有誤"
+      },
+      "PLACEHOLDER": {
+        "MICROPHONE": "選擇麥克風",
+        "NICKNAME": "輸入顯示暱稱"
+      }
+    },
+    "PRIVACY_POLICY": {
+      "TITLE": "隱私權政策"
+    },
+    "SIGNUP": {
+      "LABEL": {
+        "ACCOUNT": "帳號 (電郵地址)",
+        "CONFIRM_PASSWORD": "確認密碼",
+        "PASSWORD": "密碼",
+        "PHONE": "手機號碼"
+      },
+      "MESSAGE": {
+        "ACCOUNT_EMAIL": "電郵地址格式有誤",
+        "ACCOUNT_MINLENGTH": "帳號最小長度為 8 個字元",
+        "ACCOUNT_REQUIRED": "請輸入帳號",
+        "CONFIRM_PASSWORD_REQUIRED": "請再次輸入密碼",
+        "PASSWORD_MATCH": "前後密碼不一致，請重新輸入",
+        "PASSWORD_MINLENGTH": "密碼最小長度為 8 個字元",
+        "PASSWORD_PATTERN": "密碼格式有誤",
+        "PASSWORD_REQUIRED": "請輸入密碼",
+        "PHONE_PATTERN": "手機號碼格式有誤",
+        "PHONE_REQUIRED": "請輸入手機號碼"
+      },
+      "PLACEHOLDER": {
+        "ACCOUNT": "輸入帳號",
+        "CONFIRM_PASSWORD": "再次輸入密碼",
+        "PASSWORD": "輸入密碼",
+        "PHONE": "輸入手機號碼"
+      },
+      "TEXT": {
+        "AGREE_TERMS_1": "點擊「",
+        "AGREE_TERMS_2": "」即表示您同意我們的《",
+        "AGREE_TERMS_3": "》和《",
+        "AGREE_TERMS_4": "》。",
+        "HAVE_AN_ACCOUNT": "已經有帳號嗎？"
+      }
+    },
+    "START_A_MEETING": {
+      "LABEL": {
+        "END_DATE": "結束日期",
+        "END_TIME": "結束時間",
+        "NAME": "會議名稱"
+      },
+      "MESSAGE": {
+        "END_DATETIME_FUTURE_DATE": "必須晚於現在時間",
+        "END_DATETIME_INVALID_DATE": "結束日期或時間格式有誤",
+        "END_DATETIME_REQUIRED": "請選擇結束日期和時間",
+        "NAME_REQUIRED": "請輸入會議名稱"
+      },
+      "PLACEHOLDER": {
+        "END_DATE": "選擇結束日期",
+        "END_TIME": "選擇結束時間",
+        "NAME": "輸入會議名稱"
+      },
+      "TITLE": {
+        "MEETING_DETAILS": "會議詳情",
+        "SUPPORTED_LANGUAGES": "支援語言"
+      }
+    },
+    "TERMS": {
+      "TITLE": "服務條款"
+    },
+    "USER": {
+      "LABEL": {
+        "NICKNAME": "顯示暱稱"
+      },
+      "MESSAGE": {
+        "NICKNAME_REQUIRED": "請輸入顯示暱稱"
+      },
+      "PLACEHOLDER": {
+        "NAME": "輸入顯示暱稱"
+      },
+      "TEXT": {
+        "GUEST": "訪客",
+        "HOST": "主持人",
+        "MEMBER": "會員"
+      },
+      "TITLE": {
+        "ABOUT_ME": "關於我",
+        "LANGUAGE_PREFERENCE": "偏好語言"
+      }
+    }
   },
-  "PAGES": {},
-  "COMPONENTS": {
-    "LANG_SWITCH": "語言",
-    "THEME_SWITCH": "外觀"
+  "SITEMAP": {
+    "HOME": "首頁",
+    "USER": "個人頁面"
+  },
+  "TEXT": {
+    "HOST": "主持人",
+    "SPEAKER": "發言者"
   },
   "api": {
     "business": {
